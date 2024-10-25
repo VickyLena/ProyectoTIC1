@@ -15,7 +15,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/wtf-cinema")
 public class MainController {
-
     @Autowired
     private MovieServices movieServices;
 
@@ -34,10 +33,18 @@ public class MainController {
     }
 
     // Maneja el registro de usuarios y redirige a una página de confirmación
-    @PostMapping("/register")
+//    @PostMapping("/register")
+//    public String registerUser(@ModelAttribute User user, Model model) {
+//        // Lógica de registro de usuario
+//        model.addAttribute("message", "User registered successfully");
+//        return "registration-confirmation"; // Página de confirmación (registration-confirmation.html en templates)
+//    }
+
+    // Maneja el registro de usuarios y redirige a una página de confirmación
+    @PostMapping("/login")
     public String registerUser(@ModelAttribute User user, Model model) {
         // Lógica de registro de usuario
-        model.addAttribute("message", "User registered successfully");
+        model.addAttribute("message", "User logged in successfully");
         return "registration-confirmation"; // Página de confirmación (registration-confirmation.html en templates)
     }
 }

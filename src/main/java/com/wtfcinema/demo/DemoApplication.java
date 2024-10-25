@@ -16,9 +16,6 @@ import org.springframework.stereotype.Component;
 public class DemoApplication {
 
 	public static void main(String[] args){
-		//ApplicationContext ctx = SpringApplication.run(DemoApplication.class, args);
-		//DemoApplication app = ctx.getBean(DemoApplication.class);
-		//app.runInCommandLine();
 		SpringApplication.run(DemoApplication.class, args);
 		runInCommandLine();
 	}
