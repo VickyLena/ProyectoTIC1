@@ -5,6 +5,7 @@ import com.wtfcinema.demo.repository.MovieRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,9 +22,12 @@ public class MovieServices {
         return movieRep.findByAgeRestriction(ageRestriction);
     }
 
-    public Movie addMovie(Movie movie) {
+    public Movie addMovie(String title, String genre, Date releaseDate) {
+        Movie movie = new Movie();
+        movie.setTitle(title);
+        movie.setGenre(genre);
+        movie.setReleaseDate(releaseDate);
         return movieRep.save(movie);
     }
-
 }
 

@@ -2,21 +2,22 @@ package com.wtfcinema.demo.services;
 
 import com.wtfcinema.demo.entities.User;
 import com.wtfcinema.demo.repository.UserRep;
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UserServices {
+
     @Autowired
     private UserRep userRepo;
 
     public User getById(Long id){
         Optional<User> result = userRepo.findById(id);
-        if(result.isPresent())
-            return result.get();
-        return null;
+        return result.orElse(null);
     }
 
     public List<User> getAll()
