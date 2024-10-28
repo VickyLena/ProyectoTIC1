@@ -1,0 +1,65 @@
+/* Definimos la fuente POSTERABLE */
+@font-face {
+    font-family: 'POSTERABLE'; /* Nombre que le das a la fuente */
+    src: url('fonts/POSTERABLE.ttf') format('truetype'); /* Ruta al archivo de fuente */
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #000066; /* Fondo azul oscuro */
+    color: white; /* Color del texto */
+    margin: 0; /* Sin márgenes */
+    padding: 0; /* Sin relleno */
+    font-family: 'POSTERABLE', sans-serif; /* Usar POSTERABLE como fuente principal */
+}
+
+h1 {
+    background-color: white; /* Fondo blanco detrás del título */
+    color: #000066; /* Color del texto igual al fondo de la página */
+    text-align: center; /* Centrado horizontal */
+    font-size: 9em; /* Tamaño grande para el título */
+    font-weight: normal; /* Grosor normal */
+    margin: 0; /* Sin márgenes */
+    padding: 10px 0; /* Espacio arriba y abajo de la franja (ajustado para que sea más fino) */
+    position: relative; /* Para permitir posicionamiento de las imágenes */
+}
+
+.popcorn-img {
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0; /* Arriba */
+    left: 0; /* Esquina izquierda */
+    width: 180px; /* Ajusta el tamaño de la imagen */
+    height: 158px; /* Ajusta el tamaño de la imagen */
+}
+
+.drink-img {
+    position: absolute; /* Posicionamiento absoluto */
+    top: 0; /* Arriba */
+    right: 0; /* Esquina izquierda */
+    width: 210px; /* Ajusta el tamaño de la imagen */
+    height: 158px; /* Ajusta el tamaño de la imagen */
+}
+
+.container {
+    display: flex; /* Usar flexbox para alinear los botones */
+    justify-content: space-between; /* Espacio entre los botones */
+    padding: 20px 0; /* Espacio adicional arriba y abajo */
+}
+
+button {
+    background-color: white; /* Fondo blanco para los botones */
+    color: #000066; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    padding: 20px 0; /* Espaciado interno del botón (aumentado para hacerlo más gordito) */
+    width: 30%; /* Cada botón ocupará un tercio del ancho de la página */
+    font-family: 'POSTERABLE', sans-serif; /* Usar POSTERABLE como fuente en los botones */
+    font-size: 2em; /* Tamaño de fuente para los botones (ajustado) */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    border-radius: 5px; /* Bordes redondeados para los botones */
+}
+
+button:hover {
+    background-color: #000066; /* Cambia el fondo al pasar el mouse */
+    color: white; /* Cambia el color del texto al pasar el mouse */
+}
