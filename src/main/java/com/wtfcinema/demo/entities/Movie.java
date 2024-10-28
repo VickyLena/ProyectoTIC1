@@ -29,8 +29,10 @@ public class Movie {
     @Column(name = "DIRECTOR")
     private String director;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "MOVIE_GENRES")
     @Column(name = "GENRE")
-    private String genre;
+    private List<String> genres;
 
     @Column(name = "AGE_RESTRICTION")
     private int ageRestriction;

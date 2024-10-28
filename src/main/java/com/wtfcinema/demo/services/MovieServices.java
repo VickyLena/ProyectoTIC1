@@ -22,10 +22,10 @@ public class MovieServices {
         return movieRep.findByAgeRestriction(ageRestriction);
     }
 
-    public Movie addMovie(String title, String genre, Date releaseDate) {
+    public Movie addMovie(String title, List<String> genres, Date releaseDate) {
         Movie movie = new Movie();
         movie.setTitle(title);
-        movie.setGenre(genre);
+        movie.setGenres(genres);
         movie.setReleaseDate(releaseDate);
         return movieRep.save(movie);
     }
