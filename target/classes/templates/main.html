@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>WTF Cinema</title>
     <link rel="stylesheet" href="/index.css">
@@ -14,10 +13,12 @@
 </h1>
 
 <div class="container">
-    <button>Iniciar Sesion</button>
-    <button>Registrarse</button>
-    <button>Locales</button>
+    <button onclick="window.location.href='login.html'">Iniciar Sesión</button>
+    <button onclick="window.location.href='register.html'">Registrarse</button>
+    <button onclick="window.location.href='locations.html'">Locales</button>
 </div>
+
+
 
 <!-- Franja "Cartelera Actual" ahora colocada debajo de los botones -->
 <div class="cartelera-franja">
@@ -26,7 +27,7 @@
 
 <!-- Primera fila de imágenes -->
 <div class="imagen-container">
-    <img src="/images/pp.jpg" alt="Imagen izquierda" class="imagen-cartelera">
+    <img src="/images/pp.jpg" alt="Imagen izquierda" class="imagen-cartelera mostrar-mensaje" data-mensaje="Película Popular">
     <img src="/images/10.jpg" alt="Imagen central" class="imagen-cartelera">
     <img src="/images/pd.jpg" alt="Imagen derecha" class="imagen-cartelera">
 </div>

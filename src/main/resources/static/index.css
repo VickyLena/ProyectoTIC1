@@ -45,7 +45,14 @@ h1 {
     display: flex; /* Usar flexbox para alinear los botones */
     justify-content: space-between; /* Espacio entre los botones */
     padding: 30px 10px; /* Espacio adicional arriba y abajo */
+    gap: 10px
 }
+
+.button-link {
+    flex: 1; /* Permite que cada enlace tome un espacio uniforme */
+    text-decoration: none; /* Elimina subrayado del enlace */
+}
+
 
 button {
     background-color: white; /* Fondo blanco para los botones */
@@ -107,4 +114,53 @@ footer {
     transform: scale(1.05);
     opacity: 0.60;
     transition: transform 0.3s, opacity 0.3s; /* Animación suave */
+}
+
+.login-form-container {
+    background-color: white;
+    color: #000066;
+    width: 400px; /* Aumentar el ancho del formulario */
+    margin: 50px auto; /* Centrar el formulario en la página con margen superior e inferior */
+    padding: 40px; /* Aumentar el espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra para un efecto de elevación */
+    text-align: center; /* Centrar el texto dentro del contenedor */
+}
+
+.login-form-container h2 {
+    margin-bottom: 30px; /* Espacio debajo del título */
+    font-size: 2em; /* Tamaño del texto del título */
+}
+
+.login-form-container label {
+    display: block; /* Cada etiqueta ocupa una línea completa */
+    font-size: 1.2em; /* Tamaño de fuente para las etiquetas */
+    margin-top: 10px; /* Espacio arriba de cada etiqueta */
+}
+
+.login-form-container input {
+    width: 90%; /* Ancho del campo de entrada */
+    padding: 12px; /* Aumentar el espaciado interno */
+    margin-top: 5px; /* Espacio arriba de los campos de entrada */
+    border: 1px solid #000066; /* Borde del campo de entrada */
+    border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+    font-size: 1em; /* Tamaño de fuente para los campos de entrada */
+    text-align: center; /* Centrar el texto dentro del campo de entrada */
+}
+
+.submit-button {
+    background-color: #000066; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    padding: 12px 0; /* Aumentar el espaciado interno del botón */
+    width: 90%; /* Ancho completo para el botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados para el botón */
+    font-size: 1.2em; /* Tamaño de fuente para el botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-top: 20px; /* Espacio arriba del botón */
+}
+
+.submit-button:hover {
+    background-color: white; /* Cambia el fondo al pasar el mouse */
+    color: #000066; /* Cambia el color del texto al pasar el mouse */
 }
