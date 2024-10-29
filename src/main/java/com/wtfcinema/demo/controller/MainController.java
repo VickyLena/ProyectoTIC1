@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping("/wtf-cinema")
+@RequestMapping("")
 public class MainController {
     @Autowired
     private MovieServices movieServices;
