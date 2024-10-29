@@ -3,6 +3,7 @@ package com.wtfcinema.demo.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class User {
     private Long cardNumber;
 
     @Column(name = "BIRTH_DATE")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "PHONE_NUMBER")
     private Long phoneNumber;
