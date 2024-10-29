@@ -60,7 +60,7 @@ public class MainController {
             userService.registerNewUser(newUser); // Cambia a createUser si usas ese método
 
             model.addAttribute("message", "Usuario registrado exitosamente");
-            return "main"; // Página de confirmación (registration-confirmation.html en templates)
+            return "redirect:/main"; // Página de confirmación (registration-confirmation.html en templates)
 
         } catch (RuntimeException e) {
             model.addAttribute("errorMessage", e.getMessage());
