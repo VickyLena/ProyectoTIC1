@@ -19,9 +19,6 @@ public class Theatre {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME")
-    private String name;
-
     @Column(name = "NUMBER")
     private int number;
 
