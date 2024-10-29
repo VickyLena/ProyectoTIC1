@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - WTF Cinema</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body>
+<h1>
+    <img src="/images/popcorn.png" alt="Popcorn" class="popcorn-img">
+    Iniciar Sesion
+    <img src="/images/drink.png" alt="Drink" class="drink-img">
+</h1>
+
+<!-- Contenedor de formulario de inicio de sesión -->
+<div class="login-form-container">
+    <h2>Ingrese sus datos:</h2>
+    <form action="/submitLogin" method="POST">
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit" class="submit-button">Entrar</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+    <p>Laboratorio TIC I.</p>
+    <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+</body>
+</html>
