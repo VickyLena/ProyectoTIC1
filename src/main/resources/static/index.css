@@ -195,3 +195,26 @@ footer {
     background-color: #f2f2f2; /* Fondo gris claro en las filas pares */
 }
 
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    margin: 0 auto; /* Centra el contenedor */
+}
+
+.password-container input {
+    width: 90%; /* Ajusta el ancho del campo de entrada */
+    padding-right: 40px; /* Espacio para el icono */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 30px; /* Ajusta la posición del icono */
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #000066;
+}
+
+

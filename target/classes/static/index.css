@@ -164,3 +164,57 @@ footer {
     background-color: white; /* Cambia el fondo al pasar el mouse */
     color: #000066; /* Cambia el color del texto al pasar el mouse */
 }
+
+.locales-table {
+    width: 80%;
+    margin: 40px auto;
+    border-collapse: separate; /* Permite bordes redondeados */
+    border-spacing: 0; /* Sin espacio entre celdas */
+    border-radius: 10px; /* Bordes redondeados para la tabla */
+    overflow: hidden; /* Para asegurar que los bordes redondeados se apliquen */
+    background-color: white;
+    color: #000066;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para un efecto flotante */
+}
+
+.locales-table th, .locales-table td {
+    border: 1px solid #000066;
+    padding: 15px;
+    text-align: center; /* Centra el texto en las celdas */
+}
+
+.locales-table th {
+    background-color: white; /* Fondo blanco para la cabecera */
+    color: #000066; /* Texto en azul oscuro */
+    font-weight: normal;
+    font-size: 2.5em; /* Tamaño de fuente más grande */
+    padding: 20px; /* Espaciado adicional */
+}
+
+.locales-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Fondo gris claro en las filas pares */
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    margin: 0 auto; /* Centra el contenedor */
+}
+
+.password-container input {
+    width: 90%; /* Ajusta el ancho del campo de entrada */
+    padding-right: 40px; /* Espacio para el icono */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 30px; /* Ajusta la posición del icono */
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #000066;
+}
+
+
