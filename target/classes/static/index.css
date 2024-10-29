@@ -18,7 +18,7 @@ h1 {
     background-color: white; /* Fondo blanco detrás del título */
     color: #000066; /* Color del texto igual al fondo de la página */
     text-align: center; /* Centrado horizontal */
-    font-size: 9em; /* Tamaño grande para el título */
+    font-size: 7em; /* Tamaño grande para el título */
     font-weight: normal; /* Grosor normal */
     margin: 0; /* Sin márgenes */
     padding: 10px 0; /* Espacio arriba y abajo de la franja (ajustado para que sea más fino) */
@@ -29,22 +29,22 @@ h1 {
     position: absolute; /* Posicionamiento absoluto */
     top: 0; /* Arriba */
     left: 0; /* Esquina izquierda */
-    width: 180px; /* Ajusta el tamaño de la imagen */
-    height: 158px; /* Ajusta el tamaño de la imagen */
+    width: 130px; /* Ajusta el tamaño de la imagen */
+    height: 115px; /* Ajusta el tamaño de la imagen */
 }
 
 .drink-img {
     position: absolute; /* Posicionamiento absoluto */
     top: 0; /* Arriba */
-    right: 0; /* Esquina izquierda */
-    width: 210px; /* Ajusta el tamaño de la imagen */
-    height: 158px; /* Ajusta el tamaño de la imagen */
+    right: 0; /* Esquina derecha */
+    width: 150px; /* Ajusta el tamaño de la imagen */
+    height: 115px; /* Ajusta el tamaño de la imagen */
 }
 
 .container {
     display: flex; /* Usar flexbox para alinear los botones */
     justify-content: space-between; /* Espacio entre los botones */
-    padding: 20px 0; /* Espacio adicional arriba y abajo */
+    padding: 30px 10px; /* Espacio adicional arriba y abajo */
 }
 
 button {
@@ -57,9 +57,54 @@ button {
     font-size: 2em; /* Tamaño de fuente para los botones (ajustado) */
     cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
     border-radius: 5px; /* Bordes redondeados para los botones */
+    margin: 0 10px; /* Espacio en los laterales de cada botón */
 }
 
 button:hover {
     background-color: #000066; /* Cambia el fondo al pasar el mouse */
     color: white; /* Cambia el color del texto al pasar el mouse */
+}
+
+.cartelera-franja {
+    background-color: white; /* Fondo blanco */
+    color: #000066; /* Texto del mismo color que el fondo de la página */
+    text-align: left; /* Alineación a la izquierda */
+    font-size: 3em; /* Tamaño de fuente */
+    font-weight: normal;
+    padding: 10px 40px; /* Espacio extra a la izquierda */
+    margin: 20px 0; /* Espacio azul entre los botones y esta franja */
+}
+
+.imagen-container {
+    display: flex; /* Flexbox para alinear las imágenes en fila */
+    justify-content: space-between; /* Espacio entre las imágenes */
+    padding: 20px 40px; /* Espacio a los márgenes laterales */
+}
+
+.imagen-cartelera {
+    width: 30%; /* Cada imagen ocupa un tercio del ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    border-radius: 5px; /* Bordes redondeados para un estilo uniforme */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+    cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
+}
+
+.imagen-cartelera:hover {
+    transform: scale(1.05); /* Aumenta levemente el tamaño al pasar el mouse */
+    transition: transform 0.3s; /* Animación suave */
+}
+
+footer {
+    background-color: #000066;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.imagen-cartelera:hover {
+    transform: scale(1.05);
+    opacity: 0.60;
+    transition: transform 0.3s, opacity 0.3s; /* Animación suave */
 }
