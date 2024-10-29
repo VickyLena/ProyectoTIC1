@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Registrarse - WTF Cinema</title>
@@ -15,7 +15,7 @@
 
 <div class="login-form-container">
     <h2>Ingrese sus datos:</h2>
-    <form action="/register" method="POST">
+    <form action="/register-request" method="POST">
         <label for="name">* Nombre:</label>
         <input type="text" id="name" name="name" required>
 

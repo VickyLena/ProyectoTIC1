@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesión - WTF Cinema</title>
@@ -11,27 +11,26 @@
     Iniciar Sesion
     <img src="/images/drink.png" alt="Drink" class="drink-img">
 </h1>
-<div th:if="${error}" style="color: red;">
+
+<!-- Mostrar mensajes de error si existen -->
+<div th:if="${error}" class="error-message">
     <p th:text="${error}"></p>
-</div>
-<div th:if="${message}" style="color: green;">
-    <p th:text="${message}"></p>
 </div>
 
 <!-- Contenedor de formulario de inicio de sesión -->
 <div class="login-form-container">
     <h2>Ingrese sus datos:</h2>
-    <form action="/submitLogin" method="POST">
+    <form action="/login-request" method="POST">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
 
-        <label for="password">Password:</label>
-        <div class= "password-container">
+        <label for="password">Contrasena:</label>
+        <div class="password-container">
             <input type="password" id="password" name="password" required>
             <span class="toggle-password" onclick="togglePassword()">👁️</span>
         </div>
 
-        <button type="submit" class="submit-button">Submit</button>
+        <button type="submit" class="submit-button">Ingresar</button>
     </form>
 </div>
 
