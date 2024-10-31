@@ -117,13 +117,13 @@ public class MainController {
         User usuario = userService.getByEmail(email);
         if (usuario != null && usuario.getPassword().equals(password)) {
             session.setAttribute("USER", usuario);
-            return "redirect:/movies";
+            return "movies";
         }
 
         Employee empleado = employeeService.getByEmail(email);
         if (empleado != null && empleado.getPassword().equals(password)) {
             session.setAttribute("EMPLOYEE", empleado);
-            return "redirect:/movies";
+            return "movies";
         }
 
         redirectAttributes.addFlashAttribute("error", "Login Unsuccessful: Email or password does not match!");
