@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class MainController {
     @Autowired
     private MovieServices movieService;
@@ -33,14 +33,15 @@ public class MainController {
         return "main";
     }
 
+
     @GetMapping("/login")
     public String showLogin() {
-        return "login";
+        return "redirect:/login";
     }
 
     @GetMapping("/register")
     public String showRegister() {
-        return "register";
+        return "redirect:/register";
     }
 
     // Muestra la lista de películas en una página HTML
@@ -48,11 +49,11 @@ public class MainController {
     public String getAllMovies(Model model) {
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("movies", movies); // Envía la lista de películas al modelo para la vista
-        return "movies"; // Spring buscará un archivo "movies.html" en templates
+        return "redirect:/movies"; // Spring buscará un archivo "movies.html" en templates
     }
 
     // Maneja el registro de usuarios y redirige a una página de confirmación
-    @PostMapping("/register")
+    @PostMapping("/register-request")
     public String registerUser(@RequestParam String name,
                                @RequestParam String email,
                                @RequestParam(required = false) Long cardNumber,
