@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+</head>
+<body>
+<header class="header">
+    <div class="top-right-buttons">
+        <h1>Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
+        <a href="/logout" class="logout-button">Logout</a>
+    </div>
+</header>
+
+<!-- Movie gallery section -->
+<div>
+    <!-- Loop through movies and display each one -->
+    <div th:each="movie : ${movies}">
+        <img src="images/[[${movie.id}]].jpg" alt="[[${movie.title}]]" class="movie-poster-large">
+        <h2>[[${movie.title}]]</h2>
+        <p>[[${movie.description}]]</p>
+    </div>
+</div>
+
+</body>
+</html>
