@@ -52,7 +52,7 @@ public class MainController {
     }
 
     // Maneja el registro de usuarios y redirige a una página de confirmación
-    @PostMapping("/register-request")
+    @PostMapping("/register")
     public String registerUser(@RequestParam String name,
                                @RequestParam String email,
                                @RequestParam(required = false) Long cardNumber,
@@ -75,11 +75,11 @@ public class MainController {
             userService.registerNewUser(newUser); // Cambia a createUser si usas ese método
 
             model.addAttribute("message", "Usuario registrado exitosamente");
-            return "redirect:/movies"; // Página de confirmación (registration-confirmation.html en templates)
+            return "main";
 
         } catch (RuntimeException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "redirect:/register"; // Redirige al formulario de registro en caso de error
+            return "main"; // Redirige al formulario de registro en caso de error
         }
     }
 

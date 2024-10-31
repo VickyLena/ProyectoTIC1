@@ -1,220 +1,288 @@
-/* Definimos la fuente POSTERABLE */
 @font-face {
-    font-family: 'POSTERABLE'; /* Nombre que le das a la fuente */
-    src: url('fonts/POSTERABLE.ttf') format('truetype'); /* Ruta al archivo de fuente */
+    font-family: 'Super Kinds';
+    src: url('fonts/Super Kinds.ttf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
 body {
-    background-color: #000066; /* Fondo azul oscuro */
-    color: white; /* Color del texto */
-    margin: 0; /* Sin márgenes */
-    padding: 0; /* Sin relleno */
-    font-family: 'POSTERABLE', sans-serif; /* Usar POSTERABLE como fuente principal */
+    background-color: #751805;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Super Kinds', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.background-container {
+    background-image: url('images/cine.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 h1 {
-    background-color: white; /* Fondo blanco detrás del título */
-    color: #000066; /* Color del texto igual al fondo de la página */
-    text-align: center; /* Centrado horizontal */
-    font-size: 7em; /* Tamaño grande para el título */
-    font-weight: normal; /* Grosor normal */
-    margin: 0; /* Sin márgenes */
-    padding: 10px 0; /* Espacio arriba y abajo de la franja (ajustado para que sea más fino) */
-    position: relative; /* Para permitir posicionamiento de las imágenes */
+    color: white;
+    font-size: 6.5em;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px rgba(255, 255, 0, 0.8),
+    0 0 16px rgba(255, 255, 0, 0.6),
+    0 0 24px rgba(255, 255, 0, 0.5),
+    0 0 32px rgba(255, 215, 0, 0.4);
 }
 
-.popcorn-img {
-    position: absolute; /* Posicionamiento absoluto */
-    top: 0; /* Arriba */
-    left: 0; /* Esquina izquierda */
-    width: 130px; /* Ajusta el tamaño de la imagen */
-    height: 115px; /* Ajusta el tamaño de la imagen */
+.header {
+    position: relative;
+    text-align: center;
 }
 
-.drink-img {
-    position: absolute; /* Posicionamiento absoluto */
-    top: 0; /* Arriba */
-    right: 0; /* Esquina derecha */
-    width: 150px; /* Ajusta el tamaño de la imagen */
-    height: 115px; /* Ajusta el tamaño de la imagen */
+.header-image {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
 }
 
-.container {
-    display: flex; /* Usar flexbox para alinear los botones */
-    justify-content: space-between; /* Espacio entre los botones */
-    padding: 30px 10px; /* Espacio adicional arriba y abajo */
-    gap: 10px
+.title-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 7.5em;
+    font-weight: normal;
+    margin: 0;
+    text-shadow: 0 0 8px rgba(255, 255, 0, 0.8),
+    0 0 16px rgba(255, 255, 0, 0.6),
+    0 0 24px rgba(255, 255, 0, 0.5),
+    0 0 32px rgba(255, 215, 0, 0.4);
 }
 
-.button-link {
-    flex: 1; /* Permite que cada enlace tome un espacio uniforme */
-    text-decoration: none; /* Elimina subrayado del enlace */
+.top-right-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
 }
-
 
 button {
-    background-color: white; /* Fondo blanco para los botones */
-    color: #000066; /* Color del texto del botón */
-    border: none; /* Sin borde */
-    padding: 20px 0; /* Espaciado interno del botón (aumentado para hacerlo más gordito) */
-    width: 30%; /* Cada botón ocupará un tercio del ancho de la página */
-    font-family: 'POSTERABLE', sans-serif; /* Usar POSTERABLE como fuente en los botones */
-    font-size: 2em; /* Tamaño de fuente para los botones (ajustado) */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    border-radius: 5px; /* Bordes redondeados para los botones */
-    margin: 0 10px; /* Espacio en los laterales de cada botón */
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-family: 'Super Kinds', sans-serif;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow: 0 0 8px rgba(255, 69, 0, 0.8),
+    0 0 16px rgba(255, 69, 0, 0.6),
+    0 0 24px rgba(255, 69, 0, 0.5);
+    transition: box-shadow 0.3s ease;
 }
 
 button:hover {
-    background-color: #000066; /* Cambia el fondo al pasar el mouse */
-    color: white; /* Cambia el color del texto al pasar el mouse */
+    background-color: #ff6347;
+    box-shadow: 0 0 10px rgba(255, 99, 71, 0.9),
+    0 0 20px rgba(255, 99, 71, 0.7),
+    0 0 30px rgba(255, 99, 71, 0.6);
 }
 
 .cartelera-franja {
-    background-color: white; /* Fondo blanco */
-    color: #000066; /* Texto del mismo color que el fondo de la página */
-    text-align: left; /* Alineación a la izquierda */
-    font-size: 3em; /* Tamaño de fuente */
-    font-weight: normal;
-    padding: 10px 40px; /* Espacio extra a la izquierda */
-    margin: 20px 0; /* Espacio azul entre los botones y esta franja */
+    background-color: #ff4500;
+    color: white;
+    text-align: left;
+    font-size: 2.5em;
+    padding: 10px 40px;
+    margin: 20px 0;
+    box-shadow: 0 0 10px rgba(255, 99, 71, 0.9),
+    0 0 20px rgba(255, 99, 71, 0.7),
+    0 0 30px rgba(255, 99, 71, 0.6);
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
 .imagen-container {
-    display: flex; /* Flexbox para alinear las imágenes en fila */
-    justify-content: space-between; /* Espacio entre las imágenes */
-    padding: 20px 40px; /* Espacio a los márgenes laterales */
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    gap: 10px;
+    flex-wrap: nowrap;
+    padding: 20px 0;
 }
 
 .imagen-cartelera {
-    width: 30%; /* Cada imagen ocupa un tercio del ancho del contenedor */
-    height: auto; /* Mantiene la proporción de la imagen */
-    border-radius: 5px; /* Bordes redondeados para un estilo uniforme */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
-    cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
-.imagen-cartelera:hover {
-    transform: scale(1.05); /* Aumenta levemente el tamaño al pasar el mouse */
-    transition: transform 0.3s; /* Animación suave */
-}
-
-footer {
-    background-color: #000066;
+.flecha {
+    background-color: #ff4500;
     color: white;
-    text-align: center;
-    padding: 20px 0;
-    font-size: 1em;
-    font-weight: normal;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5em;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(255, 69, 0, 0.8),
+    0 0 16px rgba(255, 69, 0, 0.6),
+    0 0 24px rgba(255, 69, 0, 0.5);
+    transition: box-shadow 0.3s ease;
 }
 
-.imagen-cartelera:hover {
-    transform: scale(1.05);
-    opacity: 0.60;
-    transition: transform 0.3s, opacity 0.3s; /* Animación suave */
+.flecha:hover {
+    background-color: #ff6347;
+    box-shadow: 0 0 10px rgba(255, 99, 71, 0.9),
+    0 0 20px rgba(255, 99, 71, 0.7),
+    0 0 30px rgba(255, 99, 71, 0.6);
+}
+
+.login-body {
+    background-color: #751805;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Super Kinds', sans-serif;
+    background-image: url('images/cine.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .login-form-container {
     background-color: white;
-    color: #000066;
-    width: 400px; /* Aumentar el ancho del formulario */
-    margin: 50px auto; /* Centrar el formulario en la página con margen superior e inferior */
-    padding: 40px; /* Aumentar el espaciado interno */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra para un efecto de elevación */
-    text-align: center; /* Centrar el texto dentro del contenedor */
+    color: #ff6347;
+    width: 400px;
+    margin-top: 10px;
+    margin-bottom: 60px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(255, 255, 255, 0.6);
+    text-align: center;
 }
 
 .login-form-container h2 {
-    margin-bottom: 30px; /* Espacio debajo del título */
-    font-size: 2em; /* Tamaño del texto del título */
+    margin-bottom: 10px;
+    font-size: 2em;
 }
 
 .login-form-container label {
-    display: block; /* Cada etiqueta ocupa una línea completa */
-    font-size: 1.2em; /* Tamaño de fuente para las etiquetas */
-    margin-top: 10px; /* Espacio arriba de cada etiqueta */
+    display: block;
+    font-size: 1.2em;
+    margin-top: 10px;
 }
 
 .login-form-container input {
-    width: 90%; /* Ancho del campo de entrada */
-    padding: 12px; /* Aumentar el espaciado interno */
-    margin-top: 5px; /* Espacio arriba de los campos de entrada */
-    border: 1px solid #000066; /* Borde del campo de entrada */
-    border-radius: 5px; /* Bordes redondeados para los campos de entrada */
-    font-size: 1em; /* Tamaño de fuente para los campos de entrada */
-    text-align: center; /* Centrar el texto dentro del campo de entrada */
+    width: 90%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ff6347;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
 }
 
 .submit-button {
-    background-color: #000066; /* Color de fondo del botón */
-    color: white; /* Color del texto del botón */
-    padding: 12px 0; /* Aumentar el espaciado interno del botón */
-    width: 90%; /* Ancho completo para el botón */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados para el botón */
-    font-size: 1.2em; /* Tamaño de fuente para el botón */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    margin-top: 20px; /* Espacio arriba del botón */
+    background-color: #ff6347;
+    color: white;
+    padding: 12px 0;
+    width: 90%;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
 .submit-button:hover {
-    background-color: white; /* Cambia el fondo al pasar el mouse */
-    color: #000066; /* Cambia el color del texto al pasar el mouse */
+    background-color: white;
+    color: #ff6347;
+}
+
+footer {
+    background-color: #751805;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 1em;
+    width: 100%;
+    margin-top: auto;
+}
+
+.register-body {
+    background-color: #751805;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Super Kinds', sans-serif;
+    background-image: url('images/cine.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.locations-body {
+    background-color: #751805;
+    color: white;
+    margin: 0;
+    padding: 0;
+    font-family: 'Super Kinds', sans-serif;
+    background-image: url('images/cine.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .locales-table {
-    width: 80%;
-    margin: 40px auto;
-    border-collapse: separate; /* Permite bordes redondeados */
-    border-spacing: 0; /* Sin espacio entre celdas */
-    border-radius: 10px; /* Bordes redondeados para la tabla */
-    overflow: hidden; /* Para asegurar que los bordes redondeados se apliquen */
     background-color: white;
-    color: #000066;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para un efecto flotante */
+    color: #ff6347;
+    width: 90%;
+    margin: 20px auto;
+    margin-bottom: 60px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(255, 255, 255, 0.6);
+    text-align: center;
 }
 
 .locales-table th, .locales-table td {
-    border: 1px solid #000066;
-    padding: 15px;
-    text-align: center; /* Centra el texto en las celdas */
+    padding: 12px;
+    border-bottom: 1px solid #ff6347;
 }
 
 .locales-table th {
-    background-color: white; /* Fondo blanco para la cabecera */
-    color: #000066; /* Texto en azul oscuro */
-    font-weight: normal;
-    font-size: 2.5em; /* Tamaño de fuente más grande */
-    padding: 20px; /* Espaciado adicional */
-}
-
-.locales-table tr:nth-child(even) {
-    background-color: #f2f2f2; /* Fondo gris claro en las filas pares */
-}
-
-.password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%; /* Ocupa todo el ancho disponible */
-    margin: 0 auto; /* Centra el contenedor */
-}
-
-.password-container input {
-    width: 90%; /* Ajusta el ancho del campo de entrada */
-    padding-right: 40px; /* Espacio para el icono */
-}
-
-.toggle-password {
-    position: absolute;
-    right: 30px; /* Ajusta la posición del icono */
-    cursor: pointer;
     font-size: 1.2em;
-    color: #000066;
+    color: #ff6347;
 }
 
+.locales-table tr:last-child td {
+    border-bottom: none;
+}
 
