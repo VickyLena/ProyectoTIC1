@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies</title>
+    <style>
+        .movie-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .movie-cell {
+            width: 33.33%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .movie-image img {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 <header class="header">
@@ -14,12 +29,15 @@
 </header>
 
 <!-- Movie gallery section -->
-<div>
-    <!-- Loop through movies and display each one -->
-    <div th:each="movie : ${movies}">
-        <img src="images/[[${movie.id}]].jpg" alt="[[${movie.title}]]" class="movie-poster-large">
-        <h2>[[${movie.title}]]</h2>
-        <p>[[${movie.description}]]</p>
+<h1>Lista de Películas</h1>
+<div class="movie-row">
+    <div th:each="movie : ${movies}" class="movie-cell">
+        <div class="movie-row">
+            <div th:each="movie : ${movies}" class="movie-cell">
+                <h3 th:text="${movie.title}">Título de la película</h3>
+                <p th:text="${movie.description}">Descripción</p>
+            </div>
+        </div>
     </div>
 </div>
 

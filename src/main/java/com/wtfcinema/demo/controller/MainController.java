@@ -48,15 +48,18 @@ public class MainController {
     }
 
     @GetMapping("/movies")
-    public String showMovies(Model model) {
-        // Retrieve the current user from the session
+    public String showMovies(Model model, HttpSession session) {
+        // Obtener el usuario actual de la sesión
         User loggedInUser = (User) session.getAttribute("USER");
-
-        // Pass the user information to the model
         model.addAttribute("user", loggedInUser);
+
+        // Obtener la lista de películas desde la base de datos
+        List<Movie> movies = movieService.getAllMovies();
+        model.addAttribute("movies", movies);
 
         return "movies";
     }
+
 
 
 //    // Muestra la lista de películas en una página HTML
