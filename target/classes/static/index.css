@@ -1,6 +1,13 @@
 @font-face {
-    font-family: 'Super Kinds';
-    src: url('fonts/Super Kinds.ttf') format('opentype');
+    font-family: 'Angel Club';
+    src: url('fonts/Angel Club - (Demo) hanscostudio.com.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Rockdale';
+    src: url('fonts/Rockdale-FREE.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
@@ -10,14 +17,14 @@ body {
     color: white;
     margin: 0;
     padding: 0;
-    font-family: 'Super Kinds', sans-serif;
+    font-family: 'Angel Club', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 .background-container {
-    background-image: url('images/cine.png');
+    background-image: url('images/cine2.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -25,7 +32,7 @@ body {
 
 h1 {
     color: white;
-    font-size: 6.5em;
+    font-size: 6em;
     text-align: center;
     margin-bottom: 10px;
     text-shadow: 0 0 8px rgba(255, 255, 0, 0.8),
@@ -74,7 +81,7 @@ button {
     color: white;
     border: none;
     padding: 15px 25px;
-    font-family: 'Super Kinds', sans-serif;
+    font-family: 'Angel Club', sans-serif;
     font-size: 1.5em;
     cursor: pointer;
     border-radius: 50px;
@@ -153,8 +160,8 @@ button:hover {
     color: white;
     margin: 0;
     padding: 0;
-    font-family: 'Super Kinds', sans-serif;
-    background-image: url('images/cine.png');
+    font-family: 'Angel Club', sans-serif;
+    background-image: url('images/cine2.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -231,8 +238,8 @@ footer {
     color: white;
     margin: 0;
     padding: 0;
-    font-family: 'Super Kinds', sans-serif;
-    background-image: url('images/cine.png');
+    font-family: 'Angel Club', sans-serif;
+    background-image: url('images/cine2.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -247,8 +254,8 @@ footer {
     color: white;
     margin: 0;
     padding: 0;
-    font-family: 'Super Kinds', sans-serif;
-    background-image: url('images/cine.png');
+    font-family: 'Angel Club', sans-serif;
+    background-image: url('images/cine2.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
