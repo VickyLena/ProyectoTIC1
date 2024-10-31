@@ -286,3 +286,20 @@ footer {
     border-bottom: none;
 }
 
+.back-arrow {
+    display: inline-block;
+    font-size: 1.5em;
+    color: white;
+    background-color: #ff4500;
+    padding: 10px 15px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    box-shadow: 0 0 10px rgba(255, 99, 71, 0.9),
+    0 0 20px rgba(255, 99, 71, 0.7),
+    0 0 30px rgba(255, 99, 71, 0.6);
+}
+
+
