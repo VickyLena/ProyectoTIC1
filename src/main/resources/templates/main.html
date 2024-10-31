@@ -6,49 +6,46 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 <body>
-<h1>
-    <img src="/images/popcorn.png" alt="Popcorn" class="popcorn-img">
-    What The Fun Cinema
-    <img src="/images/drink.png" alt="Drink" class="drink-img">
-</h1>
-
-<div class="container">
-    <button onclick="window.location.href='login.html'">Iniciar Sesión</button>
-    <button onclick="window.location.href='register.html'">Registrarse</button>
-    <button onclick="window.location.href='locations.html'">Locales</button>
+<div class="header">
+    <img src="/images/cine.png" alt="Cine fondo" class="header-image">
+    <div class="top-right-buttons">
+        <button onclick="window.location.href='login.html'">Iniciar Sesión</button>
+        <button onclick="window.location.href='register.html'">Registrarse</button>
+        <button onclick="window.location.href='locations.html'">Locales</button>
+    </div>
+    <h1 class="title-overlay">
+        What The <br> Fun Cinema
+    </h1>
 </div>
 
-
-
-<!-- Franja "Cartelera Actual" ahora colocada debajo de los botones -->
 <div class="cartelera-franja">
     Cartelera Actual:
 </div>
 
-<!-- Primera fila de imágenes -->
-<div class="imagen-container">
-    <img src="/images/pp.jpg" alt="Imagen izquierda" class="imagen-cartelera mostrar-mensaje" data-mensaje="Película Popular">
-    <img src="/images/10.jpg" alt="Imagen central" class="imagen-cartelera">
-    <img src="/images/pd.jpg" alt="Imagen derecha" class="imagen-cartelera">
-</div>
-
-<!-- Segunda fila de imágenes -->
-<div class="imagen-container">
-    <img src="/images/dp.jpg" alt="Imagen izquierda" class="imagen-cartelera">
-    <img src="/images/htl.jpg" alt="Imagen central" class="imagen-cartelera">
-    <img src="/images/hg.jpg" alt="Imagen derecha" class="imagen-cartelera">
-</div>
-
-<div class="imagen-container">
-    <img src="/images/t.jpg" alt="Imagen izquierda" class="imagen-cartelera">
-    <img src="/images/mg.jpg" alt="Imagen central" class="imagen-cartelera">
-    <img src="/images/lw.jpg" alt="Imagen derecha" class="imagen-cartelera">
-</div>
-
-<div class="imagen-container">
-    <img src="/images/tn.jpg" alt="Imagen izquierda" class="imagen-cartelera">
-    <img src="/images/mm.jpg" alt="Imagen central" class="imagen-cartelera">
-    <img src="/images/tt.jpg" alt="Imagen derecha" class="imagen-cartelera">
+<div class="carousel-container">
+    <button class="flecha flecha-izquierda" onclick="moveCarousel(-1)">&larr;</button>
+    <div class="imagen-container">
+        <img src="/images/pp.jpg" alt="Película Popular" class="imagen-cartelera">
+        <img src="/images/10.jpg" alt="Película 10" class="imagen-cartelera">
+        <img src="/images/pd.jpg" alt="Película Destacada" class="imagen-cartelera">
+        <img src="/images/dp.jpg" alt="Película D" class="imagen-cartelera">
+        <img src="/images/htl.jpg" alt="Película HTL" class="imagen-cartelera">
+        <img src="/images/hg.jpg" alt="Película HG" class="imagen-cartelera">
+        <img src="/images/t.jpg" alt="Película T" class="imagen-cartelera">
+        <img src="/images/mg.jpg" alt="Película MG" class="imagen-cartelera">
+        <img src="/images/lw.jpg" alt="Película LW" class="imagen-cartelera">
+        <img src="/images/tn.jpg" alt="Película TN" class="imagen-cartelera">
+        <img src="/images/mm.jpg" alt="Película MM" class="imagen-cartelera">
+        <img src="/images/tt.jpg" alt="Película TT" class="imagen-cartelera">
+        <img src="/images/pf.jpg" alt="Película TT" class="imagen-cartelera">
+        <img src="/images/tfe.jpg" alt="Película TT" class="imagen-cartelera">
+        <img src="/images/a.jpg" alt="Película TT" class="imagen-cartelera">
+        <img src="/images/fc.jpg" alt="Película TT" class="imagen-cartelera">
+        <img src="/images/dd.jpg" alt="Película TT" class="imagen-cartelera">
+        <img src="/images/sp.jpg" alt="Película TT" class="imagen-cartelera">
+        <img src="/images/jp.jpg" alt="Película TT" class="imagen-cartelera">
+    </div>
+    <button class="flecha flecha-derecha" onclick="moveCarousel(1)">&rarr;</button>
 </div>
 
 <footer>
@@ -57,5 +54,14 @@
     <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
 </footer>
 
+<script>
+    function moveCarousel(direction) {
+        const container = document.querySelector('.imagen-container');
+        container.scrollBy({
+            left: direction * 200, // Ajusta el valor de desplazamiento si es necesario
+            behavior: 'smooth'
+        });
+    }
+</script>
 </body>
 </html>

@@ -5,19 +5,15 @@
     <title>Iniciar Sesión - WTF Cinema</title>
     <link rel="stylesheet" href="/index.css">
 </head>
-<body>
+<body class="login-body">
 <h1>
-    <img src="/images/popcorn.png" alt="Popcorn" class="popcorn-img">
     Iniciar Sesion
-    <img src="/images/drink.png" alt="Drink" class="drink-img">
 </h1>
 
-<!-- Mostrar mensajes de error si existen -->
 <div th:if="${error}" class="error-message">
     <p th:text="${error}"></p>
 </div>
 
-<!-- Contenedor de formulario de inicio de sesión -->
 <div class="login-form-container">
     <h2>Ingrese sus datos:</h2>
     <form action="/login-request" method="POST">

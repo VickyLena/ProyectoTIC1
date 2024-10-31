@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Registrarse - WTF Cinema</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/index.css">
 </head>
-<body>
+<body class="register-body">
 <h1>
-    <img src="/images/popcorn.png" alt="Popcorn" class="popcorn-img">
     Registrarse
-    <img src="/images/drink.png" alt="Drink" class="drink-img">
 </h1>
 
 
 <div class="login-form-container">
     <h2>Ingrese sus datos:</h2>
-    <form action="/register-request" method="POST">
+    <form action="/submitLogin" method="POST">
         <label for="name">* Nombre:</label>
         <input type="text" id="name" name="name" required>
 
@@ -23,7 +21,7 @@
         <input type="email" id="email" name="email" required>
 
         <label for="cardNumber">Número de Tarjeta:</label>
-        <input type="text" id="cardNumber" name="cardNumber" >
+        <input type="text" id="cardNumber" name="cardNumber">
 
         <label for="birthDate">* Fecha de Nacimiento:</label>
         <input type="date" id="birthDate" name="birthDate" required>
@@ -34,7 +32,7 @@
         <label for="password">* Contraseña:</label>
         <div class= "password-container">
             <input type="password" id="password" name="password" required>
-            <span class="toggle-password" onclick="togglePassword()">👁️‍🗨️</span>
+            <span class="toggle-password" onclick="togglePassword()">👁️</span>
         </div>
 
         <button type="submit" class="submit-button">Registrarse</button>
