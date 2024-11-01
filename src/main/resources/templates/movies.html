@@ -2,25 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies</title>
-    <style>
-        .movie-row {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .movie-cell {
-            width: 33.33%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .movie-image img {
-            width: 100%;
-            border-radius: 5px;
-        }
-    </style>
+    <title>WTF Cinema - Página Principal</title>
+    <link rel="stylesheet" href="/index.css">
 </head>
 <body>
+<body class="main-body">
 <header class="header">
     <div class="top-right-buttons">
         <h1>Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
@@ -28,17 +14,35 @@
     </div>
 </header>
 
-<h1>Lista de Películas</h1>
-<div class="movie-row">
-    <div th:each="movie : ${movies}" class="movie-cell">
-        <h3 th:text="${movie.getTitle()}">Título de la película</h3>
-        <p th:text="${movie.getId()}">ID</p>
-        <!-- Mostrar imagen de la película -->
-        <div class="movie-image">
-            <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película" />
+<div class="background-top">
+    <button class="reserva-button">Comprar!</button>
+</div>
+
+<div class="movies-section">
+    <div class="movie-row" th:each="movie : ${movies}">
+        <div class="movie">
+            <div class="movie-content">
+                <div class="movie-image">
+                    <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película"/>
+                </div>
+                <div class="movie-description">
+                    <h2 th:text="${movie.getTitle()}"> Titulo no disponible</h2>
+                    <p><strong>Director:</strong> <span th:text="${movie.getDirector()}"> Director no disponible</span></p>
+                    <p><strong>Duración:</strong> <span th:text="${movie.getDuration()}"> Duracion no disponible</span></p>
+                    <p><strong>Género:</strong> <span th:text="${movie.getGenres()}"> Genero no disponible</span></p>
+                    <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${movie.getReleaseDate()}"> Fecha de lanzamiento no disponible</span></p>
+                    <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}"> Restriccion de edad no disponible</span></p>
+                    <p th:text="${movie.getDescription()}"> Descripcion no disponible</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
+<footer>
+    <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+    <p>Laboratorio TIC I.</p>
+    <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+</body>
 </body>
 </html>
