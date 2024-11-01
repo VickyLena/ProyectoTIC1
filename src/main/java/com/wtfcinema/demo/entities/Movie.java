@@ -29,6 +29,15 @@ public class Movie {
     @Column(name = "DIRECTOR")
     private String director;
 
+    @Column(name = "DURATION")
+    private String duration;
+
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @Column(name = "IMAGE")
+    private String image;
+
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "MOVIE_GENRES")
     @Column(name = "GENRE")

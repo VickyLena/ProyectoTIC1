@@ -33,6 +33,10 @@
     <div th:each="movie : ${movies}" class="movie-cell">
         <h3 th:text="${movie.getTitle()}">Título de la película</h3>
         <p th:text="${movie.getId()}">ID</p>
+        <!-- Mostrar imagen de la película -->
+        <div class="movie-image">
+            <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película" />
+        </div>
     </div>
 </div>
 
