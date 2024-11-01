@@ -34,9 +34,9 @@ public class Movie {
 
     @Column(name = "DESCRIPTION")
     private String description;
-
-    @Column(name = "IMAGE")
-    private String image;
+//
+//    @Column(name = "IMAGE")
+//    private String image;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "MOVIE_GENRES")

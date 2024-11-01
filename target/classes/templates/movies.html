@@ -5,7 +5,6 @@
     <title>WTF Cinema - Página Principal</title>
     <link rel="stylesheet" href="/index.css">
 </head>
-<body>
 <body class="main-body">
 <header class="header">
     <div class="top-right-buttons">
@@ -22,27 +21,26 @@
     <div class="movie-row" th:each="movie : ${movies}">
         <div class="movie">
             <div class="movie-content">
-                <div class="movie-image">
-                    <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película"/>
-                </div>
+                <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película"/>
+
                 <div class="movie-description">
-                    <h2 th:text="${movie.getTitle()}"> Titulo no disponible</h2>
-                    <p><strong>Director:</strong> <span th:text="${movie.getDirector()}"> Director no disponible</span></p>
-                    <p><strong>Duración:</strong> <span th:text="${movie.getDuration()}"> Duracion no disponible</span></p>
-                    <p><strong>Género:</strong> <span th:text="${movie.getGenres()}"> Genero no disponible</span></p>
-                    <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${movie.getReleaseDate()}"> Fecha de lanzamiento no disponible</span></p>
-                    <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}"> Restriccion de edad no disponible</span></p>
-                    <p th:text="${movie.getDescription()}"> Descripcion no disponible</p>
+                    <h2 th:text="${movie.getTitle()}">Título no disponible</h2>
+                    <p><strong>Director:</strong> <span th:text="${movie.getDirector()}">Director no disponible</span></p>
+                    <p><strong>Duración:</strong> <span th:text="${movie.getDuration()}">Duración no disponible</span></p>
+                    <p><strong>Género:</strong> <span th:text="${movie.getGenres()}">Género no disponible</span></p>
+                    <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${movie.getReleaseDate()}">Fecha de lanzamiento no disponible</span></p>
+                    <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}">Restricción de edad no disponible</span></p>
+                    <p th:text="${movie.getDescription()}">Descripción no disponible</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <footer>
     <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
     <p>Laboratorio TIC I.</p>
     <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
 </footer>
-</body>
 </body>
 </html>
