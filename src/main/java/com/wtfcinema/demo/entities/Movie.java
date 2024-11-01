@@ -38,7 +38,7 @@ public class Movie {
 //    @Column(name = "IMAGE")
 //    private String image;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "MOVIE_GENRES")
     @Column(name = "GENRE")
     private List<String> genres;
