@@ -27,7 +27,6 @@
             <ul>
                 <li th:each="genre : ${movie.getGenres()}" th:text="${genre}">Género no disponible</li>
             </ul>
-            </p>
             <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${movie.getReleaseDate()}">Fecha de lanzamiento no disponible</span></p>
             <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}">Restricción de edad no disponible</span></p>
             <p th:text="${movie.getDescription()}">Descripción no disponible</p>
