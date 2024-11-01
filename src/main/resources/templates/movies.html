@@ -5,31 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WTF Cinema - Página Principal</title>
     <link rel="stylesheet" href="/index.css">
-    <style>
-    </style>
 </head>
 <body class="main-body">
 <header class="headerIzq">
-    <div class="top-right-buttons">
-        <h1>Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
-        <a href="/logout" class="logout-button">Logout</a>
-    </div>
+    <h1 class="welcome-text">Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
+    <a href="/logout" class="logout-button">Log out</a>
 </header>
 
 <h1>Lista de Películas</h1>
 <div class="movie-row">
     <div th:each="movie : ${movies}" class="movie-cell">
         <h3 th:text="${movie.getTitle()}">Título de la película</h3>
-        <p th:text="${movie.getId()}">ID</p>
         <div class="movie-image">
             <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película" />
         </div>
-        <p><strong>Director:</strong> <span th:text="${movie.getDirector()}">Director no disponible</span></p>
-        <p><strong>Duración:</strong> <span th:text="${movie.getDuration()}">Duración no disponible</span></p>
-        <strong>Géneros:</strong><ul> <li th:each="genre : ${movie.getGenres()}" th:text="${genre}">Género no disponible</li></ul>
-        <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${movie.getReleaseDate()}">Fecha de lanzamiento no disponible</span></p>
-        <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}">Restricción de edad no disponible</span></p>
-        <p th:text="${movie.getDescription()}">Descripción no disponible</p>
+        <div class="movie-info">
+            <p><strong>ID:</strong> <span th:text="${movie.getId()}">ID no disponible</span></p>
+            <p><strong>Director:</strong> <span th:text="${movie.getDirector()}">Director no disponible</span></p>
+            <p><strong>Duración:</strong> <span th:text="${movie.getDuration()}">Duración no disponible</span></p>
+            <p><strong>Géneros:</strong>
+            <ul>
+                <li th:each="genre : ${movie.getGenres()}" th:text="${genre}">Género no disponible</li>
+            </ul>
+            </p>
+            <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${movie.getReleaseDate()}">Fecha de lanzamiento no disponible</span></p>
+            <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}">Restricción de edad no disponible</span></p>
+            <p th:text="${movie.getDescription()}">Descripción no disponible</p>
+        </div>
     </div>
 </div>
 
