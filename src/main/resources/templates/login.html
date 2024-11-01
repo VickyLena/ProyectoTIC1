@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesión - WTF Cinema</title>
-    <link rel="stylesheet" href="index.css">
+    <style>
+        .error-message {
+            color: #ffffff;               /* Color del texto del mensaje de error */
+            font-size: 1em;         /* Aumentar el tamaño de la fuente */
+            margin-top: 10px;         /* Espacio adicional por encima del mensaje */
+            background-color: #f8d7da; /* Fondo ligeramente rosado */
+            border: 1px solid red;     /* Borde rojo alrededor del mensaje */
+            padding: 10px; /* Espaciado interno para mayor claridad */
+            border-radius: 5px;       /* Bordes redondeados */
+            display: block;
+            text-align: center;/* Hace que el mensaje ocupe toda la línea */
+        }
+    </style>
+    <link rel="stylesheet" href="/index.css">
 </head>
 <body class="login-body">
 <a href="/" class="back-arrow">&larr; Regresar a Inicio</a>
@@ -12,17 +25,18 @@
     Iniciar Sesion
 </h1>
 
-<div th:if="${error}" class="error-message">
-    <p th:text="${error}"></p>
-</div>
-
 <div class="login-form-container">
     <h2>Ingrese sus datos:</h2>
+
+    <div th:if="${errorMessage}" class="error-message">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
     <form action="/login-request" method="POST">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
 
-        <label for="password">Contrasena:</label>
+        <label for="password">Contraseña:</label>
         <div class="password-container">
             <input type="password" id="password" name="password" required>
             <span class="toggle-password" onclick="togglePassword()">👁️‍🗨️</span>

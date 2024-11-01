@@ -38,8 +38,8 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String showLogin() {
-        return "redirect:/login.html";
+    public String showLogin(Model model) {
+        return "login";
     }
 
     @GetMapping("/register")
@@ -113,7 +113,9 @@ public class MainController {
     @PostMapping("/login-request")
     public String loginUser(@RequestParam String email,
                             @RequestParam String password,
-                            RedirectAttributes redirectAttributes) {
+                            RedirectAttributes redirectAttributes,
+                            Model model) {
+
         User usuario = userService.getByEmail(email);
         if (usuario != null && usuario.getPassword().equals(password)) {
             session.setAttribute("USER", usuario);
@@ -126,14 +128,14 @@ public class MainController {
             return "redirect:/movies";
         }
 
-        redirectAttributes.addFlashAttribute("error", "Login Unsuccessful: Email or password does not match!");
-        return "redirect:/login";
+        model.addAttribute("errorMessage", "Email o contraseña incorrectas");
+        return "login";
     }
 
     // Maneja el cierre de sesión
     @GetMapping("/logout")
     public String logout() {
         session.invalidate();
-        return "redirect:/login";
+        return "login";
     }
 }
