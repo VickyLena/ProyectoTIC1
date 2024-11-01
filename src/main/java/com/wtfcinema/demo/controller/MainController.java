@@ -44,7 +44,7 @@ public class MainController {
 
     @GetMapping("/register")
     public String showRegister(Model model) {
-        return "regisTem";
+        return "register";
     }
 
 
@@ -82,7 +82,7 @@ public class MainController {
         try {
             if (userService.getByEmail(email) != null) {
                 model.addAttribute("errorMessage", "El correo electrónico ya está registrado");
-                return "regisTem";
+                return "register";
             }
 
 
@@ -104,8 +104,8 @@ public class MainController {
             return "main";
 
         } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "ERRORRRR");
-            return "redirect:/register-control";
+            model.addAttribute("errorMessage", "ERRORRRR");
+            return "register";
         }
     }
 
