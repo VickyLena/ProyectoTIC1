@@ -138,6 +138,12 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    transition: transform 0.3s ease; /* Suaviza el efecto de agrandamiento */
+}
+
+.imagen-cartelera:hover {
+    transform: scale(1.1); /* Ajusta este valor para controlar cuánto quieres agrandar la imagen */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Opcional: añade sombra para resaltar el efecto */
 }
 
 .flecha {
