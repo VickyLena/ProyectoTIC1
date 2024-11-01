@@ -32,8 +32,10 @@ public class MainController {
     private HttpSession session;
 
     // Muestra la página principal en HTML
-    @GetMapping
-    public String showHomePage() {
+    @GetMapping("/")
+    public String showHomePage(Model model) {
+        List<Movie> movies = movieService.getAllMovies();
+        model.addAttribute("movies", movies);
         return "main";
     }
 
@@ -53,9 +55,10 @@ public class MainController {
         User loggedInUser = (User) session.getAttribute("USER");
         model.addAttribute("user", loggedInUser);
 
-        List<Movie> movies = movieService.getAllMovies();
-        model.addAttribute("movies", movies);
-
+        if (!model.containsAttribute("movies")) {
+            List<Movie> movies = movieService.getAllMovies();
+            model.addAttribute("movies", movies);
+        }
         return "movies";
     }
 
