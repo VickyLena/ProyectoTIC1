@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,16 +28,11 @@
     </div>
 </header>
 
-<!-- Movie gallery section -->
 <h1>Lista de Películas</h1>
 <div class="movie-row">
     <div th:each="movie : ${movies}" class="movie-cell">
-        <div class="movie-row">
-            <div th:each="movie : ${movies}" class="movie-cell">
-                <h3 th:text="${movie.title}">Título de la película</h3>
-                <p th:text="${movie.description}">Descripción</p>
-            </div>
-        </div>
+        <h3 th:text="${movie.getTitle()}">Título de la película</h3>
+        <p th:text="${movie.getId()}">ID</p>
     </div>
 </div>
 

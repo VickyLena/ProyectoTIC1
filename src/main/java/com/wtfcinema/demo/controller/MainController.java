@@ -43,23 +43,21 @@ public class MainController {
     }
 
     @GetMapping("/register")
-    public String showRegister() {
-        return "redirect:/register.html";
+    public String showRegister(Model model) {
+        return "regisTem";
     }
 
+
     @GetMapping("/movies")
-    public String showMovies(Model model, HttpSession session) {
-        // Obtener el usuario actual de la sesión
+    public String showMovies(Model model) {
         User loggedInUser = (User) session.getAttribute("USER");
         model.addAttribute("user", loggedInUser);
 
-        // Obtener la lista de películas desde la base de datos
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("movies", movies);
 
         return "movies";
     }
-
 
 
 //    // Muestra la lista de películas en una página HTML
@@ -79,12 +77,14 @@ public class MainController {
                                @RequestParam Long phoneNumber,
                                @RequestParam String password,
                                Model model,
-                               RedirectAttributes redirectAttributes) {
+                               RedirectAttributes redirectAttributes,
+                               HttpSession session) {
         try {
             if (userService.getByEmail(email) != null) {
-                redirectAttributes.addFlashAttribute("errorMessage", "El correo electrónico ya está registrado");
-                return "redirect:/register";
+                model.addAttribute("errorMessage", "El correo electrónico ya está registrado");
+                return "regisTem";
             }
+
 
             // Crear un nuevo objeto User utilizando los parámetros recibidos
             User newUser = User.builder()
@@ -104,8 +104,8 @@ public class MainController {
             return "main";
 
         } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            return "redirect:/register";
+            redirectAttributes.addFlashAttribute("errorMessage", "ERRORRRR");
+            return "redirect:/register-control";
         }
     }
 
@@ -117,13 +117,13 @@ public class MainController {
         User usuario = userService.getByEmail(email);
         if (usuario != null && usuario.getPassword().equals(password)) {
             session.setAttribute("USER", usuario);
-            return "movies";
+            return "redirect:/movies"; //te lleva a movies pero la de main controller, no la de html
         }
 
         Employee empleado = employeeService.getByEmail(email);
         if (empleado != null && empleado.getPassword().equals(password)) {
             session.setAttribute("EMPLOYEE", empleado);
-            return "movies";
+            return "redirect:/movies";
         }
 
         redirectAttributes.addFlashAttribute("error", "Login Unsuccessful: Email or password does not match!");
