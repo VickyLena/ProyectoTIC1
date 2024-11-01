@@ -24,26 +24,10 @@
 
 <div class="carousel-container">
     <button class="flecha flecha-izquierda" onclick="moveCarousel(-1)">&larr;</button>
-    <div class="imagen-container">
-        <img src="/images/1.jpg" alt="Película Popular" class="imagen-cartelera">
-        <img src="/images/2.jpg" alt="Película 10" class="imagen-cartelera">
-        <img src="/images/3.jpg" alt="Película Destacada" class="imagen-cartelera">
-        <img src="/images/4.jpg" alt="Película D" class="imagen-cartelera">
-        <img src="/images/5.jpg" alt="Película HTL" class="imagen-cartelera">
-        <img src="/images/6.jpg" alt="Película HG" class="imagen-cartelera">
-        <img src="/images/7.jpg" alt="Película T" class="imagen-cartelera">
-        <img src="/images/9.jpg" alt="Película MG" class="imagen-cartelera">
-        <img src="/images/10.jpg" alt="Película LW" class="imagen-cartelera">
-        <img src="/images/11.jpg" alt="Película TN" class="imagen-cartelera">
-        <img src="/images/12.jpg" alt="Película MM" class="imagen-cartelera">
-        <img src="/images/13.jpg" alt="Película TT" class="imagen-cartelera">
-        <img src="/images/14.jpg" alt="Película TT" class="imagen-cartelera">
-        <img src="/images/15.jpg" alt="Película TT" class="imagen-cartelera">
-        <img src="/images/16.jpg" alt="Película TT" class="imagen-cartelera">
-        <img src="/images/17.jpg" alt="Película TT" class="imagen-cartelera">
-        <img src="/images/18.jpg" alt="Película TT" class="imagen-cartelera">
-        <img src="/images/19.jpg" alt="Película TT" class="imagen-cartelera">
-        <img src="/images/20.jpg" alt="Película TT" class="imagen-cartelera">
+    <div class="imagenes-carousel">
+        <div th:each="movie : ${movies}" class="imagen-container">
+            <a href="login"><img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película" class="imagen-cartelera"/></a>
+        </div>
     </div>
     <button class="flecha flecha-derecha" onclick="moveCarousel(1)">&rarr;</button>
 </div>
@@ -56,7 +40,7 @@
 
 <script>
     function moveCarousel(direction) {
-        const container = document.querySelector('.imagen-container');
+        const container = document.querySelector('.imagenes-carousel');
         container.scrollBy({
             left: direction * 200, // Ajusta el valor de desplazamiento si es necesario
             behavior: 'smooth'
