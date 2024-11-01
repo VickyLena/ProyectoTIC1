@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 <body class="main-body">
+
 <header class="headerIzq">
     <div class="welcome-container">
         <a href="/logout" class="logout-button">Log out</a>
@@ -15,8 +16,9 @@
 <div class="welcome-container">
     <h1 class="welcome-text">Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
 </div>
-
-<h1>Lista de Películas</h1>
+<div class="background-top">
+    <button class="reserva-button">Comprar</button>
+</div>
 <div class="movie-row">
     <div th:each="movie : ${movies}" class="movie-cell">
         <div class="movie-container">
