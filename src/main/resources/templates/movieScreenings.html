@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>movieScreenings</title>
+
+</head>
+<body class="main-body">
+<header class="headerIzq">
+    <div class="top-right-buttons">
+        <h1>Screenings for <span th:text="${movie.getTitle()}"></span>!</h1>
+        <a href="/logout" class="logout-button">Logout</a>
+        <a href="/movies" class="return-button">Return to Movies</a>
+    </div>
+</header>
+
+<h1>Lista de Screenings</h1>
+<div class="screening-row">
+    <div th:each="screening : ${movie.getScreenings()}">
+
+        <h3 th:text="${screening.getTheatre().getCinema().getName()}">Cine</h3>
+        <p><strong>Fecha y Hora:</strong> <span th:text="${screening.getDateTime()}">Fecha no disponible</span></p>
+        <p><strong>Lenguage:</strong> <span th:text="${screening.getLanguage()}">Idioma no disponible</span></p>
+        <a th:href="@{/seats/{screeningId}(screeningId=${screening.getId()})}" class="reserva-button">Ver Asientos</a>
+    </div>
+</div>
+
+</body>
+
+</html>

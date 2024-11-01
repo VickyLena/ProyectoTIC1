@@ -46,7 +46,7 @@ public class Movie {
     @Column(name = "AGE_RESTRICTION")
     private int ageRestriction;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @Builder.Default
     private List<Screening> screenings = new LinkedList<Screening>();
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieServices {
@@ -21,6 +22,8 @@ public class MovieServices {
     public List<Movie> findByAgeRestriction(int ageRestriction) {
         return movieRep.findByAgeRestriction(ageRestriction);
     }
+
+    public Optional<Movie> findById(long id) {return movieRep.findById(id);}
 
     public Movie addMovie(String title, List<String> genres, Date releaseDate) {
         Movie movie = new Movie();
