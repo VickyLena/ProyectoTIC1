@@ -1,6 +1,7 @@
 package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.*;
+import com.wtfcinema.demo.repository.CinemaRep;
 import com.wtfcinema.demo.services.EmployeeServices;
 import com.wtfcinema.demo.services.MovieServices;
 import com.wtfcinema.demo.services.ScreeningServices;
@@ -34,6 +35,8 @@ public class MainController {
 
     @Autowired
     private HttpSession session;
+    @Autowired
+    private CinemaRep cinemaRep;
 
     // Muestra la página principal en HTML
     @GetMapping("/")
@@ -172,5 +175,20 @@ public class MainController {
     @PostMapping("/seat-selection")
     public String seatSelection(Model model,@RequestParam List<Integer> seats) {
         return "seats";
+    }
+
+    @GetMapping("/locations")
+    public String showLocations(Model model) {
+        List<Cinema> cinemas= cinemaRep.findAll();
+        model.addAttribute("cinemas", cinemas);
+        return "locations";
+    }
+
+    @GetMapping("/my-tickets")
+    public String showMyTickets(Model model) {
+        User loggedInUser = (User) session.getAttribute("USER");
+        List<Ticket> userTickets = loggedInUser.getTickets();
+        model.addAttribute("userTickets", userTickets);
+        return "myTickets";
     }
 }

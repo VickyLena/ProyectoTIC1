@@ -13,6 +13,16 @@
         <a href="/logout" class="logout-button">Log out</a>
     </div>
 </header>
+<header class="headerDer">
+    <button id="openMenuBtn" class="open-menu">☰ </button>
+
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-button" onclick="closeMenu()">×</a>
+        <h2>Mi Menú</h2>
+        <a href="/locations">Sucursales</a>
+        <a href="/my-tickets">Mis Tickets</a>
+    </div>
+</header>
 <div class="welcome-container">
     <h1 class="welcome-text">Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
 </div>
@@ -47,5 +57,18 @@
     <p>Laboratorio TIC I.</p>
     <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
 </footer>
+
+<script>
+    // Abrir el menú
+    document.getElementById('openMenuBtn').onclick = function() {
+        document.getElementById('sideMenu').style.width = '250px';
+    };
+
+    // Cerrar el menú
+    function closeMenu() {
+        document.getElementById('sideMenu').style.width = '0';
+    }
+</script>
+
 </body>
 </html>

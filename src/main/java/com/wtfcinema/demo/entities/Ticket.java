@@ -22,7 +22,7 @@ public class Ticket {
     @Column(name = "SEAT")
     private String seat;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "TICKET_SNACK", joinColumns = @JoinColumn(name = "TICKET_ID"), inverseJoinColumns = @JoinColumn(name = "SNACK_ID"))
     @Builder.Default
     private List<Snack> snacks = new LinkedList<>();
