@@ -1,7 +1,6 @@
 package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.*;
-import com.wtfcinema.demo.repository.ScreeningRep;
 import com.wtfcinema.demo.services.EmployeeServices;
 import com.wtfcinema.demo.services.MovieServices;
 import com.wtfcinema.demo.services.ScreeningServices;
@@ -14,12 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.util.ClassUtils.isPresent;
 
 @Controller
 @RequestMapping("/")
@@ -31,14 +27,13 @@ public class MainController {
     private UserServices userService;
 
     @Autowired
+    private ScreeningServices screeningServices;
+
+    @Autowired
     private EmployeeServices employeeService;
 
     @Autowired
     private HttpSession session;
-    @Autowired
-    private ScreeningServices screeningServices;
-    @Autowired
-    private ScreeningRep screeningRep;
 
     // Muestra la página principal en HTML
     @GetMapping("/")
@@ -58,6 +53,7 @@ public class MainController {
         return "register";
     }
 
+
     @GetMapping("/movies")
     public String showMovies(Model model) {
         User loggedInUser = (User) session.getAttribute("USER");
@@ -69,6 +65,7 @@ public class MainController {
         }
         return "movies";
     }
+
 
     // Maneja el registro de usuarios y redirige a una página de confirmación
     @PostMapping("/register-request")
@@ -106,7 +103,7 @@ public class MainController {
             return "main";
 
         } catch (RuntimeException e) {
-            model.addAttribute("errorMessage", "Error al registrar nuevo Usuario");
+            model.addAttribute("errorMessage", "ERRORRRR");
             return "register";
         }
     }
@@ -141,7 +138,7 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/{movie_id}")
+    @GetMapping("/movie/{movie_id}")
     public String getMovieDetails(@PathVariable Long movie_id, Model model) {
         Optional<Movie> movieOpt = movieService.findById(movie_id);
         if (movieOpt.isPresent()) {
@@ -159,8 +156,8 @@ public class MainController {
 
     @GetMapping("/seats/{screening_id}")
     public String showSeats(Model model, @PathVariable Long screening_id) {
-        Screening screening = screeningRep.getById(screening_id);
-        List<Ticket> tickets = screening.getTakenSeats();
+        Optional<Screening> screening = screeningServices.findById(screening_id);
+        List<Ticket> tickets = screening.get().getTakenSeats();
         List<String> takenSeats = new LinkedList<>();
         for (Ticket ticket : tickets) {
             takenSeats.add(ticket.getSeat());
@@ -176,6 +173,4 @@ public class MainController {
     public String seatSelection(Model model,@RequestParam List<Integer> seats) {
         return "seats";
     }
-
-
 }
