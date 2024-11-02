@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css"> <!-- Asegúrate de que este archivo tenga tus estilos -->
+    <link rel="stylesheet" href="/index.css"> <!-- Asegúrate de que este archivo tenga tus estilos -->
     <title>Seleccionar Asientos</title>
     <style>
         body {
@@ -94,7 +94,7 @@
     <script>
         const seatSelection = document.getElementById('seatSelection');
         const totalSeats = 150; // Número total de asientos
-        const unavailableSeats = model.__get__()
+        const unavailableSeats = /*[[${takenSeats}]]*/ [] //thymeleaf lo convierte en una lista de javascript
 
         // Crear asientos
         for (let i = 1; i <= totalSeats; i++) {

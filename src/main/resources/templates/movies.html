@@ -36,7 +36,7 @@
                 <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${movie.getReleaseDate()}">Fecha de lanzamiento no disponible</span></p>
                 <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}">Restricción de edad no disponible</span></p>
                 <p th:text="${movie.getDescription()}">Descripción no disponible</p>
-
+                <a th:href="@{/movie/{movie_id}(movie_id=${movie.getId()})}" class="goto-screenings">Ver Funciones</a>
             </div>
         </div>
     </div>
