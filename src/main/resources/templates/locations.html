@@ -7,16 +7,25 @@
 </head>
 <body class="locations-body">
 <a href="/movies" class="back-arrow">&larr; Regresar a Inicio</a>
-<h1>
-  Nuestros Locales
-</h1>
+<h1>Nuestros Locales</h1>
 
 <div class="locations-table">
-  <div th:each="location:${cinemas}" class="locations-body">
-    <div class="locations-body"> <span th:text="${location.getName()}">Nombre no disponible</span> </div>
-    <div class="locations-body"> <span th:text="${location.getAddress()}">Direccion no disponible</span> </div>
-    <div class="locations-body"> <span th:text="${location.getPhoneNumber()}">Numero no disponible</span> </div>
-  </div>
+  <table class="locales-table">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Dirección</th>
+      <th>Número</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="location : ${cinemas}">
+      <td><span th:text="${location.getName()}">Nombre no disponible</span></td>
+      <td><span th:text="${location.getAddress()}">Dirección no disponible</span></td>
+      <td><span th:text="${location.getPhoneNumber()}">Número no disponible</span></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 
 <footer>

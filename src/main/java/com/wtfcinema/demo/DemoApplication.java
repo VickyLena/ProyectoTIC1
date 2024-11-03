@@ -22,7 +22,5 @@ public class DemoApplication {
 
 		private static void runInCommandLine() {
 	}
-
-
 }
 
