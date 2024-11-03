@@ -145,6 +145,10 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
+.imagen-cartelera:hover {
+    transform: scale(1.1); /* Scale up to 110% on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Increase shadow effect */
+}
 
 .flecha {
     background-color: #ff4500;

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTF Cinema - Página Principal</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body class="main-body">
+
+<header class="headerIzq">
+    <div class="welcome-container">
+        <a href="/logout" class="logout-button">Log out</a>
+    </div>
+</header>
+<header class="headerDer">
+    <button id="openMenuBtn" class="open-menu">☰ </button>
+
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-button" onclick="closeMenu()">×</a>
+        <h2>Mi Menú</h2>
+        <a href="/locations">Sucursales</a>
+        <a href="/movies">Volver a Peliculas</a>
+    </div>
+</header>
+
+<div class="movie-row">
+    <div th:each="ticket : ${userTickets}" class="movie-cell">
+        <div class="movie-container">
+            <div class="movie-image">
+                <img th:src="@{/images/{id}.jpg(id=${ticket.getScreening().getMovie().getId()})}" alt="Imagen de la película" />
+            </div>
+            <div class="movie-info">
+                <h3 th:text="${ticket.getScreening().getMovie().getTitle()}">Título de la película</h3>
+                <p><strong></strong>Sucursal: <span th:text="${ticket.getScreening().getTheatre().getCinema().getName()}">Sucursal no disponible</span></p>
+                <p><strong>Direccion:</strong> <span th:text="${ticket.getScreening().getTheatre().getCinema().getAddress()}">Direccion no disponible</span></p>
+                <p><strong>Fecha:</strong><span th:text="${ticket.getScreening().getDateTime()}">Fecha no disponible</span></p>
+                <ul>
+                    <li th:each="snack : ${ticket.getSnacks()}" th:text="${genre}">Snack no disponible</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+    <p>Laboratorio TIC I.</p>
+    <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+
+<script>
+    // Abrir el menú
+    document.getElementById('openMenuBtn').onclick = function() {
+        document.getElementById('sideMenu').style.width = '250px';
+    };
+
+    // Cerrar el menú
+    function closeMenu() {
+        document.getElementById('sideMenu').style.width = '0';
+    }
+</script>
+
+</body>
+</html>

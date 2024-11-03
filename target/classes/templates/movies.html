@@ -17,9 +17,9 @@
     <button id="openMenuBtn" class="open-menu">☰ </button>
 
     <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-button" onclick="closeMenu()">×</a>
+        <a href="javascript:void(0)" class="close-button" onclick="closeMenu()">✖</a>
         <h2>Mi Menú</h2>
-        <a href="/locations">Sucursales</a>
+        <a href="/locations">Locales</a>
         <a href="/my-tickets">Mis Tickets</a>
     </div>
 </header>
@@ -32,19 +32,24 @@
 <div class="movie-row">
     <div th:each="movie : ${movies}" class="movie-cell">
         <div class="movie-container">
-            <div class="movie-image">
-                <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película" />
+            <!-- Contenedor para la imagen y la información principal en una fila -->
+            <div class="movie-main-content">
+                <div class="movie-image">
+                    <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película" />
+                </div>
+                <div class="movie-info">
+                    <h2 th:text="${movie.getTitle()}">Título de la película</h2>
+                    <p><strong>Director:</strong> <span th:text="${movie.getDirector()}">Director no disponible</span></p>
+                    <p><strong>Duración:</strong> <span th:text="${movie.getDuration()}">Duración no disponible</span></p>
+                    <p><strong>Géneros:</strong></p>
+                    <ul>
+                        <li th:each="genre : ${movie.getGenres()}" th:text="${genre}">Género no disponible</li>
+                    </ul>
+                    <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${#dates.format(movie.getReleaseDate(), 'yyyy-MM-dd')}">Fecha de lanzamiento no disponible</span></p>
+                    <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}">Restricción de edad no disponible</span></p>
+                </div>
             </div>
-            <div class="movie-info">
-                <h3 th:text="${movie.getTitle()}">Título de la película</h3>
-                <p><strong>Director:</strong> <span th:text="${movie.getDirector()}">Director no disponible</span></p>
-                <p><strong>Duración:</strong> <span th:text="${movie.getDuration()}">Duración no disponible</span></p>
-                <p><strong>Géneros:</strong>
-                <ul>
-                    <li th:each="genre : ${movie.getGenres()}" th:text="${genre}">Género no disponible</li>
-                </ul>
-                <p><strong>Fecha de Lanzamiento:</strong> <span th:text="${movie.getReleaseDate()}">Fecha de lanzamiento no disponible</span></p>
-                <p><strong>Restricción de Edad:</strong> <span th:text="${movie.getAgeRestriction()}">Restricción de edad no disponible</span></p>
+            <div class="movie-description">
                 <p th:text="${movie.getDescription()}">Descripción no disponible</p>
                 <a th:href="@{/movie/{movie_id}(movie_id=${movie.getId()})}" class="goto-screenings">Ver Funciones</a>
             </div>

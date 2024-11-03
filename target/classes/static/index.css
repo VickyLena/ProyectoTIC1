@@ -11,6 +11,12 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Diamend';
+    src: url('fonts/Diamend-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
     background-color: #751805;
@@ -139,6 +145,10 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
+.imagen-cartelera:hover {
+    transform: scale(1.1); /* Scale up to 110% on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Increase shadow effect */
+}
 
 .flecha {
     background-color: #ff4500;
@@ -258,41 +268,44 @@ footer {
 .locations-body {
     background-color: #751805;
     color: white;
-    margin: 0;
-    padding: 0;
     font-family: 'Angel Club', sans-serif;
-    background-image: url('images/cine2.jpg'); /* Imagen de fondo específica para login */
+    background-image: url('images/cine2.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
 }
 
 .locations-table {
-    background-color: white;
-    color: #ff4500; /* Ajusta este color según prefieras */
     width: 90%;
     margin: 20px auto;
-    margin-bottom: 60px;
     padding: 20px;
+}
+
+.locales-table {
+    width: 100%;
+    background-color: white;
+    color: #ff4500;
+    border-collapse: collapse;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
     0 0 20px rgba(255, 255, 255, 0.7),
     0 0 30px rgba(255, 255, 255, 0.6);
-    text-align: center;
 }
 
 .locales-table th, .locales-table td {
-    padding: 12px;
+    padding: 15px;
     border-bottom: 1px solid #ff4500;
+    text-align: center;
 }
 
 .locales-table th {
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: #ff4500;
+    border-bottom: 2px solid #ff4500;
 }
 
 .locales-table tr:last-child td {
@@ -383,43 +396,56 @@ body {
 }
 
 .movie-content {
-    display: flex;
-    align-items: center;
+    display: flex; /* Coloca la imagen y la información en una fila */
+    gap: 20px;
 }
 
 .movie-image {
-    width: 220px;
+    width: 250px;
     height: auto;
     border-radius: 5px;
-    margin-right: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Estilo para el título de la película */
-.movie-description h2 {
-    font-family: 'Long Beach', sans-serif; /* Mantener la fuente Super Kinds */
-    font-size: 2em;
+.movie-info h2 {
+    font-family: 'Angel Club', sans-serif;
+    font-size: 1.8em; /* Un poco más pequeño */
+    font-weight: 400; /* Reduce el grosor */
     margin: 0 0 10px 0;
     color: #ff4500;
 }
 
 /* Estilo para la descripción y atributos de la película */
-.movie-description p {
-    font-family: 'Rockdale', sans-serif; /* Cambiar a una fuente más legible */
+.movie-info p,
+.movie-info li { /* Añadido para los <li> */
+    font-family: 'Diamend', sans-serif;
     margin: 5px 0;
     font-size: 1.1em;
 }
 
-.movie-description strong {
-    font-family: 'Rockdale', sans-serif;
-    color: #ff4500; /* Make this color prominent for key movie details */
+.movie-info strong {
+    font-family: 'Diamend', sans-serif;
+    color: #ff4500;
     font-weight: bold;
 }
+
 
 .movie-row {
     margin: 20px auto;
     padding: 0 10px;
     max-width: 1300px;
+}
+
+.goto-screenings {
+    font-family: 'Diamend', sans-serif;
+    color: #1E90FF;
+    text-decoration: none;
+    font-weight: bold;
+}
+.movie-description {
+    margin-top: 20px; /* Separa la descripción del contenido superior */
+    color: #fff;
+    font-family: 'Diamend', sans-serif;
 }
 
 /* Posición y estilos para el header */
@@ -459,23 +485,27 @@ body {
 }
 
 .movie-container {
-    display: flex;
     background-color: #751805;
-    padding: 15px;
-    margin: 10px 0;
+    padding: 20px;
+    margin: 15px 0;
     border-radius: 8px;
-    align-items: center;
+}
+.movie-main-content {
+    display: flex; /* Coloca la imagen y la información en una fila */
+    gap: 20px;
 }
 
 .movie-image img {
-    width: 150px;
+    width: 250px;
     height: auto;
     border-radius: 5px;
-    margin-right: 15px;
 }
 
 .movie-info {
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .welcome-message h1 {
@@ -522,7 +552,6 @@ h1 {
     width: auto;
 }
 
-
 .open-menu {
     position: fixed;
     top: 20px;
@@ -537,8 +566,8 @@ h1 {
     position: fixed;
     top: 0;
     right: 0;
-    background-color: #FFFFFF;
-    color: black;
+    background-color: #751805;
+    color: white;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -556,7 +585,8 @@ h1 {
     padding: 8px 16px;
     text-decoration: none;
     font-size: 20px;
-    color: black;
+    font-weight: normal;
+    color: white;
     display: block;
     transition: 0.3s;
 }
@@ -571,4 +601,52 @@ h1 {
     top: 10px;
     right: 25px;
     font-size: 36px;
+}
+
+.screenings-table {
+    background-color: white;
+    color: #ff4500;
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(255, 255, 255, 0.6);
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.screenings-table th {
+    font-size: 2em;
+    color: #ff4500;
+    padding: 12px;
+    border-bottom: 2px solid #ff4500;
+}
+
+.screenings-table tr {
+    border-bottom: 1px solid #ff4500; /* Línea divisoria extendida a toda la fila */
+}
+
+.screenings-table tr:last-child {
+    border-bottom: none; /* Quita la línea de la última fila */
+}
+
+.screenings-table td {
+    padding: 12px;
+}
+
+.small-button {
+    font-size: 1.2em;
+    padding: 5px 10px;
+    background-color: #ff4500;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.small-button:hover {
+    background-color: #ff4500;
 }
