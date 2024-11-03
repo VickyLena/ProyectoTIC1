@@ -11,6 +11,12 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Diamend';
+    src: url('fonts/Diamend-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body {
     background-color: #751805;
@@ -386,43 +392,56 @@ body {
 }
 
 .movie-content {
-    display: flex;
-    align-items: center;
+    display: flex; /* Coloca la imagen y la información en una fila */
+    gap: 20px;
 }
 
 .movie-image {
-    width: 220px;
+    width: 250px;
     height: auto;
     border-radius: 5px;
-    margin-right: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Estilo para el título de la película */
-.movie-description h2 {
-    font-family: 'Long Beach', sans-serif; /* Mantener la fuente Super Kinds */
-    font-size: 2em;
+.movie-info h2 {
+    font-family: 'Angel Club', sans-serif;
+    font-size: 1.8em; /* Un poco más pequeño */
+    font-weight: 400; /* Reduce el grosor */
     margin: 0 0 10px 0;
     color: #ff4500;
 }
 
 /* Estilo para la descripción y atributos de la película */
-.movie-description p {
-    font-family: 'Rockdale', sans-serif; /* Cambiar a una fuente más legible */
+.movie-info p,
+.movie-info li { /* Añadido para los <li> */
+    font-family: 'Diamend', sans-serif;
     margin: 5px 0;
     font-size: 1.1em;
 }
 
-.movie-description strong {
-    font-family: 'Rockdale', sans-serif;
-    color: #ff4500; /* Make this color prominent for key movie details */
+.movie-info strong {
+    font-family: 'Diamend', sans-serif;
+    color: #ff4500;
     font-weight: bold;
 }
+
 
 .movie-row {
     margin: 20px auto;
     padding: 0 10px;
     max-width: 1300px;
+}
+
+.goto-screenings {
+    font-family: 'Diamend', sans-serif;
+    color: #1E90FF;
+    text-decoration: none;
+    font-weight: bold;
+}
+.movie-description {
+    margin-top: 20px; /* Separa la descripción del contenido superior */
+    color: #fff;
+    font-family: 'Diamend', sans-serif;
 }
 
 /* Posición y estilos para el header */
@@ -462,23 +481,27 @@ body {
 }
 
 .movie-container {
-    display: flex;
     background-color: #751805;
-    padding: 15px;
-    margin: 10px 0;
+    padding: 20px;
+    margin: 15px 0;
     border-radius: 8px;
-    align-items: center;
+}
+.movie-main-content {
+    display: flex; /* Coloca la imagen y la información en una fila */
+    gap: 20px;
 }
 
 .movie-image img {
-    width: 150px;
+    width: 250px;
     height: auto;
     border-radius: 5px;
-    margin-right: 15px;
 }
 
 .movie-info {
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .welcome-message h1 {
