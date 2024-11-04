@@ -184,6 +184,13 @@ public class MainController {
         return "locations";
     }
 
+    @GetMapping("/locationsMenu")
+    public String showLocationsMenu(Model model) {
+        List<Cinema> cinemas= cinemaRep.findAll();
+        model.addAttribute("cinemas", cinemas);
+        return "locationsMenu";
+    }
+
     @GetMapping("/my-tickets")
     public String showMyTickets(Model model) {
         User loggedInUser = (User) session.getAttribute("USER");
