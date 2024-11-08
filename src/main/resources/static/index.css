@@ -509,11 +509,11 @@ body {
 }
 
 .welcome-message h1 {
-    font-size: 2.5em; /* Ajusta el tamaño de la fuente según prefieras */
-    color: #FFFFFF; /* Elige el color que prefieras */
+    font-size: 2.5em;
+    color: #FFFFFF;
     margin: 0.5em 0;
-    border: none; /* Elimina cualquier borde */
-    text-align: center; /* Centra el texto */
+    border: none;
+    text-align: center;
 }
 
 .movie-list-title {
@@ -521,23 +521,19 @@ body {
     text-align: center;
 }
 
-/* Asegúrate de agregar esto a tu archivo index.css */
-
 .welcome-container {
-    text-align: center; /* Centra el texto si es necesario */
-    margin: 20px 0; /* Añade margen arriba y abajo */
+    text-align: center;
+    margin: 20px 0;
 }
 
 .welcome-text {
-    font-size: 2em; /* Ajusta el tamaño de la fuente */
-    color: white; /* Cambia el color del texto según sea necesario */
-    /* Si había un borde amarillo, asegúrate de que no esté aquí */
-    border: none; /* Elimina cualquier borde si es necesario */
+    font-size: 2em;
+    color: white;
+    border: none;
 }
 
 h1 {
-    margin-top: 10px; /* Espacio entre el mensaje de bienvenida y el título de la lista de películas */
-    /* Puedes agregar más estilos aquí si es necesario */
+    margin-top: 10px;
 }
 
 .headerDer{
@@ -548,7 +544,7 @@ h1 {
     top: 0;
     right: 0;
     padding: 10px;
-    gap: 10px; /* Espacio entre el botón y el mensaje */
+    gap: 10px;
     width: auto;
 }
 
@@ -595,7 +591,6 @@ h1 {
     color: #ff4500;
 }
 
-/* Botón de cierre */
 .close-button {
     position: absolute;
     top: 10px;
@@ -625,11 +620,11 @@ h1 {
 }
 
 .screenings-table tr {
-    border-bottom: 1px solid #ff4500; /* Línea divisoria extendida a toda la fila */
+    border-bottom: 1px solid #ff4500;
 }
 
 .screenings-table tr:last-child {
-    border-bottom: none; /* Quita la línea de la última fila */
+    border-bottom: none;
 }
 
 .screenings-table td {
@@ -649,4 +644,33 @@ h1 {
 
 .small-button:hover {
     background-color: #ff4500;
+}
+
+.login-form-container textarea,
+.login-form-container select {
+    width: 90%;
+    padding: 12px;
+    margin-top: 5px;
+    border: 1px solid #ff4500;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+    background-color: white;
+    color: #ff4500;
+}
+
+#genres {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column; /* Alinea las opciones en una columna */
+}
+
+#genres label {
+    font-size: 1em;
+    color: #ff4500;
+    margin: 5px 0;
+}
+
+#genres input[type="checkbox"] {
+    margin-right: 10px; /* Espacio entre el checkbox y el texto */
 }

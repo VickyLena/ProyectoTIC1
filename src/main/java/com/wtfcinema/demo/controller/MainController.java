@@ -127,7 +127,7 @@ public class MainController {
         Employee empleado = employeeService.getByEmail(email);
         if (empleado != null && empleado.getPassword().equals(password)) {
             session.setAttribute("EMPLOYEE", empleado);
-            return "redirect:/movies";
+            return "redirect:/moviesAdmin";
         }
 
         model.addAttribute("errorMessage", "Email o contraseña incorrectas");
@@ -153,6 +153,10 @@ public class MainController {
         return "movieScreenings";
     }
 
+    @GetMapping("/moviesAdmin")
+    public String showMoviesAdmin(Model model){
+        return "moviesAdmin";
+    }
 
     @GetMapping("/movieScreenings")
     public String showMovieScreenings(Model model) {return "movieScreenings";}
@@ -191,6 +195,16 @@ public class MainController {
         return "locationsMenu";
     }
 
+    @GetMapping("/createMovie")
+    public String showCreateMovie(Model model) {
+        return "createMovie";
+    }
+
+    @GetMapping("/createFunction")
+    public String showCreateFunction(Model model) {
+        return "createFunction";
+    }
+
     @GetMapping("/my-tickets")
     public String showMyTickets(Model model) {
         User loggedInUser = (User) session.getAttribute("USER");
@@ -198,4 +212,10 @@ public class MainController {
         model.addAttribute("userTickets", userTickets);
         return "myTickets";
     }
+
+    @PostMapping("/register-movie")
+    public String registerMovie(Movie movie) {
+        return "redirect:/createFunction";
+    }
+
 }
