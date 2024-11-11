@@ -14,5 +14,9 @@ public class ScreeningServices {
         this.screeningRep = screeningRep;
     }
 
+    public void registerNewFunction(Screening newFunction) {
+        screeningRep.save(newFunction);
+    }
+
     public Optional<Screening> findById(long id) { return screeningRep.findById(id);}
 }

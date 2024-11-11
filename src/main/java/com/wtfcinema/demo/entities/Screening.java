@@ -3,6 +3,7 @@ package com.wtfcinema.demo.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class Screening {
     private String language;
 
     @Column(name = "DATE_TIME")
-    private Date dateTime;
+    private LocalDateTime dateTime;
 
     @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @Builder.Default

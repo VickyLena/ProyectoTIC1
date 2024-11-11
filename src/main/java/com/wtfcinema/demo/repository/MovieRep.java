@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface MovieRep extends JpaRepository<Movie, Long> {
     public Optional<Movie> findById(Long id);
 
-    List<Movie> findByTitle(String title);
+    public Optional<Movie> findByTitle(String title);
 
     List<Movie> findByAgeRestriction(int ageRestriction);
 

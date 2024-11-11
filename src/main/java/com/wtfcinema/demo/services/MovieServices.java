@@ -1,6 +1,7 @@
 package com.wtfcinema.demo.services;
 
 import com.wtfcinema.demo.entities.Movie;
+import com.wtfcinema.demo.entities.User;
 import com.wtfcinema.demo.repository.MovieRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,17 @@ public class MovieServices {
         movie.setGenres(genres);
         movie.setReleaseDate(releaseDate);
         return movieRep.save(movie);
+    }
+    public Movie findByTitle(String title) {
+        Optional<Movie> movie = movieRep.findByTitle(title);
+        return movie.orElse(null);
+    }
+
+    public void registerNewMovie(Movie movie) {
+        if (movieRep.findByTitle(movie.getTitle()).isPresent()) {
+            throw new RuntimeException("El título de la película ya está en uso.");
+        }
+        movieRep.save(movie);
     }
 }
 
