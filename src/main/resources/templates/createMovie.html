@@ -30,9 +30,12 @@
         <span th:text="${errorMessage}"></span>
     </div>
 
-    <form action="/admin/register-movie" method="POST">
+    <form action="/admin/register-movie" method="POST" enctype="multipart/form-data">
         <label for="title">* Título:</label>
         <input type="text" id="title" name="title" required>
+
+        <label for="file">* Imagen:</label>
+        <input type="file" enctype="multipart/form-data" name="file" accept=".jpg" required>
 
         <label for="description">* Descripción:</label>
         <textarea id="description" name="description" required></textarea>

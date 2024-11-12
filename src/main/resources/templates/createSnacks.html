@@ -30,9 +30,12 @@
     <span th:text="${errorMessage}"></span>
   </div>
 
-  <form action="/admin/register-snack" method="POST">
+  <form action="/admin/register-snack" method="POST" enctype="multipart/form-data">
     <label for="name">* Nombre:</label>
     <input type="text" id="name" name="name" required>
+
+    <label for="file">* Imagen:</label>
+    <input type="file" name="file" accept=".jpg" required>
 
     <label for="price">* Precio:</label>
     <input type="number" id="price" name="price" required>

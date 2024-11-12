@@ -13,4 +13,11 @@ public class TicketServices {
     private TicketRep ticketRep;
 
     public Optional<Ticket> findById(Long id) { return ticketRep.findById(id);}
+
+    public void registerNewTicket(Ticket ticket) {
+        if (ticketRep.findById(ticket.getId()).isPresent()) {
+            throw new RuntimeException("Error al registrar el ticket.");
+        }
+        ticketRep.save(ticket);
+    }
 }

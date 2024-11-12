@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>Ingrese sus datos:</h2>
+
+    <div th:if="${errorMessage}" class="error-message">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <form action="/addCard" method="POST">
+        <label for="cardNumber">Numero de Tarjeta:</label>
+        <input type="text" id="cardNumber" name="cardNumber" required>
+        <label for="permanent">Guardar para futuras compras:</label>
+        <input type="checkbox" id="permanent" name="permanent">
+
+        <button type="submit" class="submit-button">Comprar</button>
+    </form>
+
+</body>
+</html>

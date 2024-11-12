@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Metodo de Pago</h1>
+
+<div class="locations-table">
+    <table class="locales-table">
+        <tr>
+            <a th:href="@{/new-card/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="goto-screenings">
+                <span th:if="${card != null}" th:text="${card}">Numero de Tarjeta</span>
+            </a>
+        </tr>
+        <tr>
+            <a th:href="@{/new-card/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="goto-screenings">Agregar Metodo de Pago</a>
+        </tr>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+    <p>Laboratorio TIC I.</p>
+    <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+
+</body>
+</html>

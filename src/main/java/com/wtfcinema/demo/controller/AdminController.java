@@ -11,7 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.IOException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -64,6 +70,7 @@ public class AdminController {
                                 @RequestParam String duration,
                                 @RequestParam List<String> genres,
                                 @RequestParam int age_restriction,
+                                @RequestParam("file") MultipartFile file,
                                 Model model,
                                 RedirectAttributes redirectAttributes,
                                 HttpSession session) {
@@ -72,6 +79,7 @@ public class AdminController {
                 redirectAttributes.addFlashAttribute("errorMessage", "La película ya está registrada.");
                 return "redirect:/admin/createMovie";
             }
+
             Date date = Date.from(release_date.atStartOfDay(ZoneId.systemDefault()).toInstant());
             Movie newMovie = Movie.builder()
                     .title(title)
@@ -85,13 +93,31 @@ public class AdminController {
 
             movieServices.registerNewMovie(newMovie);
 
+            // Guarda el archivo en la carpeta static/movies
+            if (!file.isEmpty()) {
+                String fileExtension = ".jpg";
+                String directoryPath = "src/main/resources/static/images/";
+                String filePath = directoryPath + newMovie.getId() + fileExtension;
+
+                // Crear el directorio si no existe
+                Path directory = Paths.get(directoryPath);
+                if (!Files.exists(directory)) {
+                    Files.createDirectories(directory);
+                }
+
+                // Obtener la ruta completa del archivo
+                Path path = Paths.get(filePath);
+
+                // Guardar el archivo (sobreescribirá si ya existe uno con el mismo nombre)
+                Files.write(path, file.getBytes());
+            }
+
             session.setAttribute("MOVIE", newMovie);
-            redirectAttributes.addFlashAttribute("message", "Pelicula registrada exitosamente");
+            redirectAttributes.addFlashAttribute("message", "Película registrada exitosamente");
             return "redirect:/admin/moviesAdmin";
 
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            model.addAttribute("errorMessage", "ERROR");
+        } catch (RuntimeException | IOException e) {
+            model.addAttribute("errorMessage", "Error al registrar la película o al guardar la imagen.");
             return "redirect:/admin/createMovie";
         }
     }
@@ -113,13 +139,14 @@ public class AdminController {
     @PostMapping("/register-snack")
     public String registerSnack(@RequestParam String name,
                                 @RequestParam int price,
+                                @RequestParam("file") MultipartFile file,
                                 Model model,
                                 RedirectAttributes redirectAttributes,
                                 HttpSession session) {
         try {
             if (snackServices.findByName(name).isPresent()) {
-                redirectAttributes.addFlashAttribute("errorMessage", "El snack no existe.");
-                return "redirect:/admin/createFunction";
+                redirectAttributes.addFlashAttribute("errorMessage", "El snack ya existe.");
+                return "redirect:/admin/createSnacks";
             }
 
             Snack newSnack = Snack.builder()
@@ -129,14 +156,31 @@ public class AdminController {
 
             snackServices.registerNewSnack(newSnack);
 
+            // Guarda el archivo en la carpeta static/movies
+            if (!file.isEmpty()) {
+                String fileExtension = ".jpg";
+                String directoryPath = "src/main/resources/static/images/snacks/";
+                String filePath = directoryPath + newSnack.getName() + fileExtension;
+
+                // Crear el directorio si no existe
+                Path directory = Paths.get(directoryPath);
+                if (!Files.exists(directory)) {
+                    Files.createDirectories(directory);
+                }
+
+                // Obtener la ruta completa del archivo
+                Path path = Paths.get(filePath);
+
+                // Guardar el archivo (sobreescribirá si ya existe uno con el mismo nombre)
+                Files.write(path, file.getBytes());
+            }
             session.setAttribute("SNACK", newSnack);
             redirectAttributes.addFlashAttribute("message", "Snack agregado exitosamente");
-            return "redirect:/admin/moviesAdmin";
+            return "redirect:/admin/snacksMenuAdmin";
 
-        } catch (RuntimeException e) {
-            e.printStackTrace();
+        } catch (RuntimeException | IOException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
-            return "redirect:/admin/createFunction";
+            return "redirect:/admin/createSnacks";
         }
     }
 

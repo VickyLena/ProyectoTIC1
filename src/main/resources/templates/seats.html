@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/index.css"> <!-- Asegúrate de que este archivo tenga tus estilos -->
+    <link rel="stylesheet" href="/index.css">
     <title>Seleccionar Asientos</title>
     <style>
         body {
@@ -96,20 +96,17 @@
         const totalSeats = 150; // Número total de asientos
         const unavailableSeats = /*[[${takenSeats}]]*/ [] //thymeleaf lo convierte en una lista de javascript
 
-        // Crear asientos
         for (let i = 1; i <= totalSeats; i++) {
             const seat = document.createElement('div');
             seat.classList.add('seat', 'available');
             seat.innerText = i;
 
-            // Marcar asientos no disponibles
             if (unavailableSeats.includes(i)) {
                 seat.classList.remove('available');
                 seat.classList.add('unavailable');
                 seat.innerText = 'X'; // Indica que no está disponible
             }
 
-            // Evento de clic para seleccionar asientos
             seat.addEventListener('click', () => {
                 if (seat.classList.contains('available')) {
                     seat.classList.toggle('selected');
@@ -119,15 +116,22 @@
             seatSelection.appendChild(seat);
         }
 
-        // Evento para el botón de confirmación
         document.getElementById('confirmButton').addEventListener('click', () => {
             const selectedSeats = [...document.querySelectorAll('.seat.selected')]
                 .map(seat => seat.innerText)
-                .join(', ');
-            alert('Asientos seleccionados: ' + (selectedSeats.length ? selectedSeats : 'Ninguno'));
+                .join(',');
+
+            if (selectedSeats.length > 0) {
+                const screeningId = [[${screening_id}]];
+                console.log('screeningId:', screeningId);
+                const url = `/payment-method/${screeningId}/${selectedSeats}`;
+
+                window.location.href = url;
+            } else {
+                alert('No se ha seleccionado ningún asiento.');
+            }
         });
 
-        // Evento para el botón de deselección
         document.getElementById('deselectButton').addEventListener('click', () => {
             const selectedSeats = document.querySelectorAll('.seat.selected');
             selectedSeats.forEach(seat => {
