@@ -7,6 +7,7 @@ import com.wtfcinema.demo.services.SnackServices;
 import com.wtfcinema.demo.services.TheatreServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -188,6 +189,23 @@ public class AdminController {
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
             return "redirect:/admin/createFunction";
+        }
+    }
+    @DeleteMapping("/deleteSnack/{snackId}")
+    public ResponseEntity<?> deleteSnack(@PathVariable String snackId) {
+        try {
+            // Intentamos eliminar el snack
+            snackServices.deleteSnackById(snackId);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            // Este error ocurre si no se encuentra el snack
+            return ResponseEntity.status(404).body("Snack no encontrado: " + e.getMessage());
+        } catch (RuntimeException e) {
+            // Este error ocurre si hay un problema al eliminar el snack
+            return ResponseEntity.status(500).body("Error al eliminar el snack: " + e.getMessage());
+        } catch (Exception e) {
+            // Este bloque captura otros errores inesperados
+            return ResponseEntity.status(500).body("Error desconocido: " + e.getMessage());
         }
     }
 }

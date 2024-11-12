@@ -18,10 +18,9 @@
   <h1 class="welcome-text">Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
 </div>
 
-<div class="movie-row">
+<div class="snack-row">
   <div th:each="snack : ${snacks}" class="snack-cell">
     <div class="snack-container">
-
       <div class="movie-main-content">
         <div class="snack-image">
           <img th:src="@{/images/snacks/{name}.jpg(name=${snack.getName()})}" alt="Imagen del snack" />
@@ -31,6 +30,7 @@
           <p><strong>Precio:</strong> $<span th:text="${snack.getPrice()}">Precio no disponible</span></p>
         </div>
       </div>
+      <button class="delete-button" onclick="deleteSnack('${snack.getName()}')">Eliminar 🗑</button>
     </div>
   </div>
 </div>
@@ -44,3 +44,24 @@
   <p>Laboratorio TIC I.</p>
   <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
 </footer>
+
+<script>
+  function deleteSnack(snackId) {
+    if (confirm("¿Estás seguro de que deseas eliminar este snack?")) {
+      fetch(`/admin/deleteSnack/${snackId}`, {
+        method: 'DELETE'
+      })
+              .then(response => {
+                if (response.ok) {
+                  alert("Snack eliminado exitosamente.");
+                  location.reload();
+                } else {
+                  alert("Hubo un error al eliminar el snack.");
+                }
+              })
+              .catch(error => console.error('Error:', error));
+    }
+  }
+</script>
+</body>
+</html>

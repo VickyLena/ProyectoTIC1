@@ -20,7 +20,7 @@ public class DemoApplication {
 		runInCommandLine();
 	}
 
-		private static void runInCommandLine() {
+	private static void runInCommandLine() {
 	}
 }
 

@@ -25,4 +25,17 @@ public class SnackServices {
     public List<Snack> getAllSnacks() {
         return snackRep.findAll();
     }
+
+    public void deleteSnackById(String snack) {
+        Optional<Snack> snackOptional = snackRep.findById(snack);
+        if (snackOptional.isEmpty()) {
+            throw new IllegalArgumentException("Snack con nombre '" + snack + "' no encontrado en la base de datos.");
+        }
+        try {
+            snackRep.delete(snackOptional.get());
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar el snack con nombre '" + snack + "'. Error: " + e.getMessage());
+        }
+    }
+
 }
