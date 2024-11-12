@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="/index.css">
 </head>
 <body class="register-body">
-<a href="/moviesAdmin" class="back-arrow">&larr; Volver</a>
+<a href="/admin/moviesAdmin" class="back-arrow">&larr; Volver</a>
 <h1>
   Agregar Snacks
 </h1>
@@ -30,7 +30,7 @@
     <span th:text="${errorMessage}"></span>
   </div>
 
-  <form action="/register-snack" method="POST">
+  <form action="/admin/register-snack" method="POST">
     <label for="name">* Nombre:</label>
     <input type="text" id="name" name="name" required>
 

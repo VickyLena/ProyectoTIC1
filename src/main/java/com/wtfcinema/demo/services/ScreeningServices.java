@@ -17,7 +17,7 @@ public class ScreeningServices {
         this.screeningRep = screeningRep;
     }
 
-    public void registerNewFunction(Screening newFunction) {
+    public void registerNewScreening(Screening newFunction) {
         screeningRep.save(newFunction);
     }
 

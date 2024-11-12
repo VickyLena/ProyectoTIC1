@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 <body class="register-body">
-<a href="/moviesAdmin" class="back-arrow">&larr; Volver</a>
+<a href="/admin/moviesAdmin" class="back-arrow">&larr; Volver</a>
 <h1>
     Agregar Funcion
 </h1>
@@ -30,7 +30,7 @@
         <span th:text="${errorMessage}"></span>
     </div>
 
-    <form action="/register-function" method="POST">
+    <form action="/admin/register-function" method="POST">
         <label for="date_time">* Fecha y Hora:</label>
         <input type="datetime-local" id="date_time" name="date_time" required>
 
