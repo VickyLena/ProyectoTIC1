@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Agregar Snacks - WTF Cinema</title>
+  <style>
+    .error-message {
+      color: #ffffff;
+      font-size: 1em;
+      margin-top: 10px;
+      background-color: #f8d7da;
+      border: 1px solid red;
+      padding: 10px;
+      border-radius: 5px;
+      display: block;
+    }
+  </style>
+  <link rel="stylesheet" href="/index.css">
+</head>
+<body class="register-body">
+<a href="/moviesAdmin" class="back-arrow">&larr; Volver</a>
+<h1>
+  Agregar Snacks
+</h1>
+
+<div class="login-form-container">
+  <h2>Ingrese los datos del Snack:</h2>
+
+  <div th:if="${errorMessage}" class="error-message">
+    <span th:text="${errorMessage}"></span>
+  </div>
+
+  <form action="/register-snack" method="POST">
+    <label for="name">* Nombre:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="price">* Precio:</label>
+    <input type="number" id="price" name="price" required>
+
+    <button type="submit" class="submit-button">Agregar Snack</button>
+  </form>
+
+</div>
+
+<footer>
+  <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+  <p>Laboratorio TIC I.</p>
+  <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+</body>
+</html>

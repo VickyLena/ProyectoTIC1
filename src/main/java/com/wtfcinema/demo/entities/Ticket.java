@@ -34,4 +34,8 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "SCREENING")
     private Screening screening;
+
+    public void addSnacks(Snack newSnack) {
+        this.snacks.add(newSnack);
+    }
 }

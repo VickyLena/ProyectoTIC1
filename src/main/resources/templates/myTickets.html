@@ -38,6 +38,7 @@
                 <ul>
                     <li th:each="snack : ${ticket.getSnacks()}" th:text="${genre}">Snack no disponible</li>
                 </ul>
+                <a th:href="@{/snacks/{ticketId}(ticketId=${ticket.getId()})}" class="snacks-button">Agregar Snacks</a>
             </div>
         </div>
     </div>

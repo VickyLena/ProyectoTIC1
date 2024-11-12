@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface SnackRep extends JpaRepository<Snack,String> {
     public Optional<Snack> findByName(String name);
+
+
 }

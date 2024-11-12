@@ -44,6 +44,11 @@ public class MainController {
     @Autowired
     private CinemaRep cinemaRep;
 
+    @Autowired
+    private SnackServices snackServices;
+    @Autowired
+    private TicketServices ticketServices;
+
     // Muestra la página principal en HTML
     @GetMapping("/")
     public String showHomePage(Model model) {
@@ -211,6 +216,38 @@ public class MainController {
         return "createMovie";
     }
 
+    @GetMapping("/snacksMenu")
+    public String showSnacksMenu(Model model) {
+        List<Snack> snackList = snackServices.getAllSnacks();
+        model.addAttribute("snacks", snackList);
+        User loggedInUser = (User) session.getAttribute("USER");
+        model.addAttribute("user", loggedInUser);
+        return "snacksMenu";
+    }
+
+    @GetMapping("/snacksMenuAdmin")
+    public String showSnacksMenuAdmin(Model model) {
+        List<Snack> snackList = snackServices.getAllSnacks();
+        model.addAttribute("snacks", snackList);
+        Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
+        model.addAttribute("user", loggedInUser);
+        return "snacksMenuAdmin";
+    }
+
+    @GetMapping("/createSnacks")
+    public String showCreateSnacks(Model model) {
+        return "createSnacks";
+    }
+
+    @GetMapping("/snacks/{ticketId}")
+    public String showSnacks(Model model, @PathVariable Long ticketId) {
+        List<Snack> snackList = snackServices.getAllSnacks();
+        model.addAttribute("snacks", snackList);
+        Ticket ticket= ticketServices.findById(ticketId).get();
+        model.addAttribute("ticket", ticket);
+        return "snacks";
+    }
+
     @GetMapping("/createFunction")
     public String showCreateFunction(Model model) {
         List<Movie> movies = movieService.getAllMovies();
@@ -303,6 +340,36 @@ public class MainController {
 
             session.setAttribute("SCREENING", newFuncion);
             redirectAttributes.addFlashAttribute("message", "Función registrada exitosamente");
+            return "redirect:/moviesAdmin";
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
+            return "redirect:/createFunction";
+        }
+    }
+
+    @PostMapping("/register-snack")
+    public String registerSnack(@RequestParam String name,
+                                @RequestParam int price,
+                                Model model,
+                                RedirectAttributes redirectAttributes,
+                                HttpSession session) {
+        try {
+            if (snackServices.findByName(name).isPresent()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "El snack no existe.");
+                return "redirect:/createFunction";
+            }
+
+            Snack newSnack = Snack.builder()
+                    .name(name)
+                    .price(price)
+                    .build();
+
+            snackServices.registerNewSnack(newSnack);
+
+            session.setAttribute("SNACK", newSnack);
+            redirectAttributes.addFlashAttribute("message", "Snack agregado exitosamente");
             return "redirect:/moviesAdmin";
 
         } catch (RuntimeException e) {

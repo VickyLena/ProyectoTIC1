@@ -674,3 +674,91 @@ h1 {
 #genres input[type="checkbox"] {
     margin-right: 10px; /* Espacio entre el checkbox y el texto */
 }
+
+.snack-cell{
+    width: 300px; /* Tamaño fijo del contenedor del snack */
+    height: 400px; /* Puedes ajustar este valor según tus necesidades */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+}
+
+.snack-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f9f9f9; /* Color de fondo del contenedor */
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.snack-image img {
+    width: 100%;
+    height: auto;
+    max-height: 60%;
+}
+
+.snack-info h2 {
+    font-size: 20px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.snack-info p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.snack-actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-to-cart-button {
+    background-color: #ff4500; /* Verde */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #ff4500;
+}
+
+.cart-actions {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.purchase-button {
+    background-color: #ff4500; /* Azul */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.purchase-button:hover {
+    background-color: #ff4500;
+}
+
+
