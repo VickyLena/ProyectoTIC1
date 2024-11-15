@@ -1,10 +1,7 @@
 package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.*;
-import com.wtfcinema.demo.services.MovieServices;
-import com.wtfcinema.demo.services.ScreeningServices;
-import com.wtfcinema.demo.services.SnackServices;
-import com.wtfcinema.demo.services.TheatreServices;
+import com.wtfcinema.demo.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +40,9 @@ public class AdminController {
 
     @Autowired
     private ScreeningServices screeningServices;
+
+    @Autowired
+    private EmployeeServices employeeService;
 
     @GetMapping("/moviesAdmin")
     public String showMoviesAdmin(Model model, @ModelAttribute("message") String message) {
@@ -238,18 +238,54 @@ public class AdminController {
     @DeleteMapping("/deleteSnack/{snackId}")
     public ResponseEntity<?> deleteSnack(@PathVariable String snackId) {
         try {
-            // Intentamos eliminar el snack
             snackServices.deleteSnackById(snackId);
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
-            // Este error ocurre si no se encuentra el snack
             return ResponseEntity.status(404).body("Snack no encontrado: " + e.getMessage());
         } catch (RuntimeException e) {
-            // Este error ocurre si hay un problema al eliminar el snack
             return ResponseEntity.status(500).body("Error al eliminar el snack: " + e.getMessage());
         } catch (Exception e) {
-            // Este bloque captura otros errores inesperados
             return ResponseEntity.status(500).body("Error desconocido: " + e.getMessage());
         }
+    }
+
+    @PostMapping("/register-request-admin")
+    public String useRegisterAdmin(@RequestParam String name,
+                                   @RequestParam String email,
+                                   @RequestParam LocalDate birthDate,
+                                   @RequestParam Long phoneNumber,
+                                   @RequestParam String password,
+                                   Model model,
+                                   RedirectAttributes redirectAttributes,
+                                   HttpSession session) {
+        try {
+            if (employeeService.getByEmail(email) != null) {
+                model.addAttribute("errorMessage", "El correo electrónico ya está registrado");
+                return "redirect:/admin/registerEmployee";
+            }
+
+            Employee newEmployee = Employee.builder()
+                    .name(name)
+                    .email(email)
+                    .birthDate(birthDate)
+                    .phoneNumber(phoneNumber)
+                    .password(password)
+                    .build();
+
+            employeeService.registerNewEmployee(newEmployee);
+
+            session.setAttribute("EMPLOYEE", newEmployee);
+            model.addAttribute("message", "Usuario registrado exitosamente");
+            return "redirect:/admin/moviesAdmin";
+
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", "ERROR");
+            return "redirect:/admin/registerEmployee";
+        }
+    }
+
+    @GetMapping("/registerEmployee")
+    public String showRegisterEmployee(Model model) {
+        return "registerEmployee";
     }
 }

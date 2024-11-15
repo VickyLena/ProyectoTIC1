@@ -18,9 +18,9 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 <body class="register-body">
-<a href="/" class="back-arrow">&larr; Regresar a Inicio</a>
+<a href="/moviesAdmin" class="back-arrow">&larr; Regresar a Inicio</a>
 <h1>
-    Registrarse
+    Agregar Empleados
 </h1>
 
 <div class="login-form-container">
@@ -31,7 +31,7 @@
     </div>
 
 
-    <form action="/register-request" method="POST">
+    <form action="/admin/register-request-admin" method="POST">
         <label for="name">* Nombre:</label>
         <input type="text" id="name" name="name" required>
 
@@ -56,11 +56,9 @@
             <span class="toggle-password" onclick="togglePassword()">👁️‍🗨️</span>
         </div>
 
-        <button type="submit" class="submit-button">Registrarse</button>
+        <button type="submit" class="submit-button">Registrar</button>
     </form>
-    <p class="register-link">
-        ¿Ya tiene una cuenta? <a href="login">Iniciar Sesion</a>
-    </p>
+
 </div>
 
 <script>

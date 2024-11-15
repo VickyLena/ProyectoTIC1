@@ -3,6 +3,7 @@ package com.wtfcinema.demo.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -26,13 +27,13 @@ public class Employee {
     private String email;
 
     @Column(name = "BIRTH_DATE")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(name = "ADDRESS")
     private String address;
 
     @Column(name = "PHONE_NUMBER")
-    private int phoneNumber;
+    private Long phoneNumber;
 
     @Column(name = "PASSWORD")
     private String password;

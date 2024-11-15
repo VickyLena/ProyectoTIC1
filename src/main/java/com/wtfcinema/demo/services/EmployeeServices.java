@@ -30,4 +30,10 @@ public class EmployeeServices {
         return employeeRepo.findAll();
     }
 
+    public void registerNewEmployee(Employee employee) {
+        if (employeeRepo.findByEmail(employee.getEmail()).isPresent()) {
+            throw new RuntimeException("El correo electrónico ya está en uso.");
+        }
+        employeeRepo.save(employee);
+    }
 }
