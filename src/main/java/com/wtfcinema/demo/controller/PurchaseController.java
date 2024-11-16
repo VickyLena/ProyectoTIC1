@@ -5,6 +5,7 @@ import com.wtfcinema.demo.entities.Ticket;
 import com.wtfcinema.demo.entities.User;
 import com.wtfcinema.demo.services.ScreeningServices;
 import com.wtfcinema.demo.services.TicketServices;
+import com.wtfcinema.demo.services.UserServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +25,9 @@ import java.util.Optional;
 public class PurchaseController {
     @Autowired
     private ScreeningServices screeningServices;
+
+    @Autowired
+    private UserServices userServices;
 
     @Autowired
     private HttpSession session;
@@ -70,17 +73,30 @@ public class PurchaseController {
 
     @Transactional
     @PostMapping("/addCard")
-    public String addCard(Model model, @RequestParam Long cardNumber, @RequestParam Boolean permanent,
+    public String addCard(Model model, @RequestParam Long cardNumber, @RequestParam(required = false) Boolean permanent,
                           @RequestParam Long screening_id, @RequestParam String seats, RedirectAttributes redirectAttributes){
+
+        // Verificar que los parámetros están llegando correctamente
+        System.out.println("Card Number: " + cardNumber);
+        System.out.println("Permanent: " + permanent);
+        System.out.println("Screening ID: " + screening_id);
+        System.out.println("Seats: " + seats);
         int length = String.valueOf(cardNumber).length();
         if (length!= 16){
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: El numero de tarjeta debe tener largo 16");
             return "redirect:/new-card/" + screening_id + "/" + seats;
         }
 
+        if (permanent == null) {
+            permanent = false;
+        }
+
         if (permanent){
             User loggedInUser = (User) session.getAttribute("USER");
-            loggedInUser.setCardNumber(cardNumber);
+//            loggedInUser.setCardNumber(cardNumber);
+            System.out.println("llegaaaaaaaaa");
+            System.out.println(loggedInUser.getCardNumber());
+            userServices.saveUserNewCard(loggedInUser,cardNumber);
         }
         return "redirect:/payed/" + screening_id + "/" + seats;
     }
