@@ -7,7 +7,6 @@ import com.wtfcinema.demo.services.SnackServices;
 import com.wtfcinema.demo.services.TheatreServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +43,12 @@ public class AdminController {
     @Autowired
     private ScreeningServices screeningServices;
 
+    ///////MOVIES////////////
+
     @GetMapping("/moviesAdmin")
     public String showMoviesAdmin(Model model, @ModelAttribute("message") String message) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
-        model.addAttribute("user", loggedInUser);
+        model.addAttribute("employee", loggedInUser);
 
         if (!model.containsAttribute("movies")) {
             List<Movie> movies = movieServices.getAllMovies();
@@ -96,7 +97,7 @@ public class AdminController {
             // Guarda el archivo en la carpeta static/movies
             if (!file.isEmpty()) {
                 String fileExtension = ".jpg";
-                String directoryPath = "src/main/resources/static/images/";
+                String directoryPath = "src/main/resources/images/";
                 String filePath = directoryPath + newMovie.getId() + fileExtension;
 
                 // Crear el directorio si no existe
@@ -122,12 +123,14 @@ public class AdminController {
         }
     }
 
+    ///////////SNACKS///////////
+
     @GetMapping("/snacksMenuAdmin")
     public String showSnacksMenuAdmin(Model model) {
         List<Snack> snackList = snackServices.getAllSnacks();
         model.addAttribute("snacks", snackList);
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
-        model.addAttribute("user", loggedInUser);
+        model.addAttribute("employee", loggedInUser);
         return "snacksMenuAdmin";
     }
 
@@ -156,22 +159,17 @@ public class AdminController {
 
             snackServices.registerNewSnack(newSnack);
 
-            // Guarda el archivo en la carpeta static/movies
             if (!file.isEmpty()) {
                 String fileExtension = ".jpg";
                 String directoryPath = "src/main/resources/static/images/snacks/";
                 String filePath = directoryPath + newSnack.getName() + fileExtension;
 
-                // Crear el directorio si no existe
                 Path directory = Paths.get(directoryPath);
                 if (!Files.exists(directory)) {
                     Files.createDirectories(directory);
                 }
 
-                // Obtener la ruta completa del archivo
                 Path path = Paths.get(filePath);
-
-                // Guardar el archivo (sobreescribirá si ya existe uno con el mismo nombre)
                 Files.write(path, file.getBytes());
             }
             session.setAttribute("SNACK", newSnack);
@@ -183,6 +181,40 @@ public class AdminController {
             return "redirect:/admin/createSnacks";
         }
     }
+
+    @PostMapping("/deleteSnack/{snackId}")
+    public String deleteSnack(@PathVariable Long snackId, RedirectAttributes redirectAttributes) {
+        try {
+            Optional<Snack> snack= snackServices.findById(snackId);
+
+            if (snack.isPresent()) {
+                String photoName = snack.get().getName() + ".jpg";
+
+                Path photoPath = Paths.get("src/main/resources/static/images/snacks/", photoName);
+
+                // Intentar eliminar el archivo si existe
+                try {
+                    if (Files.exists(photoPath)) {
+                        Files.delete(photoPath);
+                    }
+                } catch (IOException ignored) {} //si no se encuentra la foto sigue, para ver cual era el error especifico abajo
+            }
+
+            snackServices.deleteSnackById(snackId);
+            redirectAttributes.addFlashAttribute("errorMessage", "Snack eliminado exitosamente.");
+            return "redirect:/admin/snacksMenuAdmin";
+
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error: Snack no encontrado. " + e);
+            return "redirect:/admin/snacksMenuAdmin";
+        } catch (RuntimeException r) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el snack. " + r);
+            return "redirect:/admin/snacksMenuAdmin";
+        }
+    }
+
+    ////////////SCREENINGS///////////
 
     @GetMapping("/createFunction")
     public String showCreateFunction(Model model) {
@@ -233,23 +265,6 @@ public class AdminController {
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
             return "redirect:/admin/createFunction";
-        }
-    }
-    @DeleteMapping("/deleteSnack/{snackId}")
-    public ResponseEntity<?> deleteSnack(@PathVariable String snackId) {
-        try {
-            // Intentamos eliminar el snack
-            snackServices.deleteSnackById(snackId);
-            return ResponseEntity.ok().build();
-        } catch (IllegalArgumentException e) {
-            // Este error ocurre si no se encuentra el snack
-            return ResponseEntity.status(404).body("Snack no encontrado: " + e.getMessage());
-        } catch (RuntimeException e) {
-            // Este error ocurre si hay un problema al eliminar el snack
-            return ResponseEntity.status(500).body("Error al eliminar el snack: " + e.getMessage());
-        } catch (Exception e) {
-            // Este bloque captura otros errores inesperados
-            return ResponseEntity.status(500).body("Error desconocido: " + e.getMessage());
         }
     }
 }

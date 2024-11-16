@@ -15,7 +15,11 @@
 </header>
 
 <div class="welcome-container">
-  <h1 class="welcome-text">Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
+  <h1 class="welcome-text">Welcome, <span th:text="${employee != null ? employee.getName() : 'Guest'}"></span>!</h1>
+</div>
+
+<div th:if="${errorMessage}" class="error-message">
+  <span th:text="${errorMessage}"></span>
 </div>
 
 <div class="snack-row">
@@ -30,7 +34,9 @@
           <p><strong>Precio:</strong> $<span th:text="${snack.getPrice()}">Precio no disponible</span></p>
         </div>
       </div>
-      <button class="delete-button" onclick="deleteSnack('${snack.getName()}')">Eliminar 🗑</button>
+        <form th:action="@{/admin/deleteSnack/{snackId}(snackId=${snack.id})}" method="POST" onsubmit="return confirmDelete()">
+          <button type="submit">Eliminar 🗑</button>
+        </form>
     </div>
   </div>
 </div>
@@ -46,22 +52,10 @@
 </footer>
 
 <script>
-  function deleteSnack(snackId) {
-    if (confirm("¿Estás seguro de que deseas eliminar este snack?")) {
-      fetch(`/admin/deleteSnack/${snackId}`, {
-        method: 'DELETE'
-      })
-              .then(response => {
-                if (response.ok) {
-                  alert("Snack eliminado exitosamente.");
-                  location.reload();
-                } else {
-                  alert("Hubo un error al eliminar el snack.");
-                }
-              })
-              .catch(error => console.error('Error:', error));
-    }
+  function confirmDelete() {
+    return confirm('¿Estás seguro de que deseas eliminar este snack?');
   }
 </script>
+
 </body>
 </html>

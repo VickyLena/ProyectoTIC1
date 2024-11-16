@@ -14,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
@@ -51,6 +52,8 @@ public class MainController {
         return "main";
     }
 
+    /////LOGIN////
+
     @GetMapping("/login")
     public String showLogin(Model model) {
         return "login";
@@ -65,12 +68,14 @@ public class MainController {
         User usuario = userService.getByEmail(email);
         if (usuario != null && usuario.getPassword().equals(password)) {
             session.setAttribute("USER", usuario);
-            return "redirect:/movies"; //te lleva a movies pero la de main controller, no la de html
+            model.addAttribute("user", usuario);
+            return "redirect:/movies";
         }
 
         Employee empleado = employeeService.getByEmail(email);
         if (empleado != null && empleado.getPassword().equals(password)) {
             session.setAttribute("EMPLOYEE", empleado);
+            model.addAttribute("employee", empleado);
             return "redirect:/admin/moviesAdmin";
         }
 
@@ -83,6 +88,8 @@ public class MainController {
         session.invalidate();
         return "redirect:/login";
     }
+
+    /////REGISTER/////
 
     @GetMapping("/register")
     public String showRegister(Model model) {
@@ -126,8 +133,10 @@ public class MainController {
         }
     }
 
+    /////MOVIES//////
+
     @GetMapping("/movies")
-    public String showMovies(Model model) {
+    public String showMovies(Model model, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("USER");
         model.addAttribute("user", loggedInUser);
 
@@ -139,13 +148,22 @@ public class MainController {
     }
 
     @GetMapping("/movie/{movie_id}")
-    public String getMovieDetails(@PathVariable Long movie_id, Model model) {
+    public String getMovieDetails(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
+        User loggedInUser = (User) session.getAttribute("USER");
+
         Optional<Movie> movieOpt = movieService.findById(movie_id);
         if (movieOpt.isPresent()) {
             model.addAttribute("movie", movieOpt.get());
         } else {
             return "redirect:/movies";
         }
+
+        Movie movie = movieOpt.get();
+        if(loggedInUser!=null && movie.getAgeRestriction()>Period.between(LocalDate.now(),loggedInUser.getBirthDate()).getYears()){
+            redirectAttributes.addFlashAttribute("errorMessage", "El usuario no tiene edad para ver esta pelicula.");
+            return "redirect:/movies";
+        }
+
         return "movieScreenings";
     }
 

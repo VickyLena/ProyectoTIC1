@@ -15,6 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Snack {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+
     @Column(name = "NAME")
     private String name;
 
