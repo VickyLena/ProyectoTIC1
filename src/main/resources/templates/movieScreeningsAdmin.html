@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WTF Cinema - Screenings</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body class="main-body">
+<header class="headerIzq">
+    <div class="top-right-buttons">
+        <h1>Screenings for <span th:text="${movie.getTitle()}"></span>!</h1>
+        <a href="/logout" class="logout-button">Logout</a>
+        <a href="/movies" class="return-button">Return to Movies</a>
+    </div>
+</header>
+
+<a href="/admin/moviesAdmin" class="back-arrow">&larr; Más Películas</a>
+
+<h1>Lista de Funciones</h1>
+
+<div th:if="${errorMessage}" class="error-message">
+    <span th:text="${errorMessage}"></span>
+</div>
+
+<table class="screenings-table">
+    <thead>
+    <tr>
+        <th>Cine</th>
+        <th>Fecha y Hora</th>
+        <th>Lenguaje</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="screening : ${movie.getScreenings()}">
+        <td th:text="${screening.getTheatre().getCinema().getName()}">Cine</td>
+        <td th:text="${screening.getDateTime()}">Fecha no disponible</td>
+        <td th:text="${screening.getLanguage()}">Idioma no disponible</td>
+        <td>
+            <a th:href="@{/seats/{screeningId}(screeningId=${screening.getId()})}" class="reserva-button small-button">Ver Asientos</a>
+        </td>
+        <td>
+            <form th:action="@{/admin/deleteScreening/{movieId}/{screeningId}(screeningId=${screening.getId()}, movieId=${movie.getId()})}" method="POST" onsubmit="return confirmDeleteS()">
+                <button type="submit">Eliminar 🗑</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function confirmDeleteS() {
+        return confirm('¿Estás seguro de que deseas eliminar esta funcion?');
+    }
+</script>
+
+</body>
+</html>

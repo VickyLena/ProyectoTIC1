@@ -1,13 +1,9 @@
 package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.*;
-import com.wtfcinema.demo.services.MovieServices;
-import com.wtfcinema.demo.services.ScreeningServices;
-import com.wtfcinema.demo.services.SnackServices;
-import com.wtfcinema.demo.services.TheatreServices;
+import com.wtfcinema.demo.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +17,7 @@ import java.io.IOException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +41,11 @@ public class AdminController {
     @Autowired
     private ScreeningServices screeningServices;
 
+    @Autowired
+    private TicketServices ticketServices;
+
+    /////MOVIES/////
+
     @GetMapping("/moviesAdmin")
     public String showMoviesAdmin(Model model, @ModelAttribute("message") String message) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
@@ -55,6 +57,24 @@ public class AdminController {
         }
         model.addAttribute("message", message);
         return "moviesAdmin";
+    }
+
+    @GetMapping("/movie/{movie_id}")
+    public String getMovieDetailsAdmin(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
+        Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
+
+        Optional<Movie> movieOpt = movieServices.findByIdWithScreenings(movie_id);
+        if (movieOpt.isPresent()) {
+            model.addAttribute("movie", movieOpt.get());
+        } else {
+            return "redirect:/admin/moviesAdmin";
+        }
+        return "movieScreeningsAdmin";
+    }
+
+    @GetMapping("/movieScreenings")
+    public String showMovieScreenings(Model model) {
+        return "movieScreeningsAdmin";
     }
 
     @GetMapping("/createMovie")
@@ -93,22 +113,18 @@ public class AdminController {
 
             movieServices.registerNewMovie(newMovie);
 
-            // Guarda el archivo en la carpeta static/movies
             if (!file.isEmpty()) {
                 String fileExtension = ".jpg";
                 String directoryPath = "src/main/resources/static/images/";
                 String filePath = directoryPath + newMovie.getId() + fileExtension;
 
-                // Crear el directorio si no existe
                 Path directory = Paths.get(directoryPath);
                 if (!Files.exists(directory)) {
                     Files.createDirectories(directory);
                 }
 
-                // Obtener la ruta completa del archivo
                 Path path = Paths.get(filePath);
 
-                // Guardar el archivo (sobreescribirá si ya existe uno con el mismo nombre)
                 Files.write(path, file.getBytes());
             }
 
@@ -121,6 +137,40 @@ public class AdminController {
             return "redirect:/admin/createMovie";
         }
     }
+
+    @PostMapping("/deleteMovie/{movieId}")
+    public String deleteMovie(@PathVariable Long movieId, RedirectAttributes redirectAttributes) {
+        try {
+            Optional<Movie> movie= movieServices.findByIdWithScreenings(movieId);
+
+            if (movie.isPresent()) {
+                String photoName = movie.get().getId() + ".jpg";
+
+                Path photoPath = Paths.get("src/main/resources/static/images/", photoName);
+
+                // Intentar eliminar el archivo si existe
+                try {
+                    if (Files.exists(photoPath)) {
+                        Files.delete(photoPath);
+                    }
+                } catch (IOException ignored) {} //si no se encuentra la foto sigue, para ver cual era el error especifico abajo
+            }
+
+            movieServices.deleteMovieById(movieId);
+            redirectAttributes.addFlashAttribute("errorMessage", "Pelicula eliminada exitosamente.");
+            return "redirect:/admin/moviesAdmin";
+
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error: Pelicula no encontrada. " + e);
+            return "redirect:/admin/moviesAdmin";
+        } catch (RuntimeException r) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la Pelicula. " + r);
+            return "redirect:/admin/moviesAdmin";
+        }
+    }
+
+    /////SNACKS/////
 
     @GetMapping("/snacksMenuAdmin")
     public String showSnacksMenuAdmin(Model model) {
@@ -263,6 +313,22 @@ public class AdminController {
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
             return "redirect:/admin/createFunction";
+        }
+    }
+
+    @PostMapping("/deleteScreening/{movieId}/{screeningId}")
+    public String deleteScreening(@PathVariable Long screeningId, @PathVariable Long movieId, RedirectAttributes redirectAttributes) {
+        try {
+            screeningServices.deleteScreeningById(screeningId);
+            redirectAttributes.addFlashAttribute("errorMessage", "Funcion eliminada exitosamente.");
+            return "redirect:/admin/movie/"+ movieId;
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error: Funcion no encontrada. " + e);
+            return "redirect:/admin/movie/"+ movieId;
+        } catch (RuntimeException r) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la funcion. " + r);
+            return "redirect:/admin/movie/"+ movieId;
         }
     }
 }

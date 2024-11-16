@@ -30,6 +30,11 @@
 <div class="background-top">
     <button class="reserva-button">Comprar</button>
 </div>
+
+<div th:if="${errorMessage}" class="error-message">
+    <span th:text="${errorMessage}"></span>
+</div>
+
 <div class="movie-row">
     <div th:each="movie : ${movies}" class="movie-cell">
         <div class="movie-container">

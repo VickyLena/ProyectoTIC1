@@ -20,4 +20,8 @@ public class TicketServices {
         }
         ticketRep.save(ticket);
     }
+
+    public void deleteById(Long id) {
+        ticketRep.deleteById(id);
+    }
 }

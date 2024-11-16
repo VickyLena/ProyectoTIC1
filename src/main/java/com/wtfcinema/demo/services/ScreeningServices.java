@@ -1,7 +1,9 @@
 package com.wtfcinema.demo.services;
 
 import com.wtfcinema.demo.entities.Screening;
+import com.wtfcinema.demo.entities.Snack;
 import com.wtfcinema.demo.repository.ScreeningRep;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +24,17 @@ public class ScreeningServices {
     }
 
     public Optional<Screening> findById(long id) { return screeningRep.findById(id);}
+
+    @Transactional
+    public void deleteScreeningById(Long screening) {
+        Optional<Screening> screeningOptional = screeningRep.findById(screening);
+        if (screeningOptional.isEmpty()) {
+            throw new IllegalArgumentException("Screening con id '" + screening + "' no encontrado en la base de datos.");
+        }
+        try {
+            screeningRep.deleteById(screening);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar la funcion con id '" + screening + "'. Error: " + e.getMessage());
+        }
+    }
 }
