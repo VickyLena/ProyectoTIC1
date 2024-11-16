@@ -896,3 +896,84 @@ input[type="number"] {
     background-color: #ff6347;
 }
 
+
+
+/* Contenedor de filas de películas */
+.movie-row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos películas por fila */
+    gap: 30px; /* Espacio entre tarjetas */
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto; /* Centrado horizontal */
+    padding: 10px;
+}
+
+/* Tarjeta de película */
+.movie2 {
+    background-color: #751805; /* Fondo marrón oscuro */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+/* Contenido de cada tarjeta: imagen e info en una fila */
+.movie-content2 {
+    display: flex;
+    gap: 20px; /* Espacio entre imagen e información */
+}
+
+/* Imagen de la película */
+.movie-image2 img {
+    width: 250px; /* Tamaño fijo */
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Información de la película */
+.movie-info2 {
+    display: flex;
+    flex-direction: column; /* Información en una columna */
+    justify-content: space-between; /* Espacio uniforme entre elementos */
+    color: #fff;
+}
+
+/* Título de la película */
+.movie-info2 h2 {
+    font-family: 'Angel Club', sans-serif;
+    font-size: 1.8em;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #ff4500;
+}
+
+/* Descripción y detalles */
+.movie-info2 p,
+.movie-info2 li {
+    font-family: 'Diamend', sans-serif;
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+/* Destacar texto en negrita */
+.movie-info2 strong {
+    color: #ff4500;
+    font-weight: bold;
+}
+
+/* Botón de agregar snacks */
+.add-to-cart-button2 {
+    background-color: #ff4500;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.add-to-cart-button2:hover {
+    background-color: #ff6347;
+}
