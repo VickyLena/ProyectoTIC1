@@ -7,6 +7,7 @@ import com.wtfcinema.demo.services.SnackServices;
 import com.wtfcinema.demo.services.TheatreServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,12 +44,10 @@ public class AdminController {
     @Autowired
     private ScreeningServices screeningServices;
 
-    ///////MOVIES////////////
-
     @GetMapping("/moviesAdmin")
     public String showMoviesAdmin(Model model, @ModelAttribute("message") String message) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
-        model.addAttribute("employee", loggedInUser);
+        model.addAttribute("user", loggedInUser);
 
         if (!model.containsAttribute("movies")) {
             List<Movie> movies = movieServices.getAllMovies();
@@ -97,7 +96,7 @@ public class AdminController {
             // Guarda el archivo en la carpeta static/movies
             if (!file.isEmpty()) {
                 String fileExtension = ".jpg";
-                String directoryPath = "src/main/resources/images/";
+                String directoryPath = "src/main/resources/static/images/";
                 String filePath = directoryPath + newMovie.getId() + fileExtension;
 
                 // Crear el directorio si no existe
@@ -122,8 +121,6 @@ public class AdminController {
             return "redirect:/admin/createMovie";
         }
     }
-
-    ///////////SNACKS///////////
 
     @GetMapping("/snacksMenuAdmin")
     public String showSnacksMenuAdmin(Model model) {
@@ -170,6 +167,7 @@ public class AdminController {
                 }
 
                 Path path = Paths.get(filePath);
+
                 Files.write(path, file.getBytes());
             }
             session.setAttribute("SNACK", newSnack);
