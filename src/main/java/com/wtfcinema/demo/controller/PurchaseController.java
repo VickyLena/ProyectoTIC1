@@ -50,9 +50,12 @@ public class PurchaseController {
     @Transactional
     @GetMapping("/payment-method/{screening_id}/{seats}")
     public String selectPaymentMethod(Model model, @PathVariable Long screening_id, @PathVariable String seats){
-        System.out.println("screening_id: " + screening_id);
         model.addAttribute("screeningId", screening_id);
         model.addAttribute("seats", seats);
+        User loggedInUser = (User) session.getAttribute("USER");
+        if (loggedInUser != null) {
+            model.addAttribute("card", loggedInUser.getCardNumber());
+        }
         return "paymentMethod";}
 
     @Transactional
