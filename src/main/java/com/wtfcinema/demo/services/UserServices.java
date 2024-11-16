@@ -4,6 +4,7 @@ import com.wtfcinema.demo.entities.User;
 import com.wtfcinema.demo.repository.UserRep;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -21,6 +22,7 @@ public class UserServices {
         return result.orElse(null);
     }
 
+    @Transactional
     public User getByEmail(String email){
         Optional<User> result = userRepo.findByEmail(email);
         return result.orElse(null);

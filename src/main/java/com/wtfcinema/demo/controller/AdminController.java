@@ -233,7 +233,7 @@ public class AdminController {
                                    HttpSession session) {
         try {
             LocalDateTime dateTime = LocalDateTime.parse(date_time);
-            Optional<Movie> movie = movieServices.findById(Long.parseLong(movie_id));
+            Optional<Movie> movie = movieServices.findByIdWithScreenings(Long.parseLong(movie_id));
             if (movie.isEmpty()) {
                 redirectAttributes.addFlashAttribute("errorMessage", "La película no existe.");
                 return "redirect:/admin/createFunction";

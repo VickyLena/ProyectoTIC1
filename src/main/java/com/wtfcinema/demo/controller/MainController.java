@@ -4,8 +4,10 @@ import com.wtfcinema.demo.entities.*;
 import com.wtfcinema.demo.repository.CinemaRep;
 import com.wtfcinema.demo.services.*;
 import jakarta.servlet.http.HttpSession;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -125,7 +127,8 @@ public class MainController {
 
             session.setAttribute("USER", newUser);
             model.addAttribute("message", "Usuario registrado exitosamente");
-            return "main";
+            model.addAttribute("user", newUser);
+            return "redirect:/movies";
 
         } catch (RuntimeException e) {
             model.addAttribute("errorMessage", "ERROR");
@@ -134,15 +137,22 @@ public class MainController {
     }
 
     /////MOVIES//////
-
+    @Transactional
     @GetMapping("/movies")
     public String showMovies(Model model, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("USER");
         model.addAttribute("user", loggedInUser);
+//        if(model.containsAttribute("message")){
+//            model.addAttribute("message", movies);
+//        }
 
         if (!model.containsAttribute("movies")) {
             List<Movie> movies = movieService.getAllMovies();
             model.addAttribute("movies", movies);
+//            for (Movie movie : movies) {
+//                // Inicializar la colección 'genres' explícitamente
+//                Hibernate.initialize(movie.getGenres());
+//            }
         }
         return "movies";
     }
@@ -151,7 +161,7 @@ public class MainController {
     public String getMovieDetails(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("USER");
 
-        Optional<Movie> movieOpt = movieService.findById(movie_id);
+        Optional<Movie> movieOpt = movieService.findByIdWithScreenings(movie_id);
         if (movieOpt.isPresent()) {
             model.addAttribute("movie", movieOpt.get());
         } else {
@@ -159,7 +169,7 @@ public class MainController {
         }
 
         Movie movie = movieOpt.get();
-        if(loggedInUser!=null && movie.getAgeRestriction()>Period.between(LocalDate.now(),loggedInUser.getBirthDate()).getYears()){
+        if(loggedInUser!=null && movie.getAgeRestriction()>Period.between(loggedInUser.getBirthDate(),LocalDate.now()).getYears()){
             redirectAttributes.addFlashAttribute("errorMessage", "El usuario no tiene edad para ver esta pelicula.");
             return "redirect:/movies";
         }

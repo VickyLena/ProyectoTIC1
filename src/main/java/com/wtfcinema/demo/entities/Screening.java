@@ -28,7 +28,7 @@ public class Screening {
     @Column(name = "DATE_TIME")
     private LocalDateTime dateTime;
 
-    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
     private List<Ticket> takenSeats = new LinkedList<Ticket>();
 

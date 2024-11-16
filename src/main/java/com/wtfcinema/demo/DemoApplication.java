@@ -17,10 +17,8 @@ public class DemoApplication {
 
 	public static void main(String[] args){
 		SpringApplication.run(DemoApplication.class, args);
-		runInCommandLine();
+
 	}
 
-	private static void runInCommandLine() {
-	}
 }
 

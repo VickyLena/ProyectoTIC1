@@ -25,7 +25,7 @@ public class Snack {
     @Column(name = "PRICE")
     private int price;
 
-    @ManyToMany(mappedBy = "snacks", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "snacks", fetch = FetchType.LAZY)
     private List<Ticket> tickets = new LinkedList<>();
 
 }

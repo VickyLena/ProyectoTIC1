@@ -38,7 +38,7 @@ public class Movie {
 //    @Column(name = "IMAGE")
 //    private String image;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "MOVIE_GENRES")
     @Column(name = "GENRE")
     private List<String> genres;
@@ -46,7 +46,7 @@ public class Movie {
     @Column(name = "AGE_RESTRICTION")
     private int ageRestriction;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
     private List<Screening> screenings = new LinkedList<Screening>();
 
