@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Comprar - WTF Cinema</title>
+    <link rel="stylesheet" href="/index.css">
 </head>
-<body>
+<body class="payment-method-body-unique">
+<a href="/" class="back-arrow">&larr; Regresar a Inicio</a>
+<div class="pago-container-unique">
     <h2>Ingrese sus datos:</h2>
 
     <div th:if="${errorMessage}" class="error-message">
@@ -12,16 +15,24 @@
     </div>
 
     <form action="/addCard" method="POST">
-        <label for="cardNumber">Numero de Tarjeta:</label>
+        <label for="cardNumber">Número de Tarjeta:</label>
         <input type="text" id="cardNumber" name="cardNumber" required>
-        <label for="permanent">Guardar para futuras compras:</label>
-        <input type="checkbox" id="permanent" name="permanent">
+
+        <div class="checkbox-container">
+            <label for="permanent">Guardar para futuras compras:</label>
+            <input type="checkbox" id="permanent" name="permanent">
+        </div>
 
         <input type="hidden" name="screening_id" th:value="${screeningId}">
         <input type="hidden" name="seats" th:value="${seats}">
 
         <button type="submit" class="submit-button">Comprar</button>
     </form>
-
+</div>
+<footer>
+    <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+    <p>Laboratorio TIC I.</p>
+    <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
 </body>
 </html>

@@ -2,22 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Metodo de Pago</title>
+    <!-- Vinculando el archivo CSS -->
+    <link rel="stylesheet" href="/index.css">
 </head>
-<body>
+
+<body class="payment-method-body">
 <h1>Metodo de Pago</h1>
 
-<div class="locations-table">
-    <table class="locales-table">
-        <tr>
-            <a th:href="@{/new-card/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="goto-screenings">
-                <span th:if="${card != null}" th:text="${card}">Numero de Tarjeta</span>
-            </a>
-        </tr>
-        <tr>
-            <a th:href="@{/new-card/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="goto-screenings">Agregar Metodo de Pago</a>
-        </tr>
-    </table>
+<div class="button-container2">
+    <!-- Enlace para agregar un nuevo método de pago -->
+    <a th:href="@{/new-card/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="payment-button">
+        Agregar Método de Pago
+    </a>
+
+    <!-- Enlace para usar el método de pago existente -->
+    <a th:href="@{/payed/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="payment-button">
+        Usar Método de Pago Existente
+    </a>
 </div>
 
 <footer>
@@ -25,6 +27,5 @@
     <p>Laboratorio TIC I.</p>
     <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
 </footer>
-
 </body>
 </html>
