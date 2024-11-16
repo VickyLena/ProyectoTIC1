@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WTF Cinema - Snacks</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body class="main-body">
+
+<header class="headerIzq">
+    <div class="welcome-container">
+        <a href="/logout" class="logout-button">Log out</a>
+    </div>
+</header>
+
+<div class="welcome-container">
+    <h1 class="welcome-text">Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
+</div>
+
+<div class="snack-row">
+    <div th:each="snack : ${snacks}" class="snack-cell">
+        <div class="snack-container">
+
+            <div class="movie-main-content">
+                <div class="snack-image">
+                    <img th:src="@{/images/snacks/{name}.jpg(name=${snack.getName()})}" alt="Imagen del snack" />
+                </div>
+                <div class="snack-info">
+                    <h2 th:text="${snack.getName()}">Nombre del snack</h2>
+                    <p><strong>Precio:</strong> $<span th:text="${snack.getPrice()}">Precio no disponible</span></p>
+                </div>
+            </div>
+            <div class="snack-actions">
+                <label for="snack-quantity" class="quantity-label">Cantidad:</label>
+                <input type="number" id="snack-quantity" name="quantity" min="1" max="20" value="1" th:attr="data-snack-id=${snack.getName()}">
+                <button class="add-to-cart-button" th:attr="data-snack-id=${snack.getName()}">Agregar al Carrito</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-actions">
+    <button id="purchase-button" class="purchase-button">Comprar</button>
+</div>
+
+<footer>
+    <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+    <p>Laboratorio TIC I.</p>
+    <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+
+<script>
+    const cart = {};
+
+    document.querySelectorAll('.add-to-cart-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const snackId = this.getAttribute('data-snack-id');
+            const quantity = document.querySelector(`input[data-snack-id="${snackId}"]`).value;
+
+            cart[snackId] = quantity;
+
+            alert(`Agregado al carrito: Snack ID ${snackId}, Cantidad: ${quantity}`);
+        });
+    });
+
+    document.getElementById('purchase-button').addEventListener('click', function() {
+        let purchaseSummary = 'Resumen de compra:\n';
+        for (const [snackId, quantity] of Object.entries(cart)) {
+            purchaseSummary += `${snackId}: X${quantity}\n`;
+        }
+
+        alert(purchaseSummary + '\nCompra realizada exitosamente!');
+
+        Object.keys(cart).forEach(snackId => delete cart[snackId]);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Pelicula - WTF Cinema</title>
+    <style>
+        .error-message {
+            color: #ffffff;
+            font-size: 1em;
+            margin-top: 10px;
+            background-color: #f8d7da;
+            border: 1px solid red;
+            padding: 10px;
+            border-radius: 5px;
+            display: block;
+        }
+    </style>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body class="register-body">
+<a href="/admin/moviesAdmin" class="back-arrow">&larr; Volver</a>
+<h1>
+    Agregar Pelicula
+</h1>
+
+<div class="login-form-container">
+    <h2>Ingrese los datos de la pelicula:</h2>
+
+    <div th:if="${errorMessage}" class="error-message">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <form action="/admin/register-movie" method="POST" enctype="multipart/form-data">
+        <label for="title">* Título:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="file">* Imagen:</label>
+        <input type="file" enctype="multipart/form-data" name="file" accept=".jpg" required>
+
+        <label for="description">* Descripción:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="director">* Director:</label>
+        <input type="text" id="director" name="director" required>
+
+        <label for="duration">* Duración (minutos):</label>
+        <input type="number" id="duration" name="duration" required>
+
+        <label for="release_date">* Fecha de Estreno:</label>
+        <input type="date" id="release_date" name="release_date" required>
+
+        <label for="age_restriction">* Restricción de Edad:</label>
+        <select id="age_restriction" name="age_restriction" required>
+            <option value="0">G (Apta para todos)</option>
+            <option value="13">PG (Guía Paternal Sugerida)</option>
+            <option value="18">PG-18 (Mayores de 18 años)</option>
+        </select>
+
+        <label for="genres">* Géneros:</label>
+        <div id="genres">
+            <label>
+                <input type="checkbox" name="genres[]" value="Accion"> Acción
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Comedia"> Comedia
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Drama"> Drama
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Terror"> Terror
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Ciencia Ficción"> Ciencia Ficción
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Romance"> Romance
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Fantasía"> Fantasía
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Aventura"> Aventura
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Familiar"> Familiar
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Animación"> Animación
+            </label>
+            <label>
+                <input type="checkbox" name="genres[]" value="Crimen"> Crimen
+            </label>
+        </div>
+
+        <button type="submit" class="submit-button">Registrar Película</button>
+    </form>
+
+</div>
+
+<footer>
+    <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+    <p>Laboratorio TIC I.</p>
+    <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+</body>
+</html>

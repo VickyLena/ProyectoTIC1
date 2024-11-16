@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WTF Cinema - Snacks</title>
+  <link rel="stylesheet" href="/index.css">
+</head>
+<body class="main-body">
+
+<header class="headerIzq">
+  <div class="welcome-container">
+    <a href="/admin/moviesAdmin" class="back-arrow">&larr; Volver</a>
+  </div>
+</header>
+
+<div class="welcome-container">
+  <h1 class="welcome-text">Welcome, <span th:text="${employee != null ? employee.getName() : 'Guest'}"></span>!</h1>
+</div>
+
+<div th:if="${errorMessage}" class="error-message">
+  <span th:text="${errorMessage}"></span>
+</div>
+
+<div class="snack-row">
+  <div th:each="snack : ${snacks}" class="snack-cell">
+    <div class="snack-container">
+      <div class="movie-main-content">
+        <div class="snack-image">
+          <img th:src="@{/images/snacks/{name}.jpg(name=${snack.getName()})}" alt="Imagen del snack" />
+        </div>
+        <div class="snack-info">
+          <h2 th:text="${snack.getName()}">Nombre del snack</h2>
+          <p><strong>Precio:</strong> $<span th:text="${snack.getPrice()}">Precio no disponible</span></p>
+        </div>
+      </div>
+        <form th:action="@{/admin/deleteSnack/{snackId}(snackId=${snack.id})}" method="POST" onsubmit="return confirmDelete()">
+          <button type="submit">Eliminar 🗑</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+<div class="cart-actions">
+  <button id="purchase-button" class="purchase-button">Comprar</button>
+</div>
+
+<footer>
+  <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+  <p>Laboratorio TIC I.</p>
+  <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+
+<script>
+  function confirmDelete() {
+    return confirm('¿Estás seguro de que deseas eliminar este snack?');
+  }
+</script>
+
+</body>
+</html>
