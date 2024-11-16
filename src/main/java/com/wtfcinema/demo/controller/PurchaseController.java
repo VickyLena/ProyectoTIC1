@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -34,12 +35,13 @@ public class PurchaseController {
     @Transactional
     @GetMapping("/seats/{screening_id}")
     public String showSeats(Model model, @PathVariable Long screening_id) {
-        Optional<Screening> screening = screeningServices.findById(screening_id);
-        List<Ticket> tickets = screening.get().getTakenSeats();
-        List<String> takenSeats = new LinkedList<>();
+        Screening screening = screeningServices.getScreeningWithTakenSeats(screening_id);
+        List<Ticket> tickets = screening.getTakenSeats();
+        List<String> takenSeats = new ArrayList<>();
         for (Ticket ticket : tickets) {
             takenSeats.add(ticket.getSeat());
         }
+        System.out.println(takenSeats);
         model.addAttribute("takenSeats", takenSeats);
         model.addAttribute("screeningId", screening_id);
         User loggedInUser = (User) session.getAttribute("USER");

@@ -23,6 +23,15 @@ public class UserServices {
     }
 
     @Transactional
+    public User getUserWithTickets(Long userId) {
+        Optional<User> user = userRepo.findByIdWithTickets(userId);
+        if(!user.isEmpty()){
+            user.get().getTickets(); // Inicializa la colección
+        }
+        return user.orElse(null);
+    }
+
+    @Transactional
     public User getByEmail(String email){
         Optional<User> result = userRepo.findByEmail(email);
         return result.orElse(null);
