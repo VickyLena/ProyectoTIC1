@@ -56,7 +56,10 @@
       </div>
       <div class="movie-description">
         <p th:text="${movie.getDescription()}">Descripción no disponible</p>
-        <a th:href="@{/movie/{movie_id}(movie_id=${movie.getId()})}" class="goto-screenings">Ver Funciones</a>
+        <a th:href="@{/admin/movie/{movie_id}(movie_id=${movie.getId()})}" class="goto-screenings">Ver Funciones</a>
+        <form th:action="@{/admin/deleteMovie/{movieId}(movieId=${movie.getId()})}" method="POST" onsubmit="return confirmDeleteM()">
+          <button type="submit">Eliminar 🗑</button>
+        </form>
       </div>
     </div>
   </div>
@@ -69,12 +72,16 @@
 </footer>
 
 <script>
-  document.getElementById('openMenuBtn').onclick = function() {
+  document.getElementById('openMenuBtn').onclick = function () {
     document.getElementById('sideMenu').style.width = '250px';
   };
 
   function closeMenu() {
     document.getElementById('sideMenu').style.width = '0';
+  }
+
+  function confirmDeleteM() {
+    return confirm('¿Estás seguro de que deseas eliminar esta pelicula y sus funciones?');
   }
 </script>
 

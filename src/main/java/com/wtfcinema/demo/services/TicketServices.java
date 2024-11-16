@@ -17,4 +17,8 @@ public class TicketServices {
     public void registerNewTicket(Ticket ticket) {
         ticketRep.save(ticket);
     }
+
+    public void deleteById(Long id) {
+        ticketRep.deleteById(id);
+    }
 }
