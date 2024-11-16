@@ -17,7 +17,6 @@ public interface MovieRep extends JpaRepository<Movie, Long> {
 
     List<Movie> findByAgeRestriction(int ageRestriction);
 
-    // Consulta con fetch join para evitar LazyInitializationException
     @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.genres")
     List<Movie> findAllWithGenres();
 

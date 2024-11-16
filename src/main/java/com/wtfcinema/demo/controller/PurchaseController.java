@@ -8,6 +8,7 @@ import com.wtfcinema.demo.services.TicketServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class PurchaseController {
     @Autowired
     private TicketServices ticketServices;
 
+    @Transactional
     @GetMapping("/seats/{screening_id}")
     public String showSeats(Model model, @PathVariable Long screening_id) {
         Optional<Screening> screening = screeningServices.findById(screening_id);
@@ -45,6 +47,7 @@ public class PurchaseController {
         return "seats";
     }
 
+    @Transactional
     @GetMapping("/payment-method/{screening_id}/{seats}")
     public String selectPaymentMethod(Model model, @PathVariable Long screening_id, @PathVariable String seats){
         System.out.println("screening_id: " + screening_id);
@@ -52,6 +55,7 @@ public class PurchaseController {
         model.addAttribute("seats", seats);
         return "paymentMethod";}
 
+    @Transactional
     @GetMapping("/new-card/{screening_id}/{seats}")
     public String newCard(Model model, @PathVariable Long screening_id, @PathVariable String seats){
         System.out.println("screening_id: " + screening_id);
@@ -59,23 +63,25 @@ public class PurchaseController {
         model.addAttribute("seats", seats);
         return "newCard";}
 
+    @Transactional
     @PostMapping("/addCard")
-    public String addCard(Model model, @RequestParam Long cardNumber, @RequestParam Boolean permanent, RedirectAttributes redirectAttributes){
+    public String addCard(Model model, @RequestParam Long cardNumber, @RequestParam Boolean permanent,
+                          @RequestParam Long screening_id, @RequestParam String seats, RedirectAttributes redirectAttributes){
         int length = String.valueOf(cardNumber).length();
         if (length!= 16){
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: El numero de tarjeta debe tener largo 16");
-            return "redirect:/new-card/{screening_id}/{seats}";
+            return "redirect:/new-card/" + screening_id + "/" + seats;
         }
 
         if (permanent){
             User loggedInUser = (User) session.getAttribute("USER");
             loggedInUser.setCardNumber(cardNumber);
         }
-
-        return "redirect:/payed/{screening_id}/{seats}";
+        return "redirect:/payed/" + screening_id + "/" + seats;
     }
 
-    @PostMapping("/payed/{screening_id}/{seats}")
+    @Transactional
+    @GetMapping("/payed/{screening_id}/{seats}")
     public String confirmPayment(Model model, @PathVariable Long screening_id, @PathVariable String seats){
         User loggedInUser = (User) session.getAttribute("USER");
         Optional<Screening> screening = screeningServices.findById(screening_id);
