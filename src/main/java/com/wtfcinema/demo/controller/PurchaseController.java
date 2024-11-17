@@ -1,9 +1,6 @@
 package com.wtfcinema.demo.controller;
 
-import com.wtfcinema.demo.entities.Screening;
-import com.wtfcinema.demo.entities.Snack;
-import com.wtfcinema.demo.entities.Ticket;
-import com.wtfcinema.demo.entities.User;
+import com.wtfcinema.demo.entities.*;
 import com.wtfcinema.demo.services.ScreeningServices;
 import com.wtfcinema.demo.services.SnackServices;
 import com.wtfcinema.demo.services.TicketServices;
@@ -110,16 +107,32 @@ public class PurchaseController {
     @GetMapping("/payed/{screening_id}/{seats}")
     public String confirmPayment(Model model, @PathVariable Long screening_id, @PathVariable String seats){
         User loggedInUser = (User) session.getAttribute("USER");
+        Employee loggedInEmployee = (Employee) session.getAttribute("EMPLOYEE");
         Optional<Screening> screening = screeningServices.findById(screening_id);
         List<String> selectedSeats = List.of(seats.split(","));
-        for (String number : selectedSeats){
-            Ticket newTicket = Ticket.builder()
-                    .seat(number)
-                    .user(loggedInUser)
-                    .screening(screening.get())
-                    .build();
-            ticketServices.registerNewTicket(newTicket);
+
+        if (loggedInUser!=null){
+            for (String number : selectedSeats){
+                Ticket newTicket = Ticket.builder()
+                        .seat(number)
+                        .user(loggedInUser)
+                        .screening(screening.get())
+                        .build();
+                ticketServices.registerNewTicket(newTicket);
+            }
         }
+
+        if (loggedInEmployee!=null){
+            for (String number : selectedSeats){
+                Ticket newTicket = Ticket.builder()
+                        .seat(number)
+                        .employee(loggedInEmployee)
+                        .screening(screening.get())
+                        .build();
+                ticketServices.registerNewTicket(newTicket);
+            }
+        }
+
         return "redirect:/my-tickets";
     }
 
