@@ -1,6 +1,7 @@
 package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.Screening;
+import com.wtfcinema.demo.entities.Snack;
 import com.wtfcinema.demo.entities.Ticket;
 import com.wtfcinema.demo.entities.User;
 import com.wtfcinema.demo.services.ScreeningServices;
@@ -187,6 +188,14 @@ public class PurchaseController {
         response.put("redirectUrl", redi);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/snacks/{ticketId}")
+    public String showSnacks(Model model, @PathVariable Long ticketId) {
+        List<Snack> snackList = snackServices.getAllSnacks();
+        model.addAttribute("snacks", snackList);
+        model.addAttribute("ticket", ticketId);
+        return "snacks";
     }
 
 }
