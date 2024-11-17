@@ -790,8 +790,8 @@ input[type="number"] {
 
 .edit-button {
     font-size: 1.2em;
-    background-color: #007bff;
-    color: white;
+    background-color: #ffffff;
+    color: #e33e00;
     padding: 5px 10px;
     border-radius: 5px;
     text-decoration: none;
@@ -799,7 +799,7 @@ input[type="number"] {
 }
 
 .edit-button:hover {
-    background-color: #0056b3;
+    background-color: #e33e00;
 }
 .payment-method-body {
     background-color: #751805;

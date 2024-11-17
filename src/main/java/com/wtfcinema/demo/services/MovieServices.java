@@ -51,6 +51,10 @@ public class MovieServices {
         Optional<Movie> movie = movieRep.findByIdWithGenres(movieId);
         return movie.orElse(null);
     }
+    public Movie findById(Long movieId) {
+        Optional<Movie> movie = movieRep.findById(movieId);
+        return movie.orElse(null);
+    }
 
     public void registerNewMovie(Movie movie) {
         if (movieRep.findByTitle(movie.getTitle()).isPresent()) {
@@ -79,5 +83,24 @@ public class MovieServices {
     public void updateMovie(Movie movie) {
         movieRep.save(movie);
     }
+
+    public void update(Movie updatedMovie) {
+        // Buscar la película existente
+        Movie existingMovie = movieRep.findById(updatedMovie.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Película no encontrada con id: " + updatedMovie.getId()));
+
+        existingMovie.setTitle(updatedMovie.getTitle());
+        existingMovie.setDescription(updatedMovie.getDescription());
+        existingMovie.setDirector(updatedMovie.getDirector());
+        existingMovie.setDuration(updatedMovie.getDuration());
+        existingMovie.setReleaseDate(updatedMovie.getReleaseDate());
+        existingMovie.setGenres(updatedMovie.getGenres());
+        existingMovie.setAgeRestriction(updatedMovie.getAgeRestriction());
+
+        movieRep.save(existingMovie);
+    }
+
+
+
 }
 

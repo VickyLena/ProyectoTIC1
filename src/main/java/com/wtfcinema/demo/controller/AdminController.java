@@ -378,9 +378,12 @@ public class AdminController {
     public String editMovie(@PathVariable("movieId") Long movieId, Model model) {
         Movie movie = movieServices.findByIdWithGenres(movieId);
         model.addAttribute("movie", movie);
-        return "redirect:/editMovies";
+        return "editMovies";
     }
 
-
-
+    @PostMapping("/update-movie")
+    public String updateMovie(@ModelAttribute Movie movie) {
+        movieServices.update(movie);
+        return "redirect:/admin/moviesAdmin";
+    }
 }

@@ -51,4 +51,5 @@ public class Movie {
     @Builder.Default
     private List<Screening> screenings = new LinkedList<Screening>();
 
+
 }

@@ -28,9 +28,6 @@
 <div class="welcome-container">
     <h1 class="welcome-text">Welcome, <span th:text="${user != null ? user.name : 'Guest'}"></span>!</h1>
 </div>
-<div class="background-top">
-    <button class="reserva-button">Comprar</button>
-</div>
 
 <div th:if="${errorMessage}" class="error-message">
     <span th:text="${errorMessage}"></span>
