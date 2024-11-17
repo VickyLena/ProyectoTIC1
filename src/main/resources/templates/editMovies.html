@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Película - WTF Cinema</title>
+  <link rel="stylesheet" href="/index.css">
+  <style>
+    .error-message {
+      color: #ffffff;
+      font-size: 1em;
+      margin-top: 10px;
+      background-color: #f8d7da;
+      border: 1px solid red;
+      padding: 10px;
+      border-radius: 5px;
+      display: block;
+    }
+
+    .edit-button {
+      font-size: 1.5em;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #007bff;
+      margin-top: 15px;
+    }
+
+    .edit-button:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body class="register-body">
+<!-- Botón para regresar a la página de administración de películas -->
+<a href="/admin/moviesAdmin" class="back-arrow">&larr; Volver</a>
+
+<h1>Editar Película</h1>
+
+<!-- Agregar botón de lápiz que lleva a la página de edición específica -->
+<form action="/admin/edit-movie" method="GET">
+  <input type="hidden" name="id" th:value="${movie.id}">
+</form>
+
+<div class="login-form-container">
+  <h2>Actualice los datos de la película:</h2>
+
+  <!-- Mostrar mensaje de error si lo hay -->
+  <div th:if="${errorMessage}" class="error-message">
+    <span th:text="${errorMessage}"></span>
+  </div>
+
+  <!-- Formulario para editar película -->
+  <form action="/admin/update-movie" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id" th:value="${movie.id}">
+
+    <label for="title">* Título:</label>
+    <input type="text" id="title" name="title" th:value="${movie.title}" required>
+
+    <label for="file">Portada:</label>
+    <input type="file" name="file" accept=".jpg">
+
+    <label for="description">* Descripción:</label>
+    <textarea id="description" name="description" required th:text="${movie.description}"></textarea>
+
+    <label for="director">* Director:</label>
+    <input type="text" id="director" name="director" th:value="${movie.director}" required>
+
+    <label for="duration">* Duración (minutos):</label>
+    <input type="number" id="duration" name="duration" th:value="${movie.duration}" required>
+
+    <label for="release_date">* Fecha de Estreno:</label>
+    <input type="date" id="release_date" name="release_date" th:value="${movie.releaseDate}">
+
+    <label for="age_restriction">* Restricción de Edad:</label>
+    <select id="age_restriction" name="age_restriction" required>
+      <option th:value="0" th:selected="${movie.ageRestriction == 0}">G (Apta para todos)</option>
+      <option th:value="13" th:selected="${movie.ageRestriction == 13}">PG (Guía Paternal Sugerida)</option>
+      <option th:value="18" th:selected="${movie.ageRestriction == 18}">PG-18 (Mayores de 18 años)</option>
+    </select>
+
+    <label for="genres">* Géneros:</label>
+    <div id="genres">
+      <label>
+        <input type="checkbox" name="genres[]" value="Accion" th:checked="${movie.genres.contains('Accion')}"> Acción
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Comedia" th:checked="${movie.genres.contains('Comedia')}"> Comedia
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Drama" th:checked="${movie.genres.contains('Drama')}"> Drama
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Terror" th:checked="${movie.genres.contains('Terror')}"> Terror
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Ciencia Ficción" th:checked="${movie.genres.contains('Ciencia Ficción')}"> Ciencia Ficción
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Romance" th:checked="${movie.genres.contains('Romance')}"> Romance
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Fantasía" th:checked="${movie.genres.contains('Fantasía')}"> Fantasía
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Aventura" th:checked="${movie.genres.contains('Aventura')}"> Aventura
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Familiar" th:checked="${movie.genres.contains('Familiar')}"> Familiar
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Animación" th:checked="${movie.genres.contains('Animación')}"> Animación
+      </label>
+      <label>
+        <input type="checkbox" name="genres[]" value="Crimen" th:checked="${movie.genres.contains('Crimen')}"> Crimen
+      </label>
+    </div>
+
+    <button type="submit" class="submit-button">Actualizar Película</button>
+  </form>
+</div>
+
+<footer>
+  <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+  <p>Laboratorio TIC I.</p>
+  <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+</body>
+</html>

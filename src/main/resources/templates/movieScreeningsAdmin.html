@@ -41,7 +41,7 @@
         </td>
         <td>
             <form th:action="@{/admin/deleteScreening/{movieId}/{screeningId}(screeningId=${screening.getId()}, movieId=${movie.getId()})}" method="POST" onsubmit="return confirmDeleteS()">
-                <button type="submit">Eliminar 🗑</button>
+                <button type="submit" class="delete-button">Eliminar 🗑</button>
             </form>
         </td>
     </tr>

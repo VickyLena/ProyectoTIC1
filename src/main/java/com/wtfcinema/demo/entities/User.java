@@ -39,6 +39,9 @@ public class User {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Column(name = "ADDRESS")
+    private String address;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
     private List<Ticket> tickets = new LinkedList<Ticket>();

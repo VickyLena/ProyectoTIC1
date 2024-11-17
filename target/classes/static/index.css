@@ -772,20 +772,35 @@ input[type="number"] {
 }
 
 .delete-button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background: transparent;
+    background-color: #ff4500; /* Fondo sólido para el botón */
+    color: white; /* Color del texto */
     border: none;
-    color: #ff4500;
+    padding: 5px 10px; /* Espaciado interno para el botón */
+    border-radius: 5px; /* Esquinas redondeadas */
     cursor: pointer;
-    font-size:14px;
+    font-size: 14px;
+    margin-top: 10px; /* Separar del contenido superior */
+    display: inline-block; /* Hace que el botón se ajuste al flujo del contenedor */
 }
 
 .delete-button:hover {
-    color: #ff6347; /* Color en hover */
+    background-color: #e33e00; /* Fondo de color al pasar el ratón */
+    color: white; /* Mantener el color del texto al pasar el ratón */
 }
 
+.edit-button {
+    font-size: 1.2em;
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
 .payment-method-body {
     background-color: #751805;
     color: white;
@@ -896,3 +911,88 @@ input[type="number"] {
     background-color: #ff6347;
 }
 
+
+
+/* Contenedor de filas de películas */
+.movie-row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos películas por fila */
+    gap: 30px; /* Espacio entre tarjetas */
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto; /* Centrado horizontal */
+    padding: 10px;
+}
+
+/* Tarjeta de película */
+.movie2 {
+    background-color: #751805; /* Fondo marrón oscuro */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+/* Contenido de cada tarjeta: imagen e info en una fila */
+.movie-content2 {
+    display: flex;
+    gap: 20px; /* Espacio entre imagen e información */
+}
+
+/* Imagen de la película */
+.movie-image2 img {
+    width: 250px; /* Tamaño fijo */
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Información de la película */
+.movie-info2 {
+    display: flex;
+    flex-direction: column; /* Coloca los elementos en columna */
+    justify-content: space-between; /* Espacio uniforme entre los elementos */
+    color: #fff;
+    align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
+}
+
+/* Título de la película */
+.movie-info2 h2 {
+    font-family: 'Angel Club', sans-serif;
+    font-size: 1.8em;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #ff4500;
+}
+
+/* Descripción y detalles */
+.movie-info2 p,
+.movie-info2 li {
+    font-family: 'Diamend', sans-serif;
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+/* Destacar texto en negrita */
+.movie-info2 strong {
+    color: #ff4500;
+    font-weight: bold;
+}
+.add-to-cart-button2 {
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    padding: 5px 10px; /* Espaciado interno alrededor del texto */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline; /* Cambia de inline-block a inline */
+    width: auto; /* Asegura que el ancho dependa solo del contenido */
+    white-space: nowrap; /* Evita que el texto se divida si es largo */
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.7), 0 0 20px rgba(255, 69, 0, 0.5); /* Brillo constante */
+}
+
+.add-to-cart-button2:hover {
+    background-color: #e33e00; /* Ajustado para dar un pequeño efecto de hover */
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.9), 0 0 30px rgba(255, 69, 0, 0.7); /* Brillo más fuerte al hacer hover */
+}

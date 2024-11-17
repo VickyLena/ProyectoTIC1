@@ -22,11 +22,13 @@
     <a href="/locationsMenu">Locales</a>
     <a href="/my-tickets">Mis Tickets</a>
     <a href="/admin/snacksMenuAdmin">Snacks</a>
+    <a href="/admin/edit-profile-admin">Editar Perfil</a>
     <br>
     <a href="/admin/createMovie">Agregar Pelicula</a>
     <a href="/admin/createFunction">Agregar Funcion</a>
     <a href="/admin/createSnacks">Agregar Snacks</a>
     <a href="/admin/registerEmployee">Registrar Empleado</a>
+    <a href="/admin/edit-movie">Editar Pelicula</a>
   </div>
 </header>
 <div class="welcome-container">
@@ -44,6 +46,7 @@
         </div>
         <div class="movie-info">
           <h2 th:text="${movie.getTitle()}">Título de la película</h2>
+          <a th:href="@{/admin/edit-movie/{movieId}(movieId=${movie.getId()})}" class="edit-button">✏️ Editar</a>
           <p><strong>Director:</strong> <span th:text="${movie.getDirector()}">Director no disponible</span></p>
           <p><strong>Duración:</strong> <span th:text="${movie.getDuration()}">Duración no disponible</span></p>
           <p><strong>Géneros:</strong></p>
@@ -56,11 +59,11 @@
       </div>
       <div class="movie-description">
         <p th:text="${movie.getDescription()}">Descripción no disponible</p>
-        <a th:href="@{/admin/movie/{movie_id}(movie_id=${movie.getId()})}" class="add-to-cart-button">Ver Funciones</a>
-        <form th:action="@{/admin/deleteMovie/{movieId}(movieId=${movie.getId()})}" method="POST" onsubmit="return confirmDeleteM()">
-          <button type="submit">Eliminar 🗑</button>
-        </form>
       </div>
+      <a th:href="@{/admin/movie/{movie_id}(movie_id=${movie.getId()})}" class="add-to-cart-button2">Ver Funciones</a>
+      <form th:action="@{/admin/deleteMovie/{movieId}(movieId=${movie.getId()})}" method="POST" onsubmit="return confirmDeleteM()">
+        <button type="submit" class="delete-button">Eliminar 🗑</button>
+      </form>
     </div>
   </div>
 </div>

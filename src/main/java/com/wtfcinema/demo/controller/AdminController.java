@@ -44,6 +44,11 @@ public class AdminController {
     @Autowired
     private TicketServices ticketServices;
 
+    @Autowired
+    private UserServices userService;
+    @Autowired
+    private EmployeeServices employeeServices;
+
     /////MOVIES/////
 
     @GetMapping("/movies")
@@ -87,7 +92,7 @@ public class AdminController {
                                 @RequestParam String description,
                                 @RequestParam String director,
                                 @RequestParam LocalDate release_date,
-                                @RequestParam String duration,
+                                @RequestParam int duration,
                                 @RequestParam List<String> genres,
                                 @RequestParam int age_restriction,
                                 @RequestParam("file") MultipartFile file,
@@ -331,4 +336,51 @@ public class AdminController {
             return "redirect:/admin/movie/"+ movieId;
         }
     }
+
+    @GetMapping("/edit-profile-admin")
+    public String showEditProfile(Model model) {
+        Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("employee", loggedInUser);
+        return "editProfileAdmin";
+    }
+
+    @PostMapping("/edit-profile-request-admin")
+    public String updateProfile(@RequestParam String name,
+                                @RequestParam String email,
+                                @RequestParam(required = false) Long cardNumber,
+                                @RequestParam LocalDate birthDate,
+                                @RequestParam String address,
+                                @RequestParam Long phoneNumber,
+                                @RequestParam String password,
+                                RedirectAttributes redirectAttributes) {
+        Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
+
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        loggedInUser.setName(name);
+        loggedInUser.setEmail(email);
+        loggedInUser.setBirthDate(birthDate);
+        loggedInUser.setAddress(address);
+        loggedInUser.setPhoneNumber(phoneNumber);
+        loggedInUser.setPassword(password);  // Puedes manejar la validación de contraseñas aquí si es necesario.
+
+        employeeServices.updateEmployee(loggedInUser);
+        redirectAttributes.addFlashAttribute("message", "Perfil actualizado correctamente.");
+        return "redirect:/admin/moviesAdmin";
+    }
+
+    @GetMapping("/edit-movie/{movieId}")
+    public String editMovie(@PathVariable("movieId") Long movieId, Model model) {
+        Movie movie = movieServices.findByIdWithGenres(movieId);
+        model.addAttribute("movie", movie);
+        return "redirect:/editMovies";
+    }
+
+
+
 }

@@ -35,7 +35,7 @@
         </div>
       </div>
         <form th:action="@{/admin/deleteSnack/{snackId}(snackId=${snack.id})}" method="POST" onsubmit="return confirmDelete()">
-          <button type="submit">Eliminar 🗑</button>
+          <button type="submit" class="delete-button">Eliminar 🗑</button>
         </form>
     </div>
   </div>

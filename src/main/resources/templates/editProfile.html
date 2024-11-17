@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Perfil - WTF Cinema</title>
+  <link rel="stylesheet" href="/index.css">
+</head>
+<body class="register-body">
+  <a href="/movies" class="back-arrow">&larr; Regresar a Películas</a>
+  <h1>Editar Perfil</h1>
+  <div class="login-form-container">
+    <h2>Actualice sus datos:</h2>
+
+    <div th:if="${errorMessage}" class="error-message">
+      <span th:text="${errorMessage}"></span>
+    </div>
+
+    <form action="/edit-profile-request" method="POST">
+      <label for="name">* Nombre:</label>
+      <input type="text" id="name" name="name" th:value="${user.name}" required>
+
+      <label for="email">* Correo Electrónico:</label>
+      <input type="email" id="email" name="email" th:value="${user.email}" required>
+
+      <label for="cardNumber">Número de Tarjeta:</label>
+      <input type="text" id="cardNumber" name="cardNumber" th:value="${user.cardNumber}">
+
+      <label for="birthDate">* Fecha de Nacimiento:</label>
+      <input type="date" id="birthDate" name="birthDate" th:value="${user.birthDate}" required>
+
+      <label for="address">* Dirección:</label>
+      <input type="text" id="address" name="address" th:value="${user.address}" required>
+
+      <label for="phoneNumber">* Número de Teléfono:</label>
+      <input type="tel" id="phoneNumber" name="phoneNumber" th:value="${user.phoneNumber}" required>
+
+      <label for="password">* Contraseña:</label>
+      <div class="password-container">
+        <input type="password" id="password" name="password" required>
+        <span class="toggle-password" onclick="togglePassword()">👁️‍🗨️</span>
+      </div>
+
+      <button type="submit" class="submit-button">Guardar Cambios</button>
+    </form>
+  </div>
+<footer>
+  <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+  <p>Laboratorio TIC I.</p>
+  <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
+
+<script>
+  function togglePassword() {
+    const passwordField = document.getElementById("password");
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+    } else {
+      passwordField.type = "password";
+    }
+  }
+</script>
+</body>
+</html>
