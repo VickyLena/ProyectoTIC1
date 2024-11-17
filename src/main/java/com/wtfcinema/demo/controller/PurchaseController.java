@@ -1,20 +1,21 @@
 package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.Screening;
+import com.wtfcinema.demo.entities.Snack;
 import com.wtfcinema.demo.entities.Ticket;
 import com.wtfcinema.demo.entities.User;
 import com.wtfcinema.demo.services.ScreeningServices;
+import com.wtfcinema.demo.services.SnackServices;
 import com.wtfcinema.demo.services.TicketServices;
 import com.wtfcinema.demo.services.UserServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class PurchaseController {
 
     @Autowired
     private UserServices userServices;
+
+    @Autowired
+    private SnackServices snackServices;
 
     @Autowired
     private HttpSession session;
@@ -51,6 +55,8 @@ public class PurchaseController {
         model.addAttribute("user", loggedInUser);
         return "seats";
     }
+
+    ////PAYMENT////
 
     @Transactional
     @GetMapping("/payment-method/{screening_id}/{seats}")
@@ -95,9 +101,6 @@ public class PurchaseController {
 
         if (permanent){
             User loggedInUser = (User) session.getAttribute("USER");
-//            loggedInUser.setCardNumber(cardNumber);
-            System.out.println("llegaaaaaaaaa");
-            System.out.println(loggedInUser.getCardNumber());
             userServices.saveUserNewCard(loggedInUser,cardNumber);
         }
         return "redirect:/payed/" + screening_id + "/" + seats;
@@ -118,5 +121,38 @@ public class PurchaseController {
             ticketServices.registerNewTicket(newTicket);
         }
         return "redirect:/my-tickets";
+    }
+
+    /////SNACKS////
+
+    @PostMapping("/add-snack/{ticketId}")
+    public ResponseEntity<String> addSnack(Model model, @PathVariable Long ticketId, @RequestBody List<String> snackList) {
+        Optional<Ticket> ticketOptional = ticketServices.findById(ticketId);
+        if (ticketOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("ERROR: Ticket no encontrado.");
+        }
+        List<Snack> snackObjectList = new ArrayList<>();
+        for (String snack : snackList) {
+            Optional<Snack> snackObj = snackServices.findByName(snack);
+            if (snackObj.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("ERROR: Snack no encontrado.");
+            }
+            snackObjectList.add(snackObj.get());
+        }
+        snackObjectList.addAll(ticketOptional.get().getSnacks());
+        ticketOptional.get().setSnacks(snackObjectList);
+        ticketServices.editTicket(ticketOptional.get());
+
+        return ResponseEntity.ok("redirect:/my-tickets");
+    }
+
+    @GetMapping("/snacks/{ticketId}")
+    public String showSnacks(Model model, @PathVariable Long ticketId) {
+        List<Snack> snackList = snackServices.getAllSnacks();
+        model.addAttribute("snacks", snackList);
+        model.addAttribute("ticket", ticketId);
+        return "snacks";
     }
 }
