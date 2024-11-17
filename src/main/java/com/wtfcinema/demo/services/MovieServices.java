@@ -97,7 +97,8 @@ public class MovieServices {
         movieRep.save(existingMovie);
     }
 
-
-
+    public List<Movie> findByGenre(String genre) {
+        return movieRep.findByGenre(genre);
+    }
 }
 

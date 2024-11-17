@@ -141,6 +141,7 @@ public class MainController {
     }
 
     /////MOVIES//////
+
     @Transactional
     @GetMapping("/movies")
     public String showMovies(Model model, RedirectAttributes redirectAttributes) {
@@ -151,6 +152,15 @@ public class MainController {
             List<Movie> movies = movieService.getAllMovies();
             model.addAttribute("movies", movies);
         }
+        return "movies";
+    }
+
+    @GetMapping("/filterMovies/{genre}")
+    public String filterMovies(Model model, @PathVariable String genre) {
+        List<Movie> movies = movieService.findByGenre(genre);
+        model.addAttribute("movies", movies);
+        User loggedInUser = (User) session.getAttribute("USER");
+        model.addAttribute("user", loggedInUser);
         return "movies";
     }
 

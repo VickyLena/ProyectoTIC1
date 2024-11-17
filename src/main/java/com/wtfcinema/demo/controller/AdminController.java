@@ -69,6 +69,15 @@ public class AdminController {
         return "moviesAdmin";
     }
 
+    @GetMapping("/filterMovies/{genre}")
+    public String filterMovies(Model model, @PathVariable String genre) {
+        List<Movie> movies = movieServices.findByGenre(genre);
+        model.addAttribute("movies", movies);
+        Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
+        model.addAttribute("employee", loggedInUser);
+        return "moviesAdmin";
+    }
+
     @GetMapping("/movie/{movie_id}")
     public String getMovieDetailsAdmin(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
