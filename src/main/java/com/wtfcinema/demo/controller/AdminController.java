@@ -192,7 +192,7 @@ public class AdminController {
     }
         //CREATE
     @GetMapping("/createFunction")
-    public String showCreateFunction(Model model) {
+    public String showCreateScreening(Model model) {
         List<Movie> movies = movieServices.getAllMovies();
         model.addAttribute("movies", movies);
         List<Theatre> theatres = theatreServices.getAllTheatres();
@@ -201,7 +201,7 @@ public class AdminController {
     }
 
     @PostMapping("/register-function")
-    public String registerFunction(@RequestParam String date_time,
+    public String registerScreening(@RequestParam String date_time,
                                    @RequestParam String language,
                                    @RequestParam String movie_id,
                                    @RequestParam String theatre_id,
@@ -362,7 +362,7 @@ public class AdminController {
     }
 
     @PostMapping("/edit-profile-request-admin")
-    public String updateProfile(@RequestParam String name,
+    public String editProfile(@RequestParam String name,
                                 @RequestParam String email,
                                 @RequestParam(required = false) Long cardNumber,
                                 @RequestParam LocalDate birthDate,
@@ -394,7 +394,7 @@ public class AdminController {
     }
 
     @PostMapping("/register-request-admin")
-    public String useRegisterAdmin(@RequestParam String name,
+    public String registerEmployee(@RequestParam String name,
                                    @RequestParam String email,
                                    @RequestParam LocalDate birthDate,
                                    @RequestParam String address,
