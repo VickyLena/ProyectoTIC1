@@ -33,12 +33,10 @@
   </head>
 
   <body class="register-body">
-  <!-- Botón para regresar a la página de administración de películas -->
     <a href="/admin/movies" class="back-arrow">&larr; Volver</a>
 
     <h1>Editar Película</h1>
 
-  <!-- Agregar botón de lápiz que lleva a la página de edición específica -->
     <form action="/admin/edit-movie" method="GET">
       <input type="hidden" name="id" th:value="${movie.id}">
     </form>
@@ -46,12 +44,10 @@
     <div class="login-form-container">
       <h2>Actualice los datos de la película:</h2>
 
-      <!-- Mostrar mensaje de error si lo hay -->
       <div th:if="${errorMessage}" class="error-message">
         <span th:text="${errorMessage}"></span>
       </div>
 
-      <!-- Formulario para editar película -->
       <form action="/admin/update-movie" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" th:value="${movie.id}">
 

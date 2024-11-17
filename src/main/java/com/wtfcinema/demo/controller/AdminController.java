@@ -153,12 +153,11 @@ public class AdminController {
 
                 Path photoPath = Paths.get("src/main/resources/static/images/", photoName);
 
-                // Intentar eliminar el archivo si existe
                 try {
                     if (Files.exists(photoPath)) {
                         Files.delete(photoPath);
                     }
-                } catch (IOException ignored) {} //si no se encuentra la foto sigue, para ver cual era el error especifico abajo
+                } catch (IOException ignored) {}
             }
 
             movieServices.deleteMovieById(movieId);
@@ -245,12 +244,12 @@ public class AdminController {
 
                 Path photoPath = Paths.get("src/main/resources/static/images/snacks/", photoName);
 
-                // Intentar eliminar el archivo si existe
+
                 try {
                     if (Files.exists(photoPath)) {
                         Files.delete(photoPath);
                     }
-                } catch (IOException ignored) {} //si no se encuentra la foto sigue, para ver cual era el error especifico abajo
+                } catch (IOException ignored) {}
             }
 
             snackServices.deleteSnackById(snackId);
@@ -367,7 +366,7 @@ public class AdminController {
         loggedInUser.setBirthDate(birthDate);
         loggedInUser.setAddress(address);
         loggedInUser.setPhoneNumber(phoneNumber);
-        loggedInUser.setPassword(password);  // Puedes manejar la validación de contraseñas aquí si es necesario.
+        loggedInUser.setPassword(password);
 
         employeeServices.updateEmployee(loggedInUser);
         redirectAttributes.addFlashAttribute("message", "Perfil actualizado correctamente.");

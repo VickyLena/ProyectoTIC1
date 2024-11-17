@@ -79,7 +79,6 @@ public class PurchaseController {
     public String addCard(Model model, @RequestParam Long cardNumber, @RequestParam(required = false) Boolean permanent,
                           @RequestParam Long screening_id, @RequestParam String seats, RedirectAttributes redirectAttributes){
 
-        // Verificar que los parámetros están llegando correctamente
         System.out.println("Card Number: " + cardNumber);
         System.out.println("Permanent: " + permanent);
         System.out.println("Screening ID: " + screening_id);

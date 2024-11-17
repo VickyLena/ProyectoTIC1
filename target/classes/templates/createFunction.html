@@ -43,15 +43,12 @@
         <label for="movie">* Película:</label>
         <select id="movie" name="movie_id" required>
             <option value="" disabled selected>Selecciona una película</option>
-            <!-- Iteración de películas con Thymeleaf -->
             <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}">Película</option>
         </select>
         <br><br>
-        <!-- Selección de Sala y Cine -->
         <label for="theatre">Cine y Sala:</label>
         <select id="theatre" name="theatre_id" required>
             <option value="" disabled selected>Selecciona una sala y cine</option>
-            <!-- Iteración de cines y salas con Thymeleaf -->
             <option th:each="theatre : ${theatres}" th:value="${theatre.id}" th:text="${theatre.cinema.name} + ' - Sala ' + ${theatre.number}">Cine y Sala</option>
         </select>
         <br><br>
