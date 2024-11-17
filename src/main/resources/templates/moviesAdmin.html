@@ -36,8 +36,8 @@
   <h1 class="welcome-text">Welcome, <span th:text="${employee != null ? employee.getName() : 'Guest'}"></span>!</h1>
 </div>
 
-<div>
-  <label for="genreSelect">Selecciona un género:</label>
+<div class="filter-container">
+  <label for="genreSelect">Seleccione un género</label>
   <select id="genreSelect">
     <option value="Accion">Acción</option>
     <option value="Comedia">Comedia</option>
@@ -51,8 +51,7 @@
     <option value="Animacion">Animación</option>
     <option value="Crimen">Crimen</option>
   </select>
-
-  <button onclick="filterMoviesAdmin()">Filtrar</button>
+  <button onclick="filterMovies()">Filtrar</button>
 </div>
 
 <div class="movie-row">
