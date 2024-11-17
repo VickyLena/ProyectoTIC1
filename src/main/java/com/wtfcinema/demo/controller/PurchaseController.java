@@ -1,9 +1,6 @@
 package com.wtfcinema.demo.controller;
 
-import com.wtfcinema.demo.entities.Screening;
-import com.wtfcinema.demo.entities.Snack;
-import com.wtfcinema.demo.entities.Ticket;
-import com.wtfcinema.demo.entities.User;
+import com.wtfcinema.demo.entities.*;
 import com.wtfcinema.demo.services.ScreeningServices;
 import com.wtfcinema.demo.services.SnackServices;
 import com.wtfcinema.demo.services.TicketServices;
@@ -50,23 +47,38 @@ public class PurchaseController {
         model.addAttribute("takenSeats", takenSeats);
         model.addAttribute("screening_id", screening_id);
         User loggedInUser = (User) session.getAttribute("USER");
-        model.addAttribute("user", loggedInUser);
+        if (loggedInUser == null) {
+            Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+            model.addAttribute("employee", userAdmin);
+            model.addAttribute("user", null);
+        }else{
+            model.addAttribute("user", loggedInUser);
+        }
         return "seats";
     }
 
     ////PAYMENT////
 
     @Transactional
-    @GetMapping({"/payment-method/{screening_id}/{seats}","/payment-method/{ticketId}"})
+    @GetMapping({"/payment-method/m/{screening_id}/{seats}","/payment-method/s/{ticketId}"})
     public String selectPaymentMethod(HttpSession session, Model model, @PathVariable(required = false) Long screening_id, @PathVariable(required = false) String ticketId,
                                       @PathVariable(required = false) String seats){
 
-        System.out.println("lllleeeeeggggaaaaa");
 
         model.addAttribute("screening_id", screening_id);
         model.addAttribute("seats", seats);
 
         User loggedInUser = (User) session.getAttribute("USER");
+        if (loggedInUser == null) {
+            Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+            model.addAttribute("employee", userAdmin);
+            model.addAttribute("user", null);
+        }else{
+            if (loggedInUser.getCardNumber() != null) {
+                model.addAttribute("card", loggedInUser.getCardNumber());
+            }
+        }
+
         if(model.getAttribute("screening_id") == null) {
             String snack = (String) session.getAttribute("snack");
             System.out.println("Snack desde sesión: " + snack);
@@ -76,15 +88,11 @@ public class PurchaseController {
 //            session.removeAttribute("snack");
         }
 
-        if (loggedInUser.getCardNumber() != null) {
-            model.addAttribute("card", loggedInUser.getCardNumber());
-        }
-
         return "paymentMethod";
     }
 
     @Transactional
-    @GetMapping({"/new-card/{screening_id}/{seats}", "/new-card/{ticketId}"})
+    @GetMapping({"/new-card/m/{screening_id}/{seats}", "/new-card/s/{ticketId}"})
     public String newCard(Model model, @PathVariable(required = false) Long screening_id, @PathVariable(required = false) Long ticketId,
                           @PathVariable(required = false) String seats){
         System.out.println("screening_id: " + screening_id);
@@ -101,48 +109,71 @@ public class PurchaseController {
     public String addCard(Model model, @RequestParam Long cardNumber, @RequestParam(required = false) Boolean permanent, @RequestParam(required = false) Long ticketId,
                           @RequestParam(required = false) Long screening_id, @RequestParam(required = false) String seats, @RequestParam(required = false) String snack, RedirectAttributes redirectAttributes){
 
+        System.out.println("LLEGAAAAAAAAAaaa"+screening_id);
         int length = String.valueOf(cardNumber).length();
         if (length!= 16){
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: El numero de tarjeta debe tener largo 16");
-                if(model.getAttribute("screening_id") != null){
-                    return "redirect:/new-card/" + screening_id + "/" + seats;
-                }
-            return "redirect:/new-card/" + ticketId;
+            if(model.getAttribute("screening_id") != null){
+                return "redirect:/new-card/m/" + screening_id + "/" + seats;
+            }
+            return "redirect:/new-card/s/" + ticketId;
         }
-
-        if (permanent == null) {
-            permanent = false;
-        }
-
+        System.out.println("LLEGAAAAAAAAAaaa");
+//        if (permanent == null) {
+//            System.out.println("LLEGAAAAAAAAAaaa");
+//            permanent = false;
+//        }
+        System.out.println(permanent);
         if (permanent){
             User loggedInUser = (User) session.getAttribute("USER");
             userServices.saveUserNewCard(loggedInUser,cardNumber);
         }
-        if(snack!=null){
-            return "redirect:/payed/" + ticketId;
+        System.out.println(snack);
+        if(screening_id!=null){
+            System.out.println("puta"+screening_id);
+            model.addAttribute("screening_id", screening_id);
+            return "redirect:/payed/m/" + screening_id + "/" + seats;
         }
-        return "redirect:/payed/" + screening_id + "/" + seats;
+        return "redirect:/payed/s/" + ticketId;
     }
 
     @Transactional
-    @GetMapping({"/payed/{screening_id}/{seats}","/payed/{ticketId}"})
+    @GetMapping({"/payed/m/{screening_id}/{seats}","/payed/s/{ticketId}"})
     public String confirmPayment(Model model, @PathVariable(required = false) Long screening_id,
                                  @PathVariable(required = false) String seats,
                                  @PathVariable(required = false) String ticketId){
-        User loggedInUser = (User) session.getAttribute("USER");
-        if(model.getAttribute("screening_id") == null){
+        System.out.println("screening_id: " + screening_id);
+        if(screening_id == null){
             System.out.println(model.getAttribute("snack"));
             return "redirect:/add-snack/{ticketId}";
         }else{
+
             Optional<Screening> screening = screeningServices.findById(screening_id);
             List<String> selectedSeats = List.of(seats.split(","));
-            for (String number : selectedSeats){
-                Ticket newTicket = Ticket.builder()
-                        .seat(number)
-                        .user(loggedInUser)
-                        .screening(screening.get())
-                        .build();
-                ticketServices.registerNewTicket(newTicket);
+            User loggedInUser = (User) session.getAttribute("USER");
+            if (loggedInUser == null) {
+                Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+                model.addAttribute("employee", userAdmin);
+                model.addAttribute("user", null);
+
+                for (String number : selectedSeats) {
+                    Ticket newTicket = Ticket.builder()
+                            .seat(number)
+                            .employee(userAdmin)
+                            .screening(screening.get())
+                            .build();
+                    ticketServices.registerNewTicket(newTicket);
+                }
+
+            }else {
+                for (String number : selectedSeats) {
+                    Ticket newTicket = Ticket.builder()
+                            .seat(number)
+                            .user(loggedInUser)
+                            .screening(screening.get())
+                            .build();
+                    ticketServices.registerNewTicket(newTicket);
+                }
             }
         }
 
@@ -165,7 +196,7 @@ public class PurchaseController {
         snackObjectList.addAll(ticketOptional.get().getSnacks());
         ticketOptional.get().setSnacks(snackObjectList);
         ticketServices.editTicket(ticketOptional.get());
-
+        session.setAttribute("snack", null);
         return "redirect:/my-tickets";
     }
 
@@ -176,13 +207,16 @@ public class PurchaseController {
     public ResponseEntity<Map<String, String>> selectSnackPaymentMethod(
             HttpSession session,
             @PathVariable Long ticketId,
-            @RequestBody List<String> snackList) {
+            @RequestBody List<String> snackList, Model model) {
 
         System.out.println("Lista de snacks: " + snackList);
         String snackListAsString = String.join(",", snackList);
         session.setAttribute("snack", snackListAsString);
 
-        String redi = "/payment-method/" + ticketId;
+        model.addAttribute("screening_id", null);
+        model.addAttribute("seat", null);
+
+        String redi = "/payment-method/s/" + ticketId;
 
         Map<String, String> response = new HashMap<>();
         response.put("redirectUrl", redi);

@@ -2,6 +2,7 @@ package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.*;
 import com.wtfcinema.demo.repository.CinemaRep;
+import com.wtfcinema.demo.repository.EmployeeRep;
 import com.wtfcinema.demo.repository.UserRep;
 import com.wtfcinema.demo.services.*;
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +43,9 @@ public class MainController {
     private CinemaRep cinemaRep;
 
     @Autowired
+    private EmployeeRep employeeRep;
+
+    @Autowired
     private UserRep userRep;
 
     @Autowired
@@ -70,6 +74,11 @@ public class MainController {
                             RedirectAttributes redirectAttributes,
                             Model model) {
 
+        model.addAttribute("snack",null);
+        model.addAttribute("screening_id",null);
+        model.addAttribute("ticketId",null);
+        model.addAttribute("seat",null);
+        session.setAttribute("snack",null);
         User usuario = userService.getByEmail(email);
         if (usuario != null && usuario.getPassword().equals(password)) {
             User usuario2 = userService.getByEmail(email);
@@ -153,6 +162,23 @@ public class MainController {
         }
         return "movies";
     }
+    @Transactional
+    @GetMapping("/moviesAdmin")
+    public String showMoviesAdmin(Model model, RedirectAttributes redirectAttributes) {
+        Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+        model.addAttribute("employee", userAdmin);
+
+        session.setAttribute("USER",null); //lo hago null para poder revisarlo dsp
+        model.addAttribute("user", null);
+
+        System.out.println(model.getAttribute("employee"));
+
+        if (!model.containsAttribute("movies")) {
+            List<Movie> movies = movieService.getAllMovies();
+            model.addAttribute("movies", movies);
+        }
+        return "movies";
+    }
 
     @GetMapping("/movie/{movie_id}")
     public String gotoMovieScreenings(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
@@ -163,6 +189,12 @@ public class MainController {
             model.addAttribute("movie", movieOpt.get());
         } else {
             return "redirect:/movies";
+        }
+
+        if (loggedInUser == null) {
+            Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+            model.addAttribute("employee", userAdmin);
+            model.addAttribute("user", null);
         }
 
         Movie movie = movieOpt.get();
@@ -206,12 +238,23 @@ public class MainController {
     @GetMapping("/my-tickets")
     public String showMyTickets(Model model) {
         User loggedInUser = (User) session.getAttribute("USER");
-        User userWithTickets = userRep.findByIdWithTickets(loggedInUser.getId()).orElseThrow();
-        model.addAttribute("userTickets", userWithTickets.getTickets());
+        if (loggedInUser == null) {
+            Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+            model.addAttribute("employee", userAdmin);
+            model.addAttribute("user", null);
 
-        List<Ticket> tickets = userWithTickets.getTickets();
-        tickets.forEach(ticket -> Hibernate.initialize(ticket.getSnacks()));
+            Employee empWithTickets = employeeRep.findByEmailWithTickets(userAdmin.getEmail()).orElseThrow();
+            model.addAttribute("userTickets", empWithTickets.getTickets());
 
+            List<Ticket> tickets = empWithTickets.getTickets();
+            tickets.forEach(ticket -> Hibernate.initialize(ticket.getSnacks()));
+        }else{
+            User userWithTickets = userRep.findByIdWithTickets(loggedInUser.getId()).orElseThrow();
+            model.addAttribute("userTickets", userWithTickets.getTickets());
+
+            List<Ticket> tickets = userWithTickets.getTickets();
+            tickets.forEach(ticket -> Hibernate.initialize(ticket.getSnacks()));
+        }
         return "myTickets";
     }
 

@@ -10,11 +10,13 @@
     <div class="top-right-buttons">
         <h1>Screenings for <span th:text="${movie.getTitle()}"></span>!</h1>
         <a href="/logout" class="logout-button">Logout</a>
-        <a href="/movies" class="return-button">Return to Movies</a>
+        <a th:if="${user != null}" href="/movies" class="return-button">Return to Movies</a>
+        <a th:if="${user == null}" href="/moviesAdmin" class="return-button">Return to Movies</a>
     </div>
 </header>
 
-<a href="/movies" class="back-arrow">&larr; Regresar</a>
+<a th:if="${user != null}" href="/movies" class="back-arrow">>Regresar</a>
+<a th:if="${user == null}" href="/moviesAdmin" class="back-arrow">>Regresar</a>
 
 <h1>Lista de Funciones</h1>
 <table class="screenings-table">

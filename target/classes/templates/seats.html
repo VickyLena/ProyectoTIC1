@@ -123,9 +123,9 @@
             .join(',');
 
         if (selectedSeats.length > 0) {
-            const screeningId = /*[[${screeningId}]]*/ null;
-            console.log('screeningId:', screeningId);
-            const url = `/payment-method/${screeningId}/${selectedSeats}`;
+            const screening_id = /*[[${screening_id}]]*/ null;
+            console.log('screening_id:', screening_id);
+            const url = `/payment-method/m/${screening_id}/${selectedSeats}`;
 
             window.location.href = url;
         } else {
