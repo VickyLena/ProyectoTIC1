@@ -29,33 +29,21 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     private HttpSession session;
-
     @Autowired
     private MovieServices movieServices;
-
     @Autowired
     private SnackServices snackServices;
-
     @Autowired
     private TheatreServices theatreServices;
-
     @Autowired
     private ScreeningServices screeningServices;
-
-    @Autowired
-    private TicketServices ticketServices;
-
-    @Autowired
-    private UserServices userService;
-
     @Autowired
     private EmployeeServices employeeServices;
-
     @Autowired
     private CinemaRep cinemaRep;
 
-    /////MOVIES/////
-
+    ///////MOVIES///////
+        //SHOW
     @GetMapping("/movies")
     public String showMoviesAdmin(Model model, @ModelAttribute("message") String message) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
@@ -68,25 +56,16 @@ public class AdminController {
         model.addAttribute("message", message);
         return "moviesAdmin";
     }
-
-    @GetMapping("/movie/{movie_id}")
-    public String getMovieDetailsAdmin(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
+        //SHOW FILTERED
+    @GetMapping("/filterMovies/{genre}")
+    public String filterMovies(Model model, @PathVariable String genre) {
+        List<Movie> movies = movieServices.findByGenre(genre);
+        model.addAttribute("movies", movies);
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
-
-        Optional<Movie> movieOpt = movieServices.findByIdWithScreenings(movie_id);
-        if (movieOpt.isPresent()) {
-            model.addAttribute("movie", movieOpt.get());
-        } else {
-            return "redirect:/admin/movies";
-        }
-        return "movieScreeningsAdmin";
+        model.addAttribute("employee", loggedInUser);
+        return "moviesAdmin";
     }
-
-    @GetMapping("/movieScreenings")
-    public String showMovieScreenings(Model model) {
-        return "movieScreeningsAdmin";
-    }
-
+        //CREATE
     @GetMapping("/createMovie")
     public String showCreateMovie(Model model) {
         return "createMovie";
@@ -147,7 +126,20 @@ public class AdminController {
             return "redirect:/admin/createMovie";
         }
     }
+        //EDIT
+    @GetMapping("/edit-movie/{movieId}")
+    public String editMovie(@PathVariable("movieId") Long movieId, Model model) {
+        Movie movie = movieServices.findByIdWithGenres(movieId);
+        model.addAttribute("movie", movie);
+        return "editMovies";
+    }
 
+    @PostMapping("/update-movie")
+    public String updateMovie(@ModelAttribute Movie movie) {
+        movieServices.update(movie);
+        return "redirect:/admin/movies";
+    }
+        //DELETE
     @PostMapping("/deleteMovie/{movieId}")
     public String deleteMovie(@PathVariable Long movieId, RedirectAttributes redirectAttributes) {
         try {
@@ -179,8 +171,95 @@ public class AdminController {
         }
     }
 
-    /////SNACKS/////
+    ///////SCREENINGS///////
+        //SHOW
+    @GetMapping("/movie/{movie_id}")
+    public String getMovieDetailsAdmin(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
+        Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
 
+        Optional<Movie> movieOpt = movieServices.findByIdWithScreenings(movie_id);
+        if (movieOpt.isPresent()) {
+            model.addAttribute("movie", movieOpt.get());
+        } else {
+            return "redirect:/admin/movies";
+        }
+        return "movieScreeningsAdmin";
+    }
+
+    @GetMapping("/movieScreenings")
+    public String showMovieScreenings(Model model) {
+        return "movieScreeningsAdmin";
+    }
+        //CREATE
+    @GetMapping("/createFunction")
+    public String showCreateScreening(Model model) {
+        List<Movie> movies = movieServices.getAllMovies();
+        model.addAttribute("movies", movies);
+        List<Theatre> theatres = theatreServices.getAllTheatres();
+        model.addAttribute("theatres", theatres);
+        return "createFunction";
+    }
+
+    @PostMapping("/register-function")
+    public String registerScreening(@RequestParam String date_time,
+                                   @RequestParam String language,
+                                   @RequestParam String movie_id,
+                                   @RequestParam String theatre_id,
+                                   Model model,
+                                   RedirectAttributes redirectAttributes,
+                                   HttpSession session) {
+        try {
+            LocalDateTime dateTime = LocalDateTime.parse(date_time);
+            Optional<Movie> movie = movieServices.findByIdWithScreenings(Long.parseLong(movie_id));
+            if (movie.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "La película no existe.");
+                return "redirect:/admin/createFunction";
+            }
+            Movie movie1 = movie.get();
+
+            Optional<Theatre> theatre = theatreServices.findById(Long.parseLong(theatre_id));
+            if (theatre.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "El teatro no existe.");
+                return "redirect:/admin/createFunction";
+            }
+            Theatre theatre1 = theatre.get();
+
+            Screening newFuncion = Screening.builder()
+                    .dateTime(dateTime)
+                    .language(language)
+                    .movie(movie1)
+                    .theatre(theatre1)
+                    .build();
+
+            screeningServices.registerNewScreening(newFuncion);
+
+            session.setAttribute("SCREENING", newFuncion);
+            redirectAttributes.addFlashAttribute("message", "Función registrada exitosamente");
+            return "redirect:/admin/movies";
+
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
+            return "redirect:/admin/createFunction";
+        }
+    }
+        //DELETE
+    @PostMapping("/deleteScreening/{movieId}/{screeningId}")
+    public String deleteScreening(@PathVariable Long screeningId, @PathVariable Long movieId, RedirectAttributes redirectAttributes) {
+        try {
+            screeningServices.deleteScreeningById(screeningId);
+            redirectAttributes.addFlashAttribute("errorMessage", "Funcion eliminada exitosamente.");
+            return "redirect:/admin/movie/"+ movieId;
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error: Funcion no encontrada. " + e);
+            return "redirect:/admin/movie/"+ movieId;
+        } catch (RuntimeException r) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la funcion. " + r);
+            return "redirect:/admin/movie/"+ movieId;
+        }
+    }
+    ///////SNACKS///////
+        //SHOW
     @GetMapping("/snacksMenuAdmin")
     public String showSnacksMenuAdmin(Model model) {
         List<Snack> snackList = snackServices.getAllSnacks();
@@ -189,7 +268,7 @@ public class AdminController {
         model.addAttribute("employee", loggedInUser);
         return "snacksMenuAdmin";
     }
-
+        //CREATE
     @GetMapping("/createSnacks")
     public String showCreateSnacks(Model model) {
         return "createSnacks";
@@ -238,7 +317,7 @@ public class AdminController {
             return "redirect:/admin/createSnacks";
         }
     }
-
+        //DELETE
     @PostMapping("/deleteSnack/{snackId}")
     public String deleteSnack(@PathVariable Long snackId, RedirectAttributes redirectAttributes) {
         try {
@@ -270,77 +349,8 @@ public class AdminController {
             return "redirect:/admin/snacksMenuAdmin";
         }
     }
-
-    ////////////SCREENINGS///////////
-
-    @GetMapping("/createFunction")
-    public String showCreateFunction(Model model) {
-        List<Movie> movies = movieServices.getAllMovies();
-        model.addAttribute("movies", movies);
-        List<Theatre> theatres = theatreServices.getAllTheatres();
-        model.addAttribute("theatres", theatres);
-        return "createFunction";
-    }
-
-    @PostMapping("/register-function")
-    public String registerFunction(@RequestParam String date_time,
-                                   @RequestParam String language,
-                                   @RequestParam String movie_id,
-                                   @RequestParam String theatre_id,
-                                   Model model,
-                                   RedirectAttributes redirectAttributes,
-                                   HttpSession session) {
-        try {
-            LocalDateTime dateTime = LocalDateTime.parse(date_time);
-            Optional<Movie> movie = movieServices.findByIdWithScreenings(Long.parseLong(movie_id));
-            if (movie.isEmpty()) {
-                redirectAttributes.addFlashAttribute("errorMessage", "La película no existe.");
-                return "redirect:/admin/createFunction";
-            }
-            Movie movie1 = movie.get();
-
-            Optional<Theatre> theatre = theatreServices.findById(Long.parseLong(theatre_id));
-            if (theatre.isEmpty()) {
-                redirectAttributes.addFlashAttribute("errorMessage", "El teatro no existe.");
-                return "redirect:/admin/createFunction";
-            }
-            Theatre theatre1 = theatre.get();
-
-            Screening newFuncion = Screening.builder()
-                    .dateTime(dateTime)
-                    .language(language)
-                    .movie(movie1)
-                    .theatre(theatre1)
-                    .build();
-
-            screeningServices.registerNewScreening(newFuncion);
-
-            session.setAttribute("SCREENING", newFuncion);
-            redirectAttributes.addFlashAttribute("message", "Función registrada exitosamente");
-            return "redirect:/admin/movies";
-
-        } catch (RuntimeException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
-            return "redirect:/admin/createFunction";
-        }
-    }
-
-    @PostMapping("/deleteScreening/{movieId}/{screeningId}")
-    public String deleteScreening(@PathVariable Long screeningId, @PathVariable Long movieId, RedirectAttributes redirectAttributes) {
-        try {
-            screeningServices.deleteScreeningById(screeningId);
-            redirectAttributes.addFlashAttribute("errorMessage", "Funcion eliminada exitosamente.");
-            return "redirect:/admin/movie/"+ movieId;
-
-        } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error: Funcion no encontrada. " + e);
-            return "redirect:/admin/movie/"+ movieId;
-        } catch (RuntimeException r) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la funcion. " + r);
-            return "redirect:/admin/movie/"+ movieId;
-        }
-    }
-
+    ///////MENU/OPTIONS///////
+        //EDIT PROFILE
     @GetMapping("/edit-profile-admin")
     public String showEditProfile(Model model) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
@@ -352,7 +362,7 @@ public class AdminController {
     }
 
     @PostMapping("/edit-profile-request-admin")
-    public String updateProfile(@RequestParam String name,
+    public String editProfile(@RequestParam String name,
                                 @RequestParam String email,
                                 @RequestParam(required = false) Long cardNumber,
                                 @RequestParam LocalDate birthDate,
@@ -377,22 +387,14 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("message", "Perfil actualizado correctamente.");
         return "redirect:/admin/movies";
     }
-
-    @GetMapping("/edit-movie/{movieId}")
-    public String editMovie(@PathVariable("movieId") Long movieId, Model model) {
-        Movie movie = movieServices.findByIdWithGenres(movieId);
-        model.addAttribute("movie", movie);
-        return "editMovies";
-    }
-
-    @PostMapping("/update-movie")
-    public String updateMovie(@ModelAttribute Movie movie) {
-        movieServices.update(movie);
-        return "redirect:/admin/movies";
+        //CREATE NEW EMPLOYEE
+    @GetMapping("/registerEmployee")
+    public String showRegisterEmployee(Model model) {
+        return "registerEmployee";
     }
 
     @PostMapping("/register-request-admin")
-    public String useRegisterAdmin(@RequestParam String name,
+    public String registerEmployee(@RequestParam String name,
                                    @RequestParam String email,
                                    @RequestParam LocalDate birthDate,
                                    @RequestParam String address,
@@ -423,11 +425,7 @@ public class AdminController {
             return "redirect:/admin/registerEmployee";
         }
     }
-    @GetMapping("/registerEmployee")
-    public String showRegisterEmployee(Model model) {
-        return "registerEmployee";
-    }
-
+        //SHOW LOCATIONS
     @GetMapping("/locationsMenuAdmin")
     public String showLocationsMenuAdmin(Model model) {
         List<Cinema> cinemas = cinemaRep.findAll();

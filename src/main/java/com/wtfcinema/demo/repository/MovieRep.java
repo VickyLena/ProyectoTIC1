@@ -25,5 +25,8 @@ public interface MovieRep extends JpaRepository<Movie, Long> {
 
     @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.genres WHERE m.id = :movieId")
     Optional<Movie> findByIdWithGenres(@Param("movieId") Long movieId);
+
+    @Query("SELECT m FROM Movie m LEFT JOIN FETCH m.genres WHERE :genre MEMBER OF m.genres")
+    List<Movie> findByGenre(@Param("genre") String genre);
 }
 

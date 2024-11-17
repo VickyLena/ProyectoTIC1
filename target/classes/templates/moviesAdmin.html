@@ -35,6 +35,26 @@
 <div class="welcome-container">
   <h1 class="welcome-text">Welcome, <span th:text="${employee != null ? employee.getName() : 'Guest'}"></span>!</h1>
 </div>
+
+<div>
+  <label for="genreSelect">Selecciona un género:</label>
+  <select id="genreSelect">
+    <option value="Accion">Acción</option>
+    <option value="Comedia">Comedia</option>
+    <option value="Drama">Drama</option>
+    <option value="Terror">Terror</option>
+    <option value="Ciencia Ficcion">Ciencia Ficción</option>
+    <option value="Romance">Romance</option>
+    <option value="Fantasia">Fantasía</option>
+    <option value="Aventura">Aventura</option>
+    <option value="Familiar">Familiar</option>
+    <option value="Animacion">Animación</option>
+    <option value="Crimen">Crimen</option>
+  </select>
+
+  <button onclick="filterMoviesAdmin()">Filtrar</button>
+</div>
+
 <div class="movie-row">
   <div th:each="movie : ${movies}" class="movie-cell">
     <div class="movie-container">
@@ -83,6 +103,11 @@
 
   function confirmDeleteM() {
     return confirm('¿Estás seguro de que deseas eliminar esta pelicula y sus funciones?');
+  }
+
+  function filterMoviesAdmin() {
+    const genre = document.getElementById('genreSelect').value;
+    window.location.href = `/admin/filterMovies/${genre}`;
   }
 </script>
 
