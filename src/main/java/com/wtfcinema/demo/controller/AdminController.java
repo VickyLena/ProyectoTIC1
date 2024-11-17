@@ -29,33 +29,21 @@ import java.util.Optional;
 public class AdminController {
     @Autowired
     private HttpSession session;
-
     @Autowired
     private MovieServices movieServices;
-
     @Autowired
     private SnackServices snackServices;
-
     @Autowired
     private TheatreServices theatreServices;
-
     @Autowired
     private ScreeningServices screeningServices;
-
-    @Autowired
-    private TicketServices ticketServices;
-
-    @Autowired
-    private UserServices userService;
-
     @Autowired
     private EmployeeServices employeeServices;
-
     @Autowired
     private CinemaRep cinemaRep;
 
-    /////MOVIES/////
-
+    ///////MOVIES///////
+        //SHOW
     @GetMapping("/movies")
     public String showMoviesAdmin(Model model, @ModelAttribute("message") String message) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
@@ -68,7 +56,7 @@ public class AdminController {
         model.addAttribute("message", message);
         return "moviesAdmin";
     }
-
+        //SHOW FILTERED
     @GetMapping("/filterMovies/{genre}")
     public String filterMovies(Model model, @PathVariable String genre) {
         List<Movie> movies = movieServices.findByGenre(genre);
@@ -77,25 +65,7 @@ public class AdminController {
         model.addAttribute("employee", loggedInUser);
         return "moviesAdmin";
     }
-
-    @GetMapping("/movie/{movie_id}")
-    public String getMovieDetailsAdmin(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
-        Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
-
-        Optional<Movie> movieOpt = movieServices.findByIdWithScreenings(movie_id);
-        if (movieOpt.isPresent()) {
-            model.addAttribute("movie", movieOpt.get());
-        } else {
-            return "redirect:/admin/movies";
-        }
-        return "movieScreeningsAdmin";
-    }
-
-    @GetMapping("/movieScreenings")
-    public String showMovieScreenings(Model model) {
-        return "movieScreeningsAdmin";
-    }
-
+        //CREATE
     @GetMapping("/createMovie")
     public String showCreateMovie(Model model) {
         return "createMovie";
@@ -156,7 +126,20 @@ public class AdminController {
             return "redirect:/admin/createMovie";
         }
     }
+        //EDIT
+    @GetMapping("/edit-movie/{movieId}")
+    public String editMovie(@PathVariable("movieId") Long movieId, Model model) {
+        Movie movie = movieServices.findByIdWithGenres(movieId);
+        model.addAttribute("movie", movie);
+        return "editMovies";
+    }
 
+    @PostMapping("/update-movie")
+    public String updateMovie(@ModelAttribute Movie movie) {
+        movieServices.update(movie);
+        return "redirect:/admin/movies";
+    }
+        //DELETE
     @PostMapping("/deleteMovie/{movieId}")
     public String deleteMovie(@PathVariable Long movieId, RedirectAttributes redirectAttributes) {
         try {
@@ -188,100 +171,26 @@ public class AdminController {
         }
     }
 
-    /////SNACKS/////
-
-    @GetMapping("/snacksMenuAdmin")
-    public String showSnacksMenuAdmin(Model model) {
-        List<Snack> snackList = snackServices.getAllSnacks();
-        model.addAttribute("snacks", snackList);
+    ///////SCREENINGS///////
+        //SHOW
+    @GetMapping("/movie/{movie_id}")
+    public String getMovieDetailsAdmin(@PathVariable Long movie_id, Model model, RedirectAttributes redirectAttributes) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
-        model.addAttribute("employee", loggedInUser);
-        return "snacksMenuAdmin";
-    }
 
-    @GetMapping("/createSnacks")
-    public String showCreateSnacks(Model model) {
-        return "createSnacks";
-    }
-
-    @PostMapping("/register-snack")
-    public String registerSnack(@RequestParam String name,
-                                @RequestParam int price,
-                                @RequestParam("file") MultipartFile file,
-                                Model model,
-                                RedirectAttributes redirectAttributes,
-                                HttpSession session) {
-        try {
-            if (snackServices.findByName(name).isPresent()) {
-                redirectAttributes.addFlashAttribute("errorMessage", "El snack ya existe.");
-                return "redirect:/admin/createSnacks";
-            }
-
-            Snack newSnack = Snack.builder()
-                    .name(name)
-                    .price(price)
-                    .build();
-
-            snackServices.registerNewSnack(newSnack);
-
-            if (!file.isEmpty()) {
-                String fileExtension = ".jpg";
-                String directoryPath = "src/main/resources/static/images/snacks/";
-                String filePath = directoryPath + newSnack.getName() + fileExtension;
-
-                Path directory = Paths.get(directoryPath);
-                if (!Files.exists(directory)) {
-                    Files.createDirectories(directory);
-                }
-
-                Path path = Paths.get(filePath);
-
-                Files.write(path, file.getBytes());
-            }
-            session.setAttribute("SNACK", newSnack);
-            redirectAttributes.addFlashAttribute("message", "Snack agregado exitosamente");
-            return "redirect:/admin/snacksMenuAdmin";
-
-        } catch (RuntimeException | IOException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
-            return "redirect:/admin/createSnacks";
+        Optional<Movie> movieOpt = movieServices.findByIdWithScreenings(movie_id);
+        if (movieOpt.isPresent()) {
+            model.addAttribute("movie", movieOpt.get());
+        } else {
+            return "redirect:/admin/movies";
         }
+        return "movieScreeningsAdmin";
     }
 
-    @PostMapping("/deleteSnack/{snackId}")
-    public String deleteSnack(@PathVariable Long snackId, RedirectAttributes redirectAttributes) {
-        try {
-            Optional<Snack> snack= snackServices.findById(snackId);
-
-            if (snack.isPresent()) {
-                String photoName = snack.get().getName() + ".jpg";
-
-                Path photoPath = Paths.get("src/main/resources/static/images/snacks/", photoName);
-
-
-                try {
-                    if (Files.exists(photoPath)) {
-                        Files.delete(photoPath);
-                    }
-                } catch (IOException ignored) {}
-            }
-
-            snackServices.deleteSnackById(snackId);
-            redirectAttributes.addFlashAttribute("errorMessage", "Snack eliminado exitosamente.");
-            return "redirect:/admin/snacksMenuAdmin";
-
-
-        } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error: Snack no encontrado. " + e);
-            return "redirect:/admin/snacksMenuAdmin";
-        } catch (RuntimeException r) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el snack. " + r);
-            return "redirect:/admin/snacksMenuAdmin";
-        }
+    @GetMapping("/movieScreenings")
+    public String showMovieScreenings(Model model) {
+        return "movieScreeningsAdmin";
     }
-
-    ////////////SCREENINGS///////////
-
+        //CREATE
     @GetMapping("/createFunction")
     public String showCreateFunction(Model model) {
         List<Movie> movies = movieServices.getAllMovies();
@@ -333,7 +242,7 @@ public class AdminController {
             return "redirect:/admin/createFunction";
         }
     }
-
+        //DELETE
     @PostMapping("/deleteScreening/{movieId}/{screeningId}")
     public String deleteScreening(@PathVariable Long screeningId, @PathVariable Long movieId, RedirectAttributes redirectAttributes) {
         try {
@@ -349,7 +258,99 @@ public class AdminController {
             return "redirect:/admin/movie/"+ movieId;
         }
     }
+    ///////SNACKS///////
+        //SHOW
+    @GetMapping("/snacksMenuAdmin")
+    public String showSnacksMenuAdmin(Model model) {
+        List<Snack> snackList = snackServices.getAllSnacks();
+        model.addAttribute("snacks", snackList);
+        Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
+        model.addAttribute("employee", loggedInUser);
+        return "snacksMenuAdmin";
+    }
+        //CREATE
+    @GetMapping("/createSnacks")
+    public String showCreateSnacks(Model model) {
+        return "createSnacks";
+    }
 
+    @PostMapping("/register-snack")
+    public String registerSnack(@RequestParam String name,
+                                @RequestParam int price,
+                                @RequestParam("file") MultipartFile file,
+                                Model model,
+                                RedirectAttributes redirectAttributes,
+                                HttpSession session) {
+        try {
+            if (snackServices.findByName(name).isPresent()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "El snack ya existe.");
+                return "redirect:/admin/createSnacks";
+            }
+
+            Snack newSnack = Snack.builder()
+                    .name(name)
+                    .price(price)
+                    .build();
+
+            snackServices.registerNewSnack(newSnack);
+
+            if (!file.isEmpty()) {
+                String fileExtension = ".jpg";
+                String directoryPath = "src/main/resources/static/images/snacks/";
+                String filePath = directoryPath + newSnack.getName() + fileExtension;
+
+                Path directory = Paths.get(directoryPath);
+                if (!Files.exists(directory)) {
+                    Files.createDirectories(directory);
+                }
+
+                Path path = Paths.get(filePath);
+
+                Files.write(path, file.getBytes());
+            }
+            session.setAttribute("SNACK", newSnack);
+            redirectAttributes.addFlashAttribute("message", "Snack agregado exitosamente");
+            return "redirect:/admin/snacksMenuAdmin";
+
+        } catch (RuntimeException | IOException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());
+            return "redirect:/admin/createSnacks";
+        }
+    }
+        //DELETE
+    @PostMapping("/deleteSnack/{snackId}")
+    public String deleteSnack(@PathVariable Long snackId, RedirectAttributes redirectAttributes) {
+        try {
+            Optional<Snack> snack= snackServices.findById(snackId);
+
+            if (snack.isPresent()) {
+                String photoName = snack.get().getName() + ".jpg";
+
+                Path photoPath = Paths.get("src/main/resources/static/images/snacks/", photoName);
+
+
+                try {
+                    if (Files.exists(photoPath)) {
+                        Files.delete(photoPath);
+                    }
+                } catch (IOException ignored) {}
+            }
+
+            snackServices.deleteSnackById(snackId);
+            redirectAttributes.addFlashAttribute("errorMessage", "Snack eliminado exitosamente.");
+            return "redirect:/admin/snacksMenuAdmin";
+
+
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error: Snack no encontrado. " + e);
+            return "redirect:/admin/snacksMenuAdmin";
+        } catch (RuntimeException r) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el snack. " + r);
+            return "redirect:/admin/snacksMenuAdmin";
+        }
+    }
+    ///////MENU/OPTIONS///////
+        //EDIT PROFILE
     @GetMapping("/edit-profile-admin")
     public String showEditProfile(Model model) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
@@ -386,18 +387,10 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("message", "Perfil actualizado correctamente.");
         return "redirect:/admin/movies";
     }
-
-    @GetMapping("/edit-movie/{movieId}")
-    public String editMovie(@PathVariable("movieId") Long movieId, Model model) {
-        Movie movie = movieServices.findByIdWithGenres(movieId);
-        model.addAttribute("movie", movie);
-        return "editMovies";
-    }
-
-    @PostMapping("/update-movie")
-    public String updateMovie(@ModelAttribute Movie movie) {
-        movieServices.update(movie);
-        return "redirect:/admin/movies";
+        //CREATE NEW EMPLOYEE
+    @GetMapping("/registerEmployee")
+    public String showRegisterEmployee(Model model) {
+        return "registerEmployee";
     }
 
     @PostMapping("/register-request-admin")
@@ -432,11 +425,7 @@ public class AdminController {
             return "redirect:/admin/registerEmployee";
         }
     }
-    @GetMapping("/registerEmployee")
-    public String showRegisterEmployee(Model model) {
-        return "registerEmployee";
-    }
-
+        //SHOW LOCATIONS
     @GetMapping("/locationsMenuAdmin")
     public String showLocationsMenuAdmin(Model model) {
         List<Cinema> cinemas = cinemaRep.findAll();
