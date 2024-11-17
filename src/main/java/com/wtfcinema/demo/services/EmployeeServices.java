@@ -36,4 +36,7 @@ public class EmployeeServices {
         }
         employeeRepo.save(employee);
     }
+    public void updateEmployee(Employee employee) {
+        employeeRepo.save(employee);
+    }
 }

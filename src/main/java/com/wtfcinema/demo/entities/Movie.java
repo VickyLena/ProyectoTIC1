@@ -3,6 +3,7 @@ package com.wtfcinema.demo.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Movie {
     private String director;
 
     @Column(name = "DURATION")
-    private String duration;
+    private int duration;
 
     @Column(name = "DESCRIPTION")
     private String description;

@@ -786,4 +786,17 @@ input[type="number"] {
     color: #ff6347; /* Color en hover */
 }
 
+.edit-button {
+    font-size: 1.2em;
+    background-color: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
 

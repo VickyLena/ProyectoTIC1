@@ -222,5 +222,43 @@ public class MainController {
         return "myTickets";
     }
 
+    @GetMapping("/edit-profile")
+    public String showEditProfile(Model model) {
+        User loggedInUser = (User) session.getAttribute("USER");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", loggedInUser);
+        return "editProfile";
+    }
+
+    @PostMapping("/edit-profile-request")
+    public String updateProfile(@RequestParam String name,
+                                @RequestParam String email,
+                                @RequestParam(required = false) Long cardNumber,
+                                @RequestParam LocalDate birthDate,
+                                @RequestParam String address,
+                                @RequestParam Long phoneNumber,
+                                @RequestParam String password,
+                                RedirectAttributes redirectAttributes) {
+        User loggedInUser = (User) session.getAttribute("USER");
+
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        loggedInUser.setName(name);
+        loggedInUser.setEmail(email);
+        loggedInUser.setCardNumber(cardNumber);
+        loggedInUser.setBirthDate(birthDate);
+        loggedInUser.setAddress(address);
+        loggedInUser.setPhoneNumber(phoneNumber);
+        loggedInUser.setPassword(password);  // Puedes manejar la validación de contraseñas aquí si es necesario.
+
+        userService.updateUser(loggedInUser);
+        redirectAttributes.addFlashAttribute("message", "Perfil actualizado correctamente.");
+        return "redirect:/movies";
+    }
+
 
 }

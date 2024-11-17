@@ -66,4 +66,9 @@ public class UserServices {
         // Guardar el usuario en la base de datos
         userRepo.save(user);
     }
+
+    public void updateUser(User user) {
+        userRepo.save(user);
+    }
+
 }

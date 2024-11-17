@@ -1,5 +1,6 @@
 package com.wtfcinema.demo.services;
 
+import com.wtfcinema.demo.entities.Employee;
 import com.wtfcinema.demo.entities.Movie;
 import com.wtfcinema.demo.entities.Screening;
 import com.wtfcinema.demo.entities.User;
@@ -46,6 +47,10 @@ public class MovieServices {
         Optional<Movie> movie = movieRep.findByTitle(title);
         return movie.orElse(null);
     }
+    public Movie findByIdWithGenres(Long movieId) {
+        Optional<Movie> movie = movieRep.findByIdWithGenres(movieId);
+        return movie.orElse(null);
+    }
 
     public void registerNewMovie(Movie movie) {
         if (movieRep.findByTitle(movie.getTitle()).isPresent()) {
@@ -70,6 +75,9 @@ public class MovieServices {
         } catch (Exception e) {
             throw new RuntimeException("Error al eliminar la pelicula con id '" + movieId + "'. Error: " + e.getMessage());
         }
+    }
+    public void updateMovie(Movie movie) {
+        movieRep.save(movie);
     }
 }
 
