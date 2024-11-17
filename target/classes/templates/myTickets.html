@@ -43,7 +43,7 @@
                 <p><strong>Asiento:</strong> <span th:text="${ticket.getSeat()}">Asiento no disponible</span></p>
 
                 <ul>
-                    <li th:each="snack : ${ticket.getSnacks()}" th:text="${snack}">Snack no disponible</li>
+                    <li th:each="snack : ${ticket.getSnacks()}" th:text="${snack.getName()}">Snack no disponible</li>
                 </ul>
                 <a th:href="@{/snacks/{ticketId}(ticketId=${ticket.getId()})}" class="add-to-cart-button2">Agregar Snacks</a>
                 <form th:action="@{/delete-ticket/{ticketId}(ticketId=${ticket.getId()})}" method="POST" onsubmit="return confirmDeleteT()">

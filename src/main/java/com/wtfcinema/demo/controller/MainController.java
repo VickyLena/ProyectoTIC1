@@ -283,6 +283,7 @@ public class MainController {
         return "redirect:/my-tickets";
     }
 
+    @Transactional
     @PostMapping("/add-snack/{ticketId}")
     public ResponseEntity<String> addSnack(Model model, @PathVariable Long ticketId, @RequestBody List<String> snackList) {
         Optional<Ticket> ticketOptional = ticketServices.findById(ticketId);

@@ -371,7 +371,7 @@ public class AdminController {
 
         employeeServices.updateEmployee(loggedInUser);
         redirectAttributes.addFlashAttribute("message", "Perfil actualizado correctamente.");
-        return "redirect:/admin/moviesAdmin";
+        return "redirect:/admin/movies";
     }
 
     @GetMapping("/edit-movie/{movieId}")
@@ -384,6 +384,6 @@ public class AdminController {
     @PostMapping("/update-movie")
     public String updateMovie(@ModelAttribute Movie movie) {
         movieServices.update(movie);
-        return "redirect:/admin/moviesAdmin";
+        return "redirect:/admin/movies";
     }
 }
