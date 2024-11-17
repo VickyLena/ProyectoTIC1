@@ -23,8 +23,10 @@
             <input type="checkbox" id="permanent" name="permanent" value="true">
         </div>
 
-        <input type="hidden" name="screening_id" th:value="${screeningId}">
+        <input type="hidden" name="screening_id" th:value="${screening_id}">
         <input type="hidden" name="seats" th:value="${seats}">
+        <input type="hidden" name="snack" th:value="${snack}">
+        <input type="hidden" name="ticketId" th:value="${ticketId}">
 
         <button type="submit" class="submit-button">Comprar</button>
     </form>

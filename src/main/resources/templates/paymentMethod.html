@@ -10,13 +10,22 @@
 <h1>Método de Pago</h1>
 
 <div class="button-container2">
-    <a th:href="@{/new-card/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="payment-button">
+    <a th:if="${screening_id!=null && seats!=null}" th:href="@{/new-card/{atri1}/{atri2}(atri1=${screening_id}, atri2=${seats})}" class="payment-button">
         Agregar Método de Pago
     </a>
+    <a th:if="${screening_id==null && seats==null}" th:href="@{/new-card/{atri1}(atri1=${ticketId})}" class="payment-button">
+        Agregar Método de Pago
+        <input type="hidden" name="snack" th:value="${snack}">
+    </a>
 
-    <a th:if="${card!=null}"
-        th:href="@{/payed/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="payment-button">
+    <a th:if="${card!=null && seats!=null}"
+        th:href="@{/payed/{atri1}/{atri2}(atri1=${screening_id}, atri2=${seats})}" class="payment-button">
         Usar Método de Pago Existente
+    </a>
+    <a th:if="${card!=null && seats==null}"
+       th:href="@{/payed/{atri1}(atri1=${ticketId})}" class="payment-button">
+        Usar Método de Pago Existente
+        <input type="hidden" name="snack" th:value="${snack}">
     </a>
 </div>
 

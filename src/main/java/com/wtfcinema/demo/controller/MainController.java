@@ -36,13 +36,13 @@ public class MainController {
     private EmployeeServices employeeService;
 
     @Autowired
+    private SnackServices snackServices;
+
+    @Autowired
     private CinemaRep cinemaRep;
 
     @Autowired
     private UserRep userRep;
-
-    @Autowired
-    private SnackServices snackServices;
 
     @Autowired
     private TicketServices ticketServices;
@@ -281,30 +281,6 @@ public class MainController {
         ticketServices.deleteById(ticketId);
         redirectAttributes.addFlashAttribute("errorMessage", "Ticket con sus snacks eliminado exitosamente.");
         return "redirect:/my-tickets";
-    }
-
-    @Transactional
-    @PostMapping("/add-snack/{ticketId}")
-    public ResponseEntity<String> addSnack(Model model, @PathVariable Long ticketId, @RequestBody List<String> snackList) {
-        Optional<Ticket> ticketOptional = ticketServices.findById(ticketId);
-        if (ticketOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("ERROR: Ticket no encontrado.");
-        }
-        List<Snack> snackObjectList = new ArrayList<>();
-        for (String snack : snackList) {
-            Optional<Snack> snackObj = snackServices.findByName(snack);
-            if (snackObj.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("ERROR: Snack no encontrado.");
-            }
-            snackObjectList.add(snackObj.get());
-        }
-        snackObjectList.addAll(ticketOptional.get().getSnacks());
-        ticketOptional.get().setSnacks(snackObjectList);
-        ticketServices.editTicket(ticketOptional.get());
-
-        return ResponseEntity.ok("redirect:/my-tickets");
     }
 
     @GetMapping("/edit-profile")
