@@ -36,7 +36,6 @@
 <div class="movie-row">
     <div th:each="movie : ${movies}" class="movie-cell">
         <div class="movie-container">
-            <!-- Contenedor para la imagen y la información principal en una fila -->
             <div class="movie-main-content">
                 <div class="movie-image">
                     <img th:src="@{/images/{id}.jpg(id=${movie.getId()})}" alt="Imagen de la película" />

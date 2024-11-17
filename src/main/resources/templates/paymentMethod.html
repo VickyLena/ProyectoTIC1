@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Método de Pago</title>
-    <!-- Vinculando el archivo CSS -->
     <link rel="stylesheet" href="/index.css">
 </head>
 
@@ -11,12 +10,10 @@
 <h1>Método de Pago</h1>
 
 <div class="button-container2">
-    <!-- Enlace para agregar un nuevo método de pago -->
     <a th:href="@{/new-card/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="payment-button">
         Agregar Método de Pago
     </a>
 
-    <!-- Enlace para usar el método de pago existente -->
     <a th:if="${card!=null}"
         th:href="@{/payed/{screening_id}/{seats}(screening_id=${screeningId}, seats=${seats})}" class="payment-button">
         Usar Método de Pago Existente

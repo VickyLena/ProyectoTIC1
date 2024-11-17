@@ -45,17 +45,17 @@
         }
 
         .seat.available:hover {
-            background-color: #66ff66; /* Verde al pasar el ratón */
+            background-color: #66ff66;
         }
 
         .seat.selected {
-            background-color: #66ff66; /* Verde para asientos seleccionados */
+            background-color: #66ff66;
         }
 
         .seat.unavailable {
-            background-color: #ff0000; /* Rojo intenso */
+            background-color: #ff0000;
             cursor: not-allowed;
-            color: white; /* Asegura que el texto sea legible */
+            color: white;
         }
 
         .button-container {
@@ -71,12 +71,12 @@
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
-            margin-right: 10px; /* Espacio entre botones */
+            margin-right: 10px;
             margin-bottom: 80px;
         }
 
         button:hover {
-            background-color: #ff6347; /* Cambia de color al pasar el ratón */
+            background-color: #ff6347;
         }
     </style>
 </head>
@@ -92,24 +92,22 @@
 
 <script th:inline="javascript">
     const seatSelection = document.getElementById('seatSelection');
-    const totalSeats = 150; // Número total de asientos
-    const unavailableSeats = /*[[${takenSeats}]]*/ []; // Thymeleaf inyecta los asientos ocupados como un array JSON
+    const totalSeats = 150;
+    const unavailableSeats = /*[[${takenSeats}]]*/ [];
 
-    console.log("Unavailable seats:", unavailableSeats); // Verifica los datos
+    console.log("Unavailable seats:", unavailableSeats);
 
     for (let i = 1; i <= totalSeats; i++) {
         const seat = document.createElement('div');
         seat.classList.add('seat', 'available');
         seat.innerText = i;
 
-        // Si el asiento está ocupado, se marca como "unavailable"
         if (unavailableSeats.includes(i.toString())) {
             seat.classList.remove('available');
             seat.classList.add('unavailable');
-            seat.innerText = 'X'; // Indica que no está disponible
+            seat.innerText = 'X';
         }
 
-        // Evento para seleccionar/desmarcar asientos disponibles
         seat.addEventListener('click', () => {
             if (seat.classList.contains('available')) {
                 seat.classList.toggle('selected');
@@ -119,7 +117,6 @@
         seatSelection.appendChild(seat);
     }
 
-    // Confirmar la selección de asientos
     document.getElementById('confirmButton').addEventListener('click', () => {
         const selectedSeats = [...document.querySelectorAll('.seat.selected')]
             .map(seat => seat.innerText)
@@ -136,7 +133,6 @@
         }
     });
 
-    // Deseleccionar todos los asientos seleccionados
     document.getElementById('deselectButton').addEventListener('click', () => {
         const selectedSeats = document.querySelectorAll('.seat.selected');
         selectedSeats.forEach(seat => {

@@ -24,7 +24,6 @@
     </div>
 </header>
 
-<!-- Mensaje de error -->
 <div th:if="${errorMessage}" class="error-message">
     <span th:text="${errorMessage}"></span>
 </div>
@@ -61,17 +60,14 @@
 </footer>
 
 <script>
-    // Abrir el menú
     document.getElementById('openMenuBtn').onclick = function() {
         document.getElementById('sideMenu').style.width = '250px';
     };
 
-    // Cerrar el menú
     function closeMenu() {
         document.getElementById('sideMenu').style.width = '0';
     }
 
-    // Confirmación al eliminar ticket
     function confirmDeleteT() {
         return confirm('¿Estás seguro de que deseas eliminar este Ticket?');
     }
