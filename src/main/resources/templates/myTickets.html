@@ -43,12 +43,13 @@
                 <p><strong>Dirección:</strong> <span th:text="${ticket.getScreening().getTheatre().getCinema().getAddress()}">Dirección no disponible</span></p>
                 <p><strong>Fecha:</strong> <span th:text="${ticket.getScreening().getDateTime()}">Fecha no disponible</span></p>
                 <p><strong>Asiento:</strong> <span th:text="${ticket.getSeat()}">Asiento no disponible</span></p>
+
                 <ul>
                     <li th:each="snack : ${ticket.getSnacks()}" th:text="${snack}">Snack no disponible</li>
                 </ul>
                 <a th:href="@{/snacks/{ticketId}(ticketId=${ticket.getId()})}" class="add-to-cart-button2">Agregar Snacks</a>
                 <form th:action="@{/delete-ticket/{ticketId}(ticketId=${ticket.getId()})}" method="POST" onsubmit="return confirmDeleteT()">
-                    <button type="submit">Eliminar 🗑</button>
+                    <button type="submit" class="delete-button">Eliminar 🗑</button>
                 </form>
             </div>
         </div>

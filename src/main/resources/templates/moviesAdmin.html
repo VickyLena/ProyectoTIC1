@@ -61,7 +61,7 @@
         <p th:text="${movie.getDescription()}">Descripción no disponible</p>
         <a th:href="@{/admin/movie/{movie_id}(movie_id=${movie.getId()})}" class="add-to-cart-button">Ver Funciones</a>
         <form th:action="@{/admin/deleteMovie/{movieId}(movieId=${movie.getId()})}" method="POST" onsubmit="return confirmDeleteM()">
-          <button type="submit">Eliminar 🗑</button>
+          <button type="submit" class="delete-button">Eliminar 🗑</button>
         </form>
       </div>
     </div>

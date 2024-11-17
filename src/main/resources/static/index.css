@@ -772,18 +772,20 @@ input[type="number"] {
 }
 
 .delete-button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background: transparent;
+    background-color: #ff4500; /* Fondo sólido para el botón */
+    color: white; /* Color del texto */
     border: none;
-    color: #ff4500;
+    padding: 5px 10px; /* Espaciado interno para el botón */
+    border-radius: 5px; /* Esquinas redondeadas */
     cursor: pointer;
-    font-size:14px;
+    font-size: 14px;
+    margin-top: 10px; /* Separar del contenido superior */
+    display: inline-block; /* Hace que el botón se ajuste al flujo del contenedor */
 }
 
 .delete-button:hover {
-    color: #ff6347; /* Color en hover */
+    background-color: #e33e00; /* Fondo de color al pasar el ratón */
+    color: white; /* Mantener el color del texto al pasar el ratón */
 }
 
 .edit-button {
@@ -948,9 +950,10 @@ input[type="number"] {
 /* Información de la película */
 .movie-info2 {
     display: flex;
-    flex-direction: column; /* Información en una columna */
-    justify-content: space-between; /* Espacio uniforme entre elementos */
+    flex-direction: column; /* Coloca los elementos en columna */
+    justify-content: space-between; /* Espacio uniforme entre los elementos */
     color: #fff;
+    align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
 }
 
 /* Título de la película */
@@ -975,18 +978,21 @@ input[type="number"] {
     color: #ff4500;
     font-weight: bold;
 }
-
-/* Botón de agregar snacks */
 .add-to-cart-button2 {
     background-color: #ff4500;
     color: white;
-    text-decoration: none;
-    padding: 10px 15px;
+    border: none;
+    padding: 5px 10px; /* Espaciado interno alrededor del texto */
     border-radius: 5px;
-    font-size: 1em;
-    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline; /* Cambia de inline-block a inline */
+    width: auto; /* Asegura que el ancho dependa solo del contenido */
+    white-space: nowrap; /* Evita que el texto se divida si es largo */
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.7), 0 0 20px rgba(255, 69, 0, 0.5); /* Brillo constante */
 }
 
 .add-to-cart-button2:hover {
-    background-color: #ff6347;
+    background-color: #e33e00; /* Ajustado para dar un pequeño efecto de hover */
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.9), 0 0 30px rgba(255, 69, 0, 0.7); /* Brillo más fuerte al hacer hover */
 }
