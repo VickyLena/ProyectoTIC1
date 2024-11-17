@@ -64,17 +64,50 @@
         });
     });
 
-    document.getElementById('purchase-button').addEventListener('click', function() {
-        let purchaseSummary = 'Resumen de compra:\n';
-        for (const [snackId, quantity] of Object.entries(cart)) {
-            purchaseSummary += `${snackId}: X${quantity}\n`;
+    const ticketId = [[${ticket}]];
+
+    document.getElementById('purchase-button').addEventListener('click', async function () {
+        if (Object.keys(cart).length === 0) {
+            alert('El carrito está vacío. Agregue snacks antes de comprar.');
+            return;
         }
 
-        alert(purchaseSummary + '\nCompra realizada exitosamente!');
+        let purchaseSummary = 'Resumen de compra:\n';
+        const snackList = [];
 
-        Object.keys(cart).forEach(snackId => delete cart[snackId]);
+        for (const [snackId, quantity] of Object.entries(cart)) {
+            purchaseSummary += `${snackId}: X${quantity}\n`;
+
+            for (let i = 0; i < quantity; i++) {
+                snackList.push(snackId);
+            }
+        }
+
+        const confirmPurchase = confirm(purchaseSummary + '\nConfirme su compra.');
+
+        if (confirmPurchase) {
+            try {
+                const response = await fetch(`/add-snack/${ticketId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(snackList)
+                });
+
+                const result = await response.text();
+                if (result.startsWith("redirect:")) {
+                    window.location.href = "/my-tickets";
+                } else {
+                    alert('Error: ' + result);
+                }
+            } catch (error) {
+                alert('Error en la comunicación con el servidor. Inténtelo más tarde.');
+            }
+        }
     });
 </script>
+
 
 </body>
 </html>
