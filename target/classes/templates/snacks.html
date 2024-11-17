@@ -54,11 +54,11 @@
     const cart = {};
 
     document.querySelectorAll('.add-to-cart-button').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const snackId = this.getAttribute('data-snack-id');
-            const quantity = document.querySelector(`input[data-snack-id="${snackId}"]`).value;
+            const quantity = parseInt(document.querySelector(`input[data-snack-id="${snackId}"]`).value);
 
-            cart[snackId] = quantity;
+            cart[snackId] = (cart[snackId] || 0) + quantity;
 
             alert(`Agregado al carrito: Snack ID ${snackId}, Cantidad: ${quantity}`);
         });
