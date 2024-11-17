@@ -24,6 +24,10 @@
     </div>
 </header>
 
+<div th:if="${errorMessage}" class="error-message">
+    <span th:text="${errorMessage}"></span>
+</div>
+
 <div class="movie-row">
     <div th:each="ticket : ${userTickets}" class="movie-cell">
         <div class="movie-container">
@@ -35,10 +39,14 @@
                 <p><strong></strong>Sucursal: <span th:text="${ticket.getScreening().getTheatre().getCinema().getName()}">Sucursal no disponible</span></p>
                 <p><strong>Direccion:</strong> <span th:text="${ticket.getScreening().getTheatre().getCinema().getAddress()}">Direccion no disponible</span></p>
                 <p><strong>Fecha:</strong><span th:text="${ticket.getScreening().getDateTime()}">Fecha no disponible</span></p>
+                <p><strong>Asiento:</strong><span th:text="${ticket.getSeat()}">Asiento no disponible</span></p>
                 <ul>
-                    <li th:each="snack : ${ticket.getSnacks()}" th:text="${genre}">Snack no disponible</li>
+                    <li th:each="snack : ${ticket.getSnacks()}" th:text="${snack.getName()}">Snack no disponible</li>
                 </ul>
                 <a th:href="@{/snacks/{ticketId}(ticketId=${ticket.getId()})}" class="snacks-button">Agregar Snacks</a>
+                <form th:action="@{/delete-ticket/{ticketId}(ticketId=${ticket.getId()})}" method="POST" onsubmit="return confirmDeleteT()">
+                    <button type="submit">Eliminar 🗑</button>
+                </form>
             </div>
         </div>
     </div>
@@ -59,6 +67,10 @@
     // Cerrar el menú
     function closeMenu() {
         document.getElementById('sideMenu').style.width = '0';
+    }
+
+    function confirmDeleteT() {
+        return confirm('¿Estás seguro de que deseas eliminar este Ticket?');
     }
 </script>
 
