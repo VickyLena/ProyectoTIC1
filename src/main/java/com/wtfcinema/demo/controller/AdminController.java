@@ -413,7 +413,7 @@ public class AdminController {
             employeeServices.registerNewEmployee(newEmployee);
             session.setAttribute("EMPLOYEE", newEmployee);
             model.addAttribute("message", "Usuario registrado exitosamente");
-            return "redirect:/admin/moviesAdmin";
+            return "redirect:/admin/movies";
         } catch (RuntimeException e) {
             model.addAttribute("errorMessage", "ERROR");
             return "redirect:/admin/registerEmployee";
