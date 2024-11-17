@@ -2,6 +2,7 @@ package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.*;
 import com.wtfcinema.demo.repository.CinemaRep;
+import com.wtfcinema.demo.repository.UserRep;
 import com.wtfcinema.demo.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.hibernate.Hibernate;
@@ -37,6 +38,9 @@ public class MainController {
 
     @Autowired
     private CinemaRep cinemaRep;
+
+    @Autowired
+    private UserRep userRep;
 
     @Autowired
     private SnackServices snackServices;
@@ -214,11 +218,16 @@ public class MainController {
         return "snacks";
     }
 
+    @Transactional
     @GetMapping("/my-tickets")
     public String showMyTickets(Model model) {
         User loggedInUser = (User) session.getAttribute("USER");
-        List<Ticket> userTickets = loggedInUser.getTickets();
-        model.addAttribute("userTickets", userTickets);
+        User userWithTickets = userRep.findByIdWithTickets(loggedInUser.getId()).orElseThrow();
+        model.addAttribute("userTickets", userWithTickets.getTickets());
+
+        List<Ticket> tickets = userWithTickets.getTickets();
+        tickets.forEach(ticket -> Hibernate.initialize(ticket.getSnacks()));
+
         return "myTickets";
     }
 

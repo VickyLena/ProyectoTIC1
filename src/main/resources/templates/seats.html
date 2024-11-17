@@ -53,8 +53,9 @@
         }
 
         .seat.unavailable {
-            background-color: #ff4500; /* Rojo para asientos no disponibles */
+            background-color: #ff0000; /* Rojo intenso */
             cursor: not-allowed;
+            color: white; /* Asegura que el texto sea legible */
         }
 
         .button-container {
@@ -71,7 +72,7 @@
             border-radius: 5px;
             transition: background-color 0.3s ease;
             margin-right: 10px; /* Espacio entre botones */
-	    margin-bottom: 80px;
+            margin-bottom: 80px;
         }
 
         button:hover {
@@ -81,70 +82,73 @@
 </head>
 <body>
 
-    <h1>Seleccionar Asientos</h1>
-    <div class="seat-selection" id="seatSelection">
+<h1>Seleccionar Asientos</h1>
+<div class="seat-selection" id="seatSelection"></div>
 
-    </div>
+<div class="button-container">
+    <button id="confirmButton">Confirmar Selección</button>
+    <button id="deselectButton">Deseleccionar Todos</button>
+</div>
 
-    <div class="button-container">
-        <button id="confirmButton">Confirmar Selección</button>
-        <button id="deselectButton">Deseleccionar Todos</button>
-    </div>
+<script th:inline="javascript">
+    const seatSelection = document.getElementById('seatSelection');
+    const totalSeats = 150; // Número total de asientos
+    const unavailableSeats = /*[[${takenSeats}]]*/ []; // Thymeleaf inyecta los asientos ocupados como un array JSON
 
-    <script>
-        const seatSelection = document.getElementById('seatSelection');
-        const totalSeats = 150; // Número total de asientos
-        const unavailableSeats = /*[[${takenSeats}]]*/ [] //thymeleaf lo convierte en una lista de javascript
+    console.log("Unavailable seats:", unavailableSeats); // Verifica los datos
 
-        for (let i = 1; i <= totalSeats; i++) {
-            const seat = document.createElement('div');
-            seat.classList.add('seat', 'available');
-            seat.innerText = i;
+    for (let i = 1; i <= totalSeats; i++) {
+        const seat = document.createElement('div');
+        seat.classList.add('seat', 'available');
+        seat.innerText = i;
 
-            if (unavailableSeats.includes(i)) {
-                seat.classList.remove('available');
-                seat.classList.add('unavailable');
-                seat.innerText = 'X'; // Indica que no está disponible
-            }
-
-            seat.addEventListener('click', () => {
-                if (seat.classList.contains('available')) {
-                    seat.classList.toggle('selected');
-                }
-            });
-
-            seatSelection.appendChild(seat);
+        // Si el asiento está ocupado, se marca como "unavailable"
+        if (unavailableSeats.includes(i.toString())) {
+            seat.classList.remove('available');
+            seat.classList.add('unavailable');
+            seat.innerText = 'X'; // Indica que no está disponible
         }
 
-        document.getElementById('confirmButton').addEventListener('click', () => {
-            const selectedSeats = [...document.querySelectorAll('.seat.selected')]
-                .map(seat => seat.innerText)
-                .join(',');
-
-            if (selectedSeats.length > 0) {
-                const screeningId = [[${screening_id}]];
-                console.log('screeningId:', screeningId);
-                const url = `/payment-method/${screeningId}/${selectedSeats}`;
-
-                window.location.href = url;
-            } else {
-                alert('No se ha seleccionado ningún asiento.');
+        // Evento para seleccionar/desmarcar asientos disponibles
+        seat.addEventListener('click', () => {
+            if (seat.classList.contains('available')) {
+                seat.classList.toggle('selected');
             }
         });
 
-        document.getElementById('deselectButton').addEventListener('click', () => {
-            const selectedSeats = document.querySelectorAll('.seat.selected');
-            selectedSeats.forEach(seat => {
-                seat.classList.remove('selected');
-            });
+        seatSelection.appendChild(seat);
+    }
+
+    // Confirmar la selección de asientos
+    document.getElementById('confirmButton').addEventListener('click', () => {
+        const selectedSeats = [...document.querySelectorAll('.seat.selected')]
+            .map(seat => seat.innerText)
+            .join(',');
+
+        if (selectedSeats.length > 0) {
+            const screeningId = /*[[${screeningId}]]*/ null;
+            console.log('screeningId:', screeningId);
+            const url = `/payment-method/${screeningId}/${selectedSeats}`;
+
+            window.location.href = url;
+        } else {
+            alert('No se ha seleccionado ningún asiento.');
+        }
+    });
+
+    // Deseleccionar todos los asientos seleccionados
+    document.getElementById('deselectButton').addEventListener('click', () => {
+        const selectedSeats = document.querySelectorAll('.seat.selected');
+        selectedSeats.forEach(seat => {
+            seat.classList.remove('selected');
         });
-    </script>
+    });
+</script>
 </body>
 <footer>
-        <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
-        <p>Laboratorio TIC I.</p>
-        <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
-    </footer>
+    <p>&copy; 2024 WTF Cinema. Proyecto final.</p>
+    <p>Laboratorio TIC I.</p>
+    <p>Jimena Bazzano, Martina Gutierrez, Victoria Lena y Agustina Rabajoli</p>
+</footer>
 
-</body>
 </html>

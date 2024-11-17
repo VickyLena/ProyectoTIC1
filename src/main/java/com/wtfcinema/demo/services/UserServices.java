@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +19,15 @@ public class UserServices {
     public User getById(Long id){
         Optional<User> result = userRepo.findById(id);
         return result.orElse(null);
+    }
+
+    @Transactional
+    public User getUserWithTickets(Long userId) {
+        Optional<User> user = userRepo.findByIdWithTickets(userId);
+        if(!user.isEmpty()){
+            user.get().getTickets(); // Inicializa la colección
+        }
+        return user.orElse(null);
     }
 
     @Transactional
@@ -71,4 +79,10 @@ public class UserServices {
         userRepo.save(user);
     }
 
+
+    @Transactional
+    public void saveUserNewCard(User user,Long card) {
+        user.setCardNumber(card);
+        userRepo.save(user);
+    }
 }

@@ -799,4 +799,194 @@ input[type="number"] {
 .edit-button:hover {
     background-color: #0056b3;
 }
+.payment-method-body {
+    background-color: #751805;
+    color: white;
+    font-family: 'Angel Club', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
 
+.button-container2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.payment-button {
+    background-color: #ff4500;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1.5em;
+    font-family: 'Angel Club', sans-serif;
+    text-decoration: none;
+    font-weight: normal;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255, 99, 71, 0.9),
+    0 0 20px rgba(255, 99, 71, 0.7),
+    0 0 30px rgba(255, 99, 71, 0.6);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.payment-button:hover {
+    background-color: #ff6347;
+    transform: scale(1.05);
+}
+.pago-container-unique {
+    background-color: white;
+    color: #ff4500;
+    width: 320px;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(255, 255, 255, 0.6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.pago-container-unique h2 {
+    margin: 0 0 30px 0;
+    font-size: 1.8em;
+    font-family: 'Angel Club', sans-serif;
+    color: #ff4500;
+}
+
+.pago-container-unique label {
+    font-size: 1.1em; /* Tamaño unificado para ambos textos */
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.pago-container-unique input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ff4500;
+    border-radius: 5px;
+    font-size: 1.1em;
+}
+
+.pago-container-unique .checkbox-container {
+    display: flex;
+    flex-direction: column; /* Ordena el texto y el checkbox verticalmente */
+    align-items: center;
+    gap: 10px; /* Espacio entre el texto y el checkbox */
+}
+
+.pago-container-unique .checkbox-container label {
+    font-size: 1.1em; /* Asegura que el texto sea del mismo tamaño */
+}
+
+.pago-container-unique button {
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.pago-container-unique button:hover {
+    background-color: #ff6347;
+}
+
+
+
+/* Contenedor de filas de películas */
+.movie-row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos películas por fila */
+    gap: 30px; /* Espacio entre tarjetas */
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto; /* Centrado horizontal */
+    padding: 10px;
+}
+
+/* Tarjeta de película */
+.movie2 {
+    background-color: #751805; /* Fondo marrón oscuro */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+/* Contenido de cada tarjeta: imagen e info en una fila */
+.movie-content2 {
+    display: flex;
+    gap: 20px; /* Espacio entre imagen e información */
+}
+
+/* Imagen de la película */
+.movie-image2 img {
+    width: 250px; /* Tamaño fijo */
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Información de la película */
+.movie-info2 {
+    display: flex;
+    flex-direction: column; /* Información en una columna */
+    justify-content: space-between; /* Espacio uniforme entre elementos */
+    color: #fff;
+}
+
+/* Título de la película */
+.movie-info2 h2 {
+    font-family: 'Angel Club', sans-serif;
+    font-size: 1.8em;
+    font-weight: 400;
+    margin-bottom: 10px;
+    color: #ff4500;
+}
+
+/* Descripción y detalles */
+.movie-info2 p,
+.movie-info2 li {
+    font-family: 'Diamend', sans-serif;
+    font-size: 1.1em;
+    margin: 5px 0;
+}
+
+/* Destacar texto en negrita */
+.movie-info2 strong {
+    color: #ff4500;
+    font-weight: bold;
+}
+
+/* Botón de agregar snacks */
+.add-to-cart-button2 {
+    background-color: #ff4500;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.add-to-cart-button2:hover {
+    background-color: #ff6347;
+}
