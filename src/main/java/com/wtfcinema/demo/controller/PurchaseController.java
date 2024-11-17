@@ -58,10 +58,13 @@ public class PurchaseController {
         model.addAttribute("screeningId", screening_id);
         model.addAttribute("seats", seats);
         User loggedInUser = (User) session.getAttribute("USER");
-        if (loggedInUser != null) {
+
+        if (loggedInUser.getCardNumber() != null) {
             model.addAttribute("card", loggedInUser.getCardNumber());
         }
-        return "paymentMethod";}
+
+        return "paymentMethod";
+    }
 
     @Transactional
     @GetMapping("/new-card/{screening_id}/{seats}")

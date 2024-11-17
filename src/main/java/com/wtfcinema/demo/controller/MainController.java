@@ -212,6 +212,7 @@ public class MainController {
     @GetMapping("/snacks/{ticketId}")
     public String showSnacks(Model model, @PathVariable Long ticketId) {
         List<Snack> snackList = snackServices.getAllSnacks();
+        model.addAttribute("user", ticketServices.findById(ticketId).get().getUser());
         model.addAttribute("snacks", snackList);
         model.addAttribute("ticket", ticketId);
         return "snacks";
