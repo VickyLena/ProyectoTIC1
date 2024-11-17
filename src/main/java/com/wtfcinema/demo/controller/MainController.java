@@ -146,17 +146,10 @@ public class MainController {
     public String showMovies(Model model, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("USER");
         model.addAttribute("user", loggedInUser);
-//        if(model.containsAttribute("message")){
-//            model.addAttribute("message", movies);
-//        }
 
         if (!model.containsAttribute("movies")) {
             List<Movie> movies = movieService.getAllMovies();
             model.addAttribute("movies", movies);
-//            for (Movie movie : movies) {
-//                // Inicializar la colección 'genres' explícitamente
-//                Hibernate.initialize(movie.getGenres());
-//            }
         }
         return "movies";
     }
@@ -207,15 +200,6 @@ public class MainController {
         User loggedInUser = (User) session.getAttribute("USER");
         model.addAttribute("user", loggedInUser);
         return "snacksMenu";
-    }
-
-    @GetMapping("/snacks/{ticketId}")
-    public String showSnacks(Model model, @PathVariable Long ticketId) {
-        List<Snack> snackList = snackServices.getAllSnacks();
-        model.addAttribute("user", ticketServices.findById(ticketId).get().getUser());
-        model.addAttribute("snacks", snackList);
-        model.addAttribute("ticket", ticketId);
-        return "snacks";
     }
 
     @Transactional
