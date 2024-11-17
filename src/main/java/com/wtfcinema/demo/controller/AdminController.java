@@ -46,6 +46,7 @@ public class AdminController {
 
     @Autowired
     private UserServices userService;
+
     @Autowired
     private EmployeeServices employeeServices;
 
@@ -384,5 +385,42 @@ public class AdminController {
     public String updateMovie(@ModelAttribute Movie movie) {
         movieServices.update(movie);
         return "redirect:/admin/movies";
+    }
+
+    @PostMapping("/register-request-admin")
+    public String useRegisterAdmin(@RequestParam String name,
+                                   @RequestParam String email,
+                                   @RequestParam LocalDate birthDate,
+                                   @RequestParam String address,
+                                   @RequestParam Long phoneNumber,
+                                   @RequestParam String password,
+                                   Model model,
+                                   RedirectAttributes redirectAttributes,
+                                   HttpSession session) {
+        try {
+            if (employeeServices.getByEmail(email) != null) {
+                model.addAttribute("errorMessage", "El correo electrónico ya está registrado");
+                return "redirect:/admin/registerEmployee";
+            }
+            Employee newEmployee = Employee.builder()
+                    .name(name)
+                    .email(email)
+                    .birthDate(birthDate)
+                    .address(address)
+                    .phoneNumber(phoneNumber)
+                    .password(password)
+                    .build();
+            employeeServices.registerNewEmployee(newEmployee);
+            session.setAttribute("EMPLOYEE", newEmployee);
+            model.addAttribute("message", "Usuario registrado exitosamente");
+            return "redirect:/admin/moviesAdmin";
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", "ERROR");
+            return "redirect:/admin/registerEmployee";
+        }
+    }
+    @GetMapping("/registerEmployee")
+    public String showRegisterEmployee(Model model) {
+        return "registerEmployee";
     }
 }
