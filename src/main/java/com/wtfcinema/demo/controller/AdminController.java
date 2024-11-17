@@ -51,7 +51,7 @@ public class AdminController {
 
     /////MOVIES/////
 
-    @GetMapping("/moviesAdmin")
+    @GetMapping("/movies")
     public String showMoviesAdmin(Model model, @ModelAttribute("message") String message) {
         Employee loggedInUser = (Employee) session.getAttribute("EMPLOYEE");
         model.addAttribute("employee", loggedInUser);
@@ -72,7 +72,7 @@ public class AdminController {
         if (movieOpt.isPresent()) {
             model.addAttribute("movie", movieOpt.get());
         } else {
-            return "redirect:/admin/moviesAdmin";
+            return "redirect:/admin/movies";
         }
         return "movieScreeningsAdmin";
     }
@@ -135,7 +135,7 @@ public class AdminController {
 
             session.setAttribute("MOVIE", newMovie);
             redirectAttributes.addFlashAttribute("message", "Película registrada exitosamente");
-            return "redirect:/admin/moviesAdmin";
+            return "redirect:/admin/movies";
 
         } catch (RuntimeException | IOException e) {
             model.addAttribute("errorMessage", "Error al registrar la película o al guardar la imagen.");
@@ -163,15 +163,15 @@ public class AdminController {
 
             movieServices.deleteMovieById(movieId);
             redirectAttributes.addFlashAttribute("errorMessage", "Pelicula eliminada exitosamente.");
-            return "redirect:/admin/moviesAdmin";
+            return "redirect:/admin/movies";
 
 
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error: Pelicula no encontrada. " + e);
-            return "redirect:/admin/moviesAdmin";
+            return "redirect:/admin/movies";
         } catch (RuntimeException r) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la Pelicula. " + r);
-            return "redirect:/admin/moviesAdmin";
+            return "redirect:/admin/movies";
         }
     }
 
@@ -313,7 +313,7 @@ public class AdminController {
 
             session.setAttribute("SCREENING", newFuncion);
             redirectAttributes.addFlashAttribute("message", "Función registrada exitosamente");
-            return "redirect:/admin/moviesAdmin";
+            return "redirect:/admin/movies";
 
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: " + e.getMessage());

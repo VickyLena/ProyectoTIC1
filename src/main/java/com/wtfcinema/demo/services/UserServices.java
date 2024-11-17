@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +31,8 @@ public class UserServices {
         return user.orElse(null);
     }
 
-    @Transactional
     public User getByEmail(String email){
-        Optional<User> result = userRepo.findByEmail(email);
+        Optional<User> result = userRepo.findByEmailWithTickets(email);
         return result.orElse(null);
     }
 
@@ -65,9 +65,10 @@ public class UserServices {
         return userRepo.save(newUser);
     }
 
+    @Transactional
     public void registerNewUser(User user) {
         // Validar si el usuario ya existe
-        if (userRepo.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepo.findByEmailWithTickets(user.getEmail()).isPresent()) {
             throw new RuntimeException("El correo electrónico ya está en uso.");
         }
 
@@ -75,14 +76,8 @@ public class UserServices {
         userRepo.save(user);
     }
 
-    public void updateUser(User user) {
-        userRepo.save(user);
-    }
-
-
     @Transactional
-    public void saveUserNewCard(User user,Long card) {
-        user.setCardNumber(card);
-        userRepo.save(user);
+    public void deleteUser(Long id){
+        userRepo.deleteById(id);
     }
 }
