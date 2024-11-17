@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WTF Cinema - Página Principal</title>
+    <title>WTF Cinema - Películas</title>
     <link rel="stylesheet" href="/index.css">
 </head>
 <body class="main-body">
@@ -17,35 +17,37 @@
     <button id="openMenuBtn" class="open-menu">☰ </button>
 
     <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-button" onclick="closeMenu()">×</a>
+        <a href="javascript:void(0)" class="close-button" onclick="closeMenu()">✖</a>
         <h2>Mi Menú</h2>
         <a href="/locations">Sucursales</a>
-        <a href="/movies">Volver a Peliculas</a>
+        <a href="/movies">Volver a Películas</a>
     </div>
 </header>
 
+<!-- Mensaje de error -->
 <div th:if="${errorMessage}" class="error-message">
     <span th:text="${errorMessage}"></span>
 </div>
 
-<div class="movie-row">
-    <div th:each="ticket : ${userTickets}" class="movie-cell">
-        <div class="movie-container">
-            <div class="movie-image">
+<div class="movie-row2">
+    <div th:each="ticket : ${userTickets}" class="movie2">
+        <div class="movie-content2">
+            <div class="movie-image2">
                 <img th:src="@{/images/{id}.jpg(id=${ticket.getScreening().getMovie().getId()})}" alt="Imagen de la película" />
             </div>
-            <div class="movie-info">
-                <h3 th:text="${ticket.getScreening().getMovie().getTitle()}">Título de la película</h3>
-                <p><strong></strong>Sucursal: <span th:text="${ticket.getScreening().getTheatre().getCinema().getName()}">Sucursal no disponible</span></p>
-                <p><strong>Direccion:</strong> <span th:text="${ticket.getScreening().getTheatre().getCinema().getAddress()}">Direccion no disponible</span></p>
-                <p><strong>Fecha:</strong><span th:text="${ticket.getScreening().getDateTime()}">Fecha no disponible</span></p>
-                <p><strong>Asiento:</strong><span th:text="${ticket.getSeat()}">Asiento no disponible</span></p>
+            <div class="movie-info2">
+                <h2 th:text="${ticket.getScreening().getMovie().getTitle()}">Título de la película</h2>
+                <p><strong>Sucursal:</strong> <span th:text="${ticket.getScreening().getTheatre().getCinema().getName()}">Sucursal no disponible</span></p>
+                <p><strong>Dirección:</strong> <span th:text="${ticket.getScreening().getTheatre().getCinema().getAddress()}">Dirección no disponible</span></p>
+                <p><strong>Fecha:</strong> <span th:text="${ticket.getScreening().getDateTime()}">Fecha no disponible</span></p>
+                <p><strong>Asiento:</strong> <span th:text="${ticket.getSeat()}">Asiento no disponible</span></p>
+
                 <ul>
-                    <li th:each="snack : ${ticket.getSnacks()}" th:text="${snack.getName()}">Snack no disponible</li>
+                    <li th:each="snack : ${ticket.getSnacks()}" th:text="${snack}">Snack no disponible</li>
                 </ul>
-                <a th:href="@{/snacks/{ticketId}(ticketId=${ticket.getId()})}" class="snacks-button">Agregar Snacks</a>
+                <a th:href="@{/snacks/{ticketId}(ticketId=${ticket.getId()})}" class="add-to-cart-button2">Agregar Snacks</a>
                 <form th:action="@{/delete-ticket/{ticketId}(ticketId=${ticket.getId()})}" method="POST" onsubmit="return confirmDeleteT()">
-                    <button type="submit">Eliminar 🗑</button>
+                    <button type="submit" class="delete-button">Eliminar 🗑</button>
                 </form>
             </div>
         </div>
@@ -69,6 +71,7 @@
         document.getElementById('sideMenu').style.width = '0';
     }
 
+    // Confirmación al eliminar ticket
     function confirmDeleteT() {
         return confirm('¿Estás seguro de que deseas eliminar este Ticket?');
     }
