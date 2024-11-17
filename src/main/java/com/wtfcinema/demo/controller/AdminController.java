@@ -1,6 +1,7 @@
 package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.*;
+import com.wtfcinema.demo.repository.CinemaRep;
 import com.wtfcinema.demo.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,9 @@ public class AdminController {
 
     @Autowired
     private EmployeeServices employeeServices;
+
+    @Autowired
+    private CinemaRep cinemaRep;
 
     /////MOVIES/////
 
@@ -422,5 +426,12 @@ public class AdminController {
     @GetMapping("/registerEmployee")
     public String showRegisterEmployee(Model model) {
         return "registerEmployee";
+    }
+
+    @GetMapping("/locationsMenuAdmin")
+    public String showLocationsMenuAdmin(Model model) {
+        List<Cinema> cinemas = cinemaRep.findAll();
+        model.addAttribute("cinemas", cinemas);
+        return "locationsMenuAdmin";
     }
 }
