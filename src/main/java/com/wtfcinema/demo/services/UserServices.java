@@ -80,4 +80,10 @@ public class UserServices {
     public void deleteUser(Long id){
         userRepo.deleteById(id);
     }
+
+    @Transactional
+    public void saveUserNewCard(User user,Long card) {
+        user.setCardNumber(card);
+        userRepo.save(user);
+    }
 }
