@@ -53,7 +53,7 @@
 <script>
     const cart = {};
 
-    document.querySelectorAll('.add-to-cart-button').forEach(button => {
+    document.querySelectorAll('.add-to-cart-button2').forEach(button => {
         button.addEventListener('click', function () {
             const snackId = this.getAttribute('data-snack-id');
             const quantity = parseInt(document.querySelector(`input[data-snack-id="${snackId}"]`).value);
