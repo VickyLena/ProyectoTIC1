@@ -1,5 +1,6 @@
 package com.wtfcinema.demo.services;
 
+import com.wtfcinema.demo.entities.Employee;
 import com.wtfcinema.demo.entities.User;
 import com.wtfcinema.demo.repository.UserRep;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,10 @@ public class UserServices {
     @Transactional
     public void saveUserNewCard(User user,Long card) {
         user.setCardNumber(card);
+        userRepo.save(user);
+    }
+
+    public void updateUser(User user) {
         userRepo.save(user);
     }
 

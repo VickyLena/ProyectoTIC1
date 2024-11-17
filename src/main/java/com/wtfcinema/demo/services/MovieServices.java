@@ -51,6 +51,7 @@ public class MovieServices {
         Optional<Movie> movie = movieRep.findByIdWithGenres(movieId);
         return movie.orElse(null);
     }
+
     public Movie findById(Long movieId) {
         Optional<Movie> movie = movieRep.findById(movieId);
         return movie.orElse(null);
@@ -80,12 +81,8 @@ public class MovieServices {
             throw new RuntimeException("Error al eliminar la pelicula con id '" + movieId + "'. Error: " + e.getMessage());
         }
     }
-    public void updateMovie(Movie movie) {
-        movieRep.save(movie);
-    }
 
     public void update(Movie updatedMovie) {
-        // Buscar la película existente
         Movie existingMovie = movieRep.findById(updatedMovie.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Película no encontrada con id: " + updatedMovie.getId()));
 
