@@ -45,6 +45,4 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
     private List<Ticket> tickets = new LinkedList<Ticket>();
-
-    
 }

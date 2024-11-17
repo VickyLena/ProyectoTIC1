@@ -1,7 +1,6 @@
 package com.wtfcinema.demo.controller;
 
 import com.wtfcinema.demo.entities.Screening;
-import com.wtfcinema.demo.entities.Snack;
 import com.wtfcinema.demo.entities.Ticket;
 import com.wtfcinema.demo.entities.User;
 import com.wtfcinema.demo.services.ScreeningServices;
@@ -53,6 +52,8 @@ public class PurchaseController {
         model.addAttribute("user", loggedInUser);
         return "seats";
     }
+
+    ////PAYMENT////
 
     @Transactional
     @GetMapping({"/payment-method/{screening_id}/{seats}","/payment-method/{ticketId}"})

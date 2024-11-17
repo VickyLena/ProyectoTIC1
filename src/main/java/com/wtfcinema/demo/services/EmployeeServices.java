@@ -21,7 +21,7 @@ public class EmployeeServices {
     }
 
     public Employee getByEmail(String email){
-        Optional<Employee> result = employeeRepo.findByEmail(email);
+        Optional<Employee> result = employeeRepo.findByEmailWithTickets(email);
         return result.orElse(null);
     }
 

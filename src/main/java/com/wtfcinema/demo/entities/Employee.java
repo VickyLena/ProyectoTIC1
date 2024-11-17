@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Table(name = "EMPLOYEE")
@@ -37,5 +39,9 @@ public class Employee {
 
     @Column(name = "PASSWORD")
     private String password;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Builder.Default
+    private List<Ticket> tickets = new LinkedList<Ticket>();
 
 }

@@ -32,6 +32,10 @@ public class Ticket {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "EMPLOYEE_ID")
+    private Employee employee;
+
+    @ManyToOne
     @JoinColumn(name = "SCREENING")
     private Screening screening;
 
