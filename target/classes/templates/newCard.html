@@ -17,11 +17,10 @@
     <form action="/addCard" method="POST">
         <label for="cardNumber">Número de Tarjeta:</label>
         <input type="text" id="cardNumber" name="cardNumber" required>
-        <input type="hidden" name="permanent" th:value="false">
 
         <div th:if="${user!=null}" class="checkbox-container">
             <label for="permanent">Guardar para futuras compras:</label>
-            <input type="checkbox" id="permanent" name="permanent" value="true">
+            <input type="checkbox" id="permanent" name="permanent" th:value="true">
         </div>
 
         <input type="hidden" name="screening_id" th:value="${screening_id}">

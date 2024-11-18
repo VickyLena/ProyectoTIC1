@@ -138,6 +138,10 @@ public class PurchaseController {
             return "redirect:/new-card/s/" + ticketId;
         }
 
+        if (permanent == null) {
+            permanent = false;
+        }
+
         if (permanent){
             User loggedInUser = (User) session.getAttribute("USER");
             userServices.saveUserNewCard(loggedInUser,cardNumber);
