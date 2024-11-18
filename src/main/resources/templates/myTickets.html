@@ -10,7 +10,8 @@
 
 <header class="headerIzq">
     <div class="welcome-container">
-        <a href="/movies" class="back-arrow">&larr; Regresar</a>
+        <a th:if="${user!=null}" href="/movies" class="back-arrow">&larr; Regresar</a>
+        <a th:if="${user==null}" href="/admin/movies" class="back-arrow">&larr; Regresar</a>
     </div>
 </header>
 
