@@ -128,7 +128,6 @@ public class PurchaseController {
     public String addCard(Model model, @RequestParam Long cardNumber, @RequestParam(required = false) Boolean permanent, @RequestParam(required = false) Long ticketId,
                           @RequestParam(required = false) Long screening_id, @RequestParam(required = false) String seats, @RequestParam(required = false) String snack, RedirectAttributes redirectAttributes){
 
-        System.out.println("LLEGAAAAAAAAAaaa"+screening_id);
         int length = String.valueOf(cardNumber).length();
         if (length!= 16){
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: El numero de tarjeta debe tener largo 16");
@@ -137,12 +136,7 @@ public class PurchaseController {
             }
             return "redirect:/new-card/s/" + ticketId;
         }
-        System.out.println("LLEGAAAAAAAAAaaa");
-//        if (permanent == null) {
-//            System.out.println("LLEGAAAAAAAAAaaa");
-//            permanent = false;
-//        }
-        System.out.println(permanent);
+
         if (permanent){
             User loggedInUser = (User) session.getAttribute("USER");
             userServices.saveUserNewCard(loggedInUser,cardNumber);
@@ -248,6 +242,8 @@ public class PurchaseController {
         List<Snack> snackList = snackServices.getAllSnacks();
         model.addAttribute("snacks", snackList);
         model.addAttribute("ticket", ticketId);
+        model.addAttribute("user", null);
+        model.addAttribute("employee", (Employee) session.getAttribute("EMPLOYEE"));
         return "snacks";
     }
 
