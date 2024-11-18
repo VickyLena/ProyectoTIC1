@@ -112,7 +112,14 @@ public class PurchaseController {
         model.addAttribute("seats", seats);
         String snack = (String) session.getAttribute("snack");
         model.addAttribute("snack", snack);
-
+        User loggedInUser = (User) session.getAttribute("USER");
+        if (loggedInUser == null) {
+            Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+            model.addAttribute("employee", userAdmin);
+            model.addAttribute("user", null);
+        }else{
+            model.addAttribute("user", loggedInUser);
+        }
         return "newCard";}
 
     @Transactional

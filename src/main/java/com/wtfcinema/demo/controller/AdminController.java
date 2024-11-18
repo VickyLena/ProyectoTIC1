@@ -394,10 +394,9 @@ public class AdminController {
     }
 
     @PostMapping("/register-request-admin")
-    public String registerEmployee(@RequestParam String name,
+    public String useRegisterAdmin(@RequestParam String name,
                                    @RequestParam String email,
                                    @RequestParam LocalDate birthDate,
-                                   @RequestParam String address,
                                    @RequestParam Long phoneNumber,
                                    @RequestParam String password,
                                    Model model,
@@ -412,12 +411,10 @@ public class AdminController {
                     .name(name)
                     .email(email)
                     .birthDate(birthDate)
-                    .address(address)
                     .phoneNumber(phoneNumber)
                     .password(password)
                     .build();
             employeeServices.registerNewEmployee(newEmployee);
-            session.setAttribute("EMPLOYEE", newEmployee);
             model.addAttribute("message", "Usuario registrado exitosamente");
             return "redirect:/admin/movies";
         } catch (RuntimeException e) {
