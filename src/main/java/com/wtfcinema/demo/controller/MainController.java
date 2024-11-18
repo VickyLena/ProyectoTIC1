@@ -275,26 +275,40 @@ public class MainController {
     @PostMapping("/delete-ticket/{ticketId}")
     public String deleteTicket(Model model, @PathVariable Long ticketId, RedirectAttributes redirectAttributes) {
         User loggedInUser = (User) session.getAttribute("USER");
-        if (loggedInUser == null) {
-            redirectAttributes.addFlashAttribute("errorMessage", "ERROR: No estas iniciado sesion.");
-            return "redirect:/my-tickets";
-        }
         Optional<Ticket> ticketOptional = ticketServices.findById(ticketId);
+        List<Ticket> userTicketsForScreening=new ArrayList<>();
+
+
         if (ticketOptional.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "ERROR: Ticket no encontrado.");
             return "redirect:/my-tickets";
         }
-
-        if (ticketOptional.get().getSnacks()==null){
+        Ticket ticket = ticketOptional.get();
+        if (ticket.getSnacks()==null){
             ticketServices.deleteById(ticketId);
             redirectAttributes.addFlashAttribute("errorMessage", "Ticket eliminado exitosamente.");
             return "redirect:/my-tickets";
         }
+        if (loggedInUser == null) {
+            Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+            if(userAdmin != null) {
+                model.addAttribute("employee", userAdmin);
+                session.setAttribute("USER",null); //lo hago null para poder revisarlo dsp
+                model.addAttribute("user", null);
 
-        Ticket ticket = ticketOptional.get();
-        List<Ticket> userTicketsForScreening = loggedInUser.getTickets().stream()
-                .filter(t -> t.getScreening().equals(ticket.getScreening()))
-                .toList();
+                userTicketsForScreening = userAdmin.getTickets().stream()
+                        .filter(t -> t.getScreening().equals(ticket.getScreening()))
+                        .toList();
+            }else{
+                redirectAttributes.addFlashAttribute("errorMessage", "ERROR: No estas iniciado sesion.");
+                return "redirect:/my-tickets";
+            }
+
+        }else{
+            userTicketsForScreening = loggedInUser.getTickets().stream()
+                    .filter(t -> t.getScreening().equals(ticket.getScreening()))
+                    .toList();
+        }
 
         if (userTicketsForScreening.size() > 1){
             int i=0;
