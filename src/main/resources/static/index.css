@@ -526,7 +526,7 @@ body {
 }
 
 .welcome-text {
-    font-size: 2em;
+    font-size:2.8em;
     color: white;
     border: none;
 }
@@ -561,7 +561,7 @@ h1 {
     position: fixed;
     top: 0;
     right: 0;
-    background-color: #751805;
+    background-color: #e63900;
     color: white;
     overflow-x: hidden;
     transition: 0.5s;
@@ -587,7 +587,7 @@ h1 {
 }
 
 .side-menu a:hover {
-    color: #ff4500;
+    color: #751805;
 }
 
 .close-button {
@@ -956,26 +956,23 @@ input[type="number"] {
 /* Contenido de cada tarjeta: imagen e info en una fila */
 .movie-content2 {
     display: flex;
-    gap: 20px; /* Espacio entre imagen e información */
+    gap: 20px;
 }
 
-/* Imagen de la película */
 .movie-image2 img {
-    width: 250px; /* Tamaño fijo */
+    width: 250px;
     height: auto;
     border-radius: 5px;
 }
 
-/* Información de la película */
 .movie-info2 {
     display: flex;
-    flex-direction: column; /* Coloca los elementos en columna */
-    justify-content: space-between; /* Espacio uniforme entre los elementos */
+    flex-direction: column;
+    justify-content: space-between;
     color: #fff;
-    align-items: flex-start; /* Alinea los elementos al inicio (izquierda) */
+    align-items: flex-start;
 }
 
-/* Título de la película */
 .movie-info2 h2 {
     font-family: 'Angel Club', sans-serif;
     font-size: 1.8em;
@@ -984,7 +981,6 @@ input[type="number"] {
     color: #ff4500;
 }
 
-/* Descripción y detalles */
 .movie-info2 p,
 .movie-info2 li {
     font-family: 'Diamend', sans-serif;
@@ -992,7 +988,6 @@ input[type="number"] {
     margin: 5px 0;
 }
 
-/* Destacar texto en negrita */
 .movie-info2 strong {
     color: #ff4500;
     font-weight: bold;
@@ -1001,17 +996,65 @@ input[type="number"] {
     background-color: #ff4500;
     color: white;
     border: none;
-    padding: 5px 10px; /* Espaciado interno alrededor del texto */
+    padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    display: inline; /* Cambia de inline-block a inline */
-    width: auto; /* Asegura que el ancho dependa solo del contenido */
-    white-space: nowrap; /* Evita que el texto se divida si es largo */
-    box-shadow: 0 0 10px rgba(255, 69, 0, 0.7), 0 0 20px rgba(255, 69, 0, 0.5); /* Brillo constante */
+    display: inline;
+    width: auto;
+    white-space: nowrap;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.7), 0 0 20px rgba(255, 69, 0, 0.5);
 }
 
 .add-to-cart-button2:hover {
-    background-color: #e33e00; /* Ajustado para dar un pequeño efecto de hover */
-    box-shadow: 0 0 15px rgba(255, 69, 0, 0.9), 0 0 30px rgba(255, 69, 0, 0.7); /* Brillo más fuerte al hacer hover */
+    background-color: #e33e00;
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.9), 0 0 30px rgba(255, 69, 0, 0.7);
+}
+
+.filter-container {
+    background-color: white;
+    color: #ff4500;
+    width: auto;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(255, 255, 255, 0.7),
+    0 0 30px rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Angel Club', sans-serif;
+}
+
+.filter-container label {
+    font-size: 1.2em;
+    color: #ff4500;
+    white-space: nowrap;
+}
+
+.filter-container select {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ff4500;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+    background-color: #fff;
+    color: #751805;
+}
+
+.filter-container button {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    color: white;
+    background-color: #ff4500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-container button:hover {
+    background-color: #e63900;
 }

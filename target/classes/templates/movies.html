@@ -33,8 +33,8 @@
     <span th:text="${errorMessage}"></span>
 </div>
 
-<div>
-    <label for="genreSelect">Selecciona un género:</label>
+<div class="filter-container">
+    <label for="genreSelect">Seleccione un género</label>
     <select id="genreSelect">
         <option value="Accion">Acción</option>
         <option value="Comedia">Comedia</option>
@@ -48,9 +48,11 @@
         <option value="Animacion">Animación</option>
         <option value="Crimen">Crimen</option>
     </select>
-
     <button onclick="filterMovies()">Filtrar</button>
 </div>
+
+
+
 
 
 <div class="movie-row">
@@ -74,8 +76,8 @@
             </div>
             <div class="movie-description">
                 <p th:text="${movie.getDescription()}">Descripción no disponible</p>
-                <a th:href="@{/movie/{movie_id}(movie_id=${movie.getId()})}" class="add-to-cart-button2">Ver Funciones</a>
             </div>
+            <a th:href="@{/movie/{movie_id}(movie_id=${movie.getId()})}" class="add-to-cart-button2">Ver Funciones</a>
         </div>
     </div>
 </div>

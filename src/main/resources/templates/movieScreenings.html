@@ -15,8 +15,8 @@
     </div>
 </header>
 
-<a th:if="${user != null}" href="/movies" class="back-arrow">>Regresar</a>
-<a th:if="${user == null}" href="/moviesAdmin" class="back-arrow">>Regresar</a>
+<a th:if="${user != null}" href="/movies" class="back-arrow">&larr; Regresar</a>
+<a th:if="${user == null}" href="/moviesAdmin" class="back-arrow">&larr; Regresar</a>
 
 <h1>Lista de Funciones</h1>
 <table class="screenings-table">
@@ -24,7 +24,7 @@
     <tr>
         <th>Cine</th>
         <th>Fecha y Hora</th>
-        <th>Lenguaje</th>
+        <th>Idioma</th>
         <th></th>
     </tr>
     </thead>
