@@ -125,14 +125,14 @@ button:hover {
 
 .imagenes-carousel {
     display: flex;
-    overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+    overflow-x: hidden;
     gap: 10px;
     padding: 20px 0;
     scroll-behavior: smooth;
 }
 
 .imagen-container {
-    min-width: 150px; /* Ancho mínimo de cada imagen contenedor para alineación horizontal */
+    min-width: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -146,8 +146,8 @@ button:hover {
     cursor: pointer;
 }
 .imagen-cartelera:hover {
-    transform: scale(1.1); /* Scale up to 110% on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Increase shadow effect */
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .flecha {
@@ -177,7 +177,7 @@ button:hover {
     margin: 0;
     padding: 0;
     font-family: 'Angel Club', sans-serif;
-    background-image: url('images/cine2.jpg'); /* Imagen de fondo específica para login */
+    background-image: url('images/cine2.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -191,7 +191,7 @@ button:hover {
     background-color: white;
     color: #ff4500;
     width: 400px;
-    margin-top: 10px; /* Espacio reducido */
+    margin-top: 10px;
     margin-bottom: 60px;
     padding: 40px;
     border-radius: 10px;
@@ -202,7 +202,7 @@ button:hover {
 }
 
 .login-form-container h2 {
-    margin-bottom: 10px; /* Más espacio reducido */
+    margin-bottom: 10px;
     font-size: 2em;
 }
 
@@ -255,7 +255,7 @@ footer {
     margin: 0;
     padding: 0;
     font-family: 'Angel Club', sans-serif;
-    background-image: url('images/cine2.jpg'); /* Imagen de fondo específica para login */
+    background-image: url('images/cine2.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -330,10 +330,10 @@ footer {
 
 body {
     background-image: url('images/cine2.jpg');
-    background-size: cover; /* Ajusta la imagen al tamaño de la pantalla sin zoom */
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: center; /* Centra la imagen */
-    background-attachment: fixed; /* Hace que el fondo no se mueva al hacer scroll */
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .main-body {
@@ -359,7 +359,7 @@ body {
     0 0 35px rgba(255, 99, 71, 0.6);
     cursor: pointer;
     transition: box-shadow 0.5s ease, transform 0.3s ease;
-    margin-top: 20px; /* Ajusta este valor según lo necesites */
+    margin-top: 20px;
 }
 
 .reserva-button:hover {
@@ -378,15 +378,15 @@ body {
 
 .movie-row {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas para dos películas por fila */
+    grid-template-columns: 1fr 1fr;
     gap: 70px;
     width: 100%;
-    max-width: 1200px; /* Ancho máximo para la fila de películas */
+    max-width: 1200px;
     margin-bottom: 20px;
 }
 
 .movie {
-    background-color: #751805; /* Marrón oscuro */
+    background-color: #751805;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -395,7 +395,7 @@ body {
 }
 
 .movie-content {
-    display: flex; /* Coloca la imagen y la información en una fila */
+    display: flex;
     gap: 20px;
 }
 
@@ -405,18 +405,18 @@ body {
     border-radius: 5px;
 }
 
-/* Estilo para el título de la película */
+
 .movie-info h2 {
     font-family: 'Angel Club', sans-serif;
-    font-size: 1.8em; /* Un poco más pequeño */
-    font-weight: 400; /* Reduce el grosor */
+    font-size: 1.8em;
+    font-weight: 400;
     margin: 0 0 10px 0;
     color: #ff4500;
 }
 
-/* Estilo para la descripción y atributos de la película */
+
 .movie-info p,
-.movie-info li { /* Añadido para los <li> */
+.movie-info li {
     font-family: 'Diamend', sans-serif;
     margin: 5px 0;
     font-size: 1.1em;
@@ -442,12 +442,12 @@ body {
     font-weight: bold;
 }
 .movie-description {
-    margin-top: 20px; /* Separa la descripción del contenido superior */
+    margin-top: 20px;
     color: #fff;
     font-family: 'Diamend', sans-serif;
 }
 
-/* Posición y estilos para el header */
+
 .headerIzq {
     display: flex;
     align-items: center;
@@ -456,7 +456,7 @@ body {
     top: 0;
     left: 0;
     padding: 10px;
-    gap: 10px; /* Espacio entre el botón y el mensaje */
+    gap: 10px;
     width: auto;
 }
 
@@ -475,7 +475,7 @@ body {
 }
 
 .logout-button:hover {
-    background-color: white; /* Color de fondo al pasar el mouse */
+    background-color: white;
 }
 
 .welcome-text {
@@ -490,7 +490,7 @@ body {
     border-radius: 8px;
 }
 .movie-main-content {
-    display: flex; /* Coloca la imagen y la información en una fila */
+    display: flex;
     gap: 20px;
 }
 
@@ -661,7 +661,7 @@ h1 {
 #genres {
     margin-top: 10px;
     display: flex;
-    flex-direction: column; /* Alinea las opciones en una columna */
+    flex-direction: column;
 }
 
 #genres label {
@@ -671,7 +671,7 @@ h1 {
 }
 
 #genres input[type="checkbox"] {
-    margin-right: 10px; /* Espacio entre el checkbox y el texto */
+    margin-right: 10px;
 }
 
 .snack-row{
@@ -695,7 +695,7 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #751805; /* Color de fondo del contenedor */
+    background-color: #751805;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -730,19 +730,19 @@ h1 {
 .snack-quantity-container {
     display: flex;
     align-items: center;
-    gap: 5px; /* Espacio entre el label y el input */
-    width: 100px; /* Ajusta el ancho del contenedor */
+    gap: 5px;
+    width: 100px;
 }
 
 .quantity-label {
-    font-size: 14px; /* Reduce el tamaño del texto */
-    margin-right: 5px; /* Espacio entre el label y el input */
+    font-size: 14px;
+    margin-right: 5px;
 }
 
 #snack-quantity {
-    width: 50px; /* Ajusta el ancho del input */
-    padding: 2px; /* Reduce el padding interno */
-    font-size: 14px; /* Ajusta el tamaño del texto dentro del input */
+    width: 50px;
+    padding: 2px;
+    font-size: 14px;
 }
 
 
@@ -791,20 +791,20 @@ input[type="number"] {
 }
 
 .delete-button {
-    background-color: #ff4500; /* Fondo sólido para el botón */
-    color: white; /* Color del texto */
+    background-color: #ff4500;
+    color: white;
     border: none;
-    padding: 5px 10px; /* Espaciado interno para el botón */
-    border-radius: 5px; /* Esquinas redondeadas */
+    padding: 5px 10px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    margin-top: 10px; /* Separar del contenido superior */
-    display: inline-block; /* Hace que el botón se ajuste al flujo del contenedor */
+    margin-top: 10px;
+    display: inline-block;
 }
 
 .delete-button:hover {
-    background-color: #e33e00; /* Fondo de color al pasar el ratón */
-    color: white; /* Mantener el color del texto al pasar el ratón */
+    background-color: #e33e00;
+    color: white;
 }
 
 .edit-button {
@@ -887,7 +887,7 @@ input[type="number"] {
 }
 
 .pago-container-unique label {
-    font-size: 1.1em; /* Tamaño unificado para ambos textos */
+    font-size: 1.1em;
     margin-bottom: 10px;
     display: block;
     text-align: center;
@@ -906,13 +906,13 @@ input[type="number"] {
 
 .pago-container-unique .checkbox-container {
     display: flex;
-    flex-direction: column; /* Ordena el texto y el checkbox verticalmente */
+    flex-direction: column;
     align-items: center;
-    gap: 10px; /* Espacio entre el texto y el checkbox */
+    gap: 10px;
 }
 
 .pago-container-unique .checkbox-container label {
-    font-size: 1.1em; /* Asegura que el texto sea del mismo tamaño */
+    font-size: 1.1em;
 }
 
 .pago-container-unique button {
@@ -932,20 +932,20 @@ input[type="number"] {
 
 
 
-/* Contenedor de filas de películas */
+
 .movie-row2 {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos películas por fila */
-    gap: 30px; /* Espacio entre tarjetas */
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
     width: 100%;
     max-width: 1200px;
-    margin: 20px auto; /* Centrado horizontal */
+    margin: 20px auto;
     padding: 10px;
 }
 
-/* Tarjeta de película */
+
 .movie2 {
-    background-color: #751805; /* Fondo marrón oscuro */
+    background-color: #751805;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -953,7 +953,7 @@ input[type="number"] {
     align-items: center;
 }
 
-/* Contenido de cada tarjeta: imagen e info en una fila */
+
 .movie-content2 {
     display: flex;
     gap: 20px;

@@ -172,23 +172,6 @@ public class MainController {
 
         return "movies";
     }
-//    @Transactional
-////    @GetMapping("/moviesA")
-////    public String showMoviesAdmin(Model model, RedirectAttributes redirectAttributes) {
-////        Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
-////        model.addAttribute("employee", userAdmin);
-////
-////        session.setAttribute("USER",null); //lo hago null para poder revisarlo dsp
-////        model.addAttribute("user", null);
-////
-////        System.out.println(model.getAttribute("employee"));
-////
-////        if (!model.containsAttribute("movies")) {
-////            List<Movie> movies = movieService.getAllMovies();
-////            model.addAttribute("movies", movies);
-////        }
-////        return "movies";
-////    }
 
     @GetMapping("/filterMovies/{genre}")
     public String filterMovies(Model model, @PathVariable String genre) {
