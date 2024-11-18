@@ -5,6 +5,7 @@ import com.wtfcinema.demo.repository.CinemaRep;
 import com.wtfcinema.demo.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -322,7 +323,7 @@ public class AdminController {
     @PostMapping("/deleteSnack/{snackId}")
     public String deleteSnack(@PathVariable Long snackId, RedirectAttributes redirectAttributes) {
         try {
-            Optional<Snack> snack= snackServices.findById(snackId);
+            Optional<Snack> snack = snackServices.findById(snackId);
 
             if (snack.isPresent()) {
                 String photoName = snack.get().getName() + ".jpg";
@@ -334,7 +335,8 @@ public class AdminController {
                     if (Files.exists(photoPath)) {
                         Files.delete(photoPath);
                     }
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             }
 
             snackServices.deleteSnackById(snackId);
@@ -342,13 +344,15 @@ public class AdminController {
             return "redirect:/admin/snacksMenuAdmin";
 
 
+        } catch (DataIntegrityViolationException ex) {
+            redirectAttributes.addFlashAttribute("errorMessage", "No se puede eliminar el snack porque está asociado a otros registros. Por favor, elimine las referencias primero.");
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error: Snack no encontrado. " + e);
-            return "redirect:/admin/snacksMenuAdmin";
         } catch (RuntimeException r) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar el snack. " + r);
-            return "redirect:/admin/snacksMenuAdmin";
+            redirectAttributes.addFlashAttribute("errorMessage", "Error inesperado al eliminar el snack. " + r);
         }
+
+        return "redirect:/admin/snacksMenuAdmin";
     }
     ///////MENU/OPTIONS///////
         //EDIT PROFILE
