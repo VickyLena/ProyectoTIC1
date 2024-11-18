@@ -7,7 +7,8 @@ import com.wtfcinema.demo.services.TicketServices;
 import com.wtfcinema.demo.services.UserServices;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +54,16 @@ public class PurchaseController {
             model.addAttribute("user", null);
         }else{
             model.addAttribute("user", loggedInUser);
+        }
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime screeningDateTime = screening.getDateTime();
+
+        long monthsDifference = ChronoUnit.MONTHS.between(currentDateTime.toLocalDate(), screeningDateTime.toLocalDate());
+        if (monthsDifference > 6) {
+            model.addAttribute("hay_que_pagar", true);
+        }else{
+            model.addAttribute("hay_que_pagar", false);
         }
         return "seats";
     }
@@ -174,10 +185,10 @@ public class PurchaseController {
                             .build();
                     ticketServices.registerNewTicket(newTicket);
                 }
+                model.addAttribute("user", loggedInUser);
             }
+            return "redirect:/my-tickets";
         }
-
-        return "redirect:/my-tickets";
     }
 
     @Transactional

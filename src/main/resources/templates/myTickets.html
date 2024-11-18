@@ -10,8 +10,7 @@
 
 <header class="headerIzq">
     <div class="welcome-container">
-        <a th:if="${user!=null}" href="/movies" class="back-arrow">&larr; Regresar</a>
-        <a th:if="${user==null}" href="/admin/movies" class="back-arrow">&larr; Regresar</a>
+        <a href="/movies" class="back-arrow">&larr; Regresar</a>
     </div>
 </header>
 <h1>Tus Tickets</h1>
@@ -22,8 +21,7 @@
         <a href="javascript:void(0)" class="close-button" onclick="closeMenu()">✖</a>
         <h2>Mi Menú</h2>
         <a href="/locations">Locales</a>
-        <a th:if="${user!=null}" href="/movies">Regresar a Películas</a>
-        <a th:if="${user==null}" href="/admin/movies">Regresar a Películas</a>
+        <a href="/movies">Regresar a Películas</a>
     </div>
 </header>
 

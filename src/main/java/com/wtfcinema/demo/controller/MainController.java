@@ -154,17 +154,26 @@ public class MainController {
     @Transactional
     @GetMapping("/movies")
     public String showMovies(Model model, RedirectAttributes redirectAttributes) {
-        User loggedInUser = (User) session.getAttribute("USER");
-        model.addAttribute("user", loggedInUser);
 
         if (!model.containsAttribute("movies")) {
             List<Movie> movies = movieService.getAllMovies();
             model.addAttribute("movies", movies);
         }
+        User loggedInUser = (User) session.getAttribute("USER");
+
+        if(loggedInUser == null) {
+            Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
+            model.addAttribute("employee", userAdmin);
+            session.setAttribute("USER",null); //lo hago null para poder revisarlo dsp
+            model.addAttribute("user", null);
+        }else{
+            model.addAttribute("user", loggedInUser);
+        }
+
         return "movies";
     }
     @Transactional
-    @GetMapping("/moviesAdmin")
+    @GetMapping("/moviesA")
     public String showMoviesAdmin(Model model, RedirectAttributes redirectAttributes) {
         Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
         model.addAttribute("employee", userAdmin);
@@ -250,22 +259,24 @@ public class MainController {
         User loggedInUser = (User) session.getAttribute("USER");
         if (loggedInUser == null) {
             Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
-            model.addAttribute("employee", userAdmin);
-            model.addAttribute("user", null);
 
             Employee empWithTickets = employeeRep.findByEmailWithTickets(userAdmin.getEmail()).orElseThrow();
             model.addAttribute("userTickets", empWithTickets.getTickets());
 
             List<Ticket> tickets = empWithTickets.getTickets();
             tickets.forEach(ticket -> Hibernate.initialize(ticket.getSnacks()));
+
+            model.addAttribute("employee", userAdmin);
+            model.addAttribute("user", null);
+            return "myTickets";
         }else{
             User userWithTickets = userRep.findByIdWithTickets(loggedInUser.getId()).orElseThrow();
             model.addAttribute("userTickets", userWithTickets.getTickets());
 
             List<Ticket> tickets = userWithTickets.getTickets();
             tickets.forEach(ticket -> Hibernate.initialize(ticket.getSnacks()));
+            return "myTickets";
         }
-        return "myTickets";
     }
 
     @GetMapping("/delete-user")
