@@ -47,6 +47,7 @@ public class PurchaseController {
         System.out.println(takenSeats);
         model.addAttribute("takenSeats", takenSeats);
         model.addAttribute("screening_id", screening_id);
+
         User loggedInUser = (User) session.getAttribute("USER");
         if (loggedInUser == null) {
             Employee userAdmin = (Employee) session.getAttribute("EMPLOYEE");
@@ -143,7 +144,6 @@ public class PurchaseController {
         }
         System.out.println(snack);
         if(screening_id!=null){
-            System.out.println("puta"+screening_id);
             model.addAttribute("screening_id", screening_id);
             return "redirect:/payed/m/" + screening_id + "/" + seats;
         }
