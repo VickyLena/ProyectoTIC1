@@ -30,7 +30,7 @@
     <tbody>
     <tr th:each="screening : ${movie.getScreenings()}">
         <td th:text="${screening.getTheatre().getCinema().getName()}">Cine</td>
-        <td th:text="${screening.getDateTime()}">Fecha no disponible</td>
+        <td th:text="${screening.getDateLindo()}">Fecha no disponible</td>
         <td th:text="${screening.getLanguage()}">Idioma no disponible</td>
         <td>
             <a th:href="@{/seats/{screeningId}(screeningId=${screening.getId()})}" class="reserva-button small-button">Ver Asientos</a>

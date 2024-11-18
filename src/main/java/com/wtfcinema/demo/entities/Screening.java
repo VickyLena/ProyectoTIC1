@@ -42,4 +42,12 @@ public class Screening {
     private Movie movie;
     /////////////////////////////////////////////
 
+
+    public String getDateLindo(){
+        return dateTime.format(DateTimeFormatter.ofPattern("d 'de' MMMM 'de' yyyy, HH:mm"));
+    }
+    public String getDateLindo2(){
+        return dateTime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm"));
+    }
+
 }
