@@ -190,6 +190,7 @@ public class AdminController {
     public String showMovieScreenings(Model model) {
         return "movieScreeningsAdmin";
     }
+
         //CREATE
     @GetMapping("/createFunction")
     public String showCreateScreening(Model model) {
